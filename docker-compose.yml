@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: dataspeak-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dataspeak
+      POSTGRES_USER: dataspeak
+      POSTGRES_PASSWORD: dataspeak_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
