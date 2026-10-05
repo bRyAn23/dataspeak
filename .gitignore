@@ -1,1 +1,43 @@
+# OS
 .DS_Store
+Thumbs.db
+
+# Environment files (per-service .env.example files are committed)
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output
+node_modules/
+vendor/
+dist/
+dist-ssr/
+*.local
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# Logs and caches
+*.log
+.phpunit.result.cache
+.phpunit.cache/
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Transient upload scratch (never committed, never a Docker volume)
+backend/storage/app/tmp/
+analytics/tmp/
+
+# Deployment templates are committed; the real production env file is not.
+!deploy/aws/.env.prod.example
+deploy/aws/.env.prod

@@ -1,5 +1,8 @@
 <?php
 
+use App\Logging\PrivacyProcessor;
+use App\Logging\PrivacyTap;
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -52,6 +55,17 @@ return [
 
     'channels' => [
 
+        'json' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'handler' => StreamHandler::class,
+            'formatter' => JsonFormatter::class,
+            'with' => [
+                'stream' => 'php://stderr',
+            ],
+            'processors' => [PsrLogMessageProcessor::class, PrivacyProcessor::class],
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => explode(',', (string) env('LOG_STACK', 'single')),
@@ -60,6 +74,7 @@ return [
 
         'single' => [
             'driver' => 'single',
+            'tap' => [PrivacyTap::class],
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
@@ -67,6 +82,7 @@ return [
 
         'daily' => [
             'driver' => 'daily',
+            'tap' => [PrivacyTap::class],
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'max_files' => env('LOG_DAILY_DAYS', 14),
@@ -104,6 +120,7 @@ return [
 
         'stderr' => [
             'driver' => 'monolog',
+            'tap' => [PrivacyTap::class],
             'level' => env('LOG_LEVEL', 'debug'),
             'handler' => StreamHandler::class,
             'handler_with' => [
@@ -115,6 +132,7 @@ return [
 
         'syslog' => [
             'driver' => 'syslog',
+            'tap' => [PrivacyTap::class],
             'level' => env('LOG_LEVEL', 'debug'),
             'facility' => env('LOG_SYSLOG_FACILITY', LOG_USER),
             'replace_placeholders' => true,
@@ -122,6 +140,7 @@ return [
 
         'errorlog' => [
             'driver' => 'errorlog',
+            'tap' => [PrivacyTap::class],
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
         ],

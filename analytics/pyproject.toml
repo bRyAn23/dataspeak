@@ -1,0 +1,32 @@
+[project]
+name = "dataspeak-analytics"
+version = "1.0"
+description = "Data Speak internal deterministic analytics service (FastAPI)"
+requires-python = ">=3.9"
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+src = ["app", "tests"]
+extend-exclude = [".venv", "tmp"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "S", "T20"]
+# T20: no print() - logs must go through the structured logger
+ignore = [
+    "UP006", "UP007", "UP035", "UP045",  # keep Optional[...] syntax: Python 3.9 runtime
+    "B008",  # FastAPI Depends()/Header() in defaults is the framework idiom
+    "S112",  # try/except/continue in date-format probing is intentional
+    "E731",  # short local lambdas for label lookup
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S106", "S105"]
+"app/core/security.py" = ["S105"]  # header *name*, not a secret
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

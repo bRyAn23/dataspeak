@@ -1,0 +1,22 @@
+# AWS Amplify Hosting build specification (monorepo: the React app lives in frontend/).
+# Set the environment variable VITE_API_BASE_URL=https://<api-domain>/api/v1 in the Amplify console; the browser
+# talks only to the Laravel API. Add the SPA rewrite rule described in docs/DEPLOYMENT_AWS.md.
+version: 1
+applications:
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm use 24 || nvm install 24
+            - npm ci --no-audit --no-fund
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*

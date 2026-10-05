@@ -35,4 +35,28 @@ return [
         ],
     ],
 
+    /*
+    | Internal deterministic analytics service (FastAPI). Laravel is its only caller.
+    | Token is shared via ANALYTICS_INTERNAL_TOKEN and sent as X-Internal-Token.
+    */
+    'analytics' => [
+        'base_url' => env('ANALYTICS_BASE_URL', 'http://127.0.0.1:8001'),
+        'token' => env('ANALYTICS_INTERNAL_TOKEN'),
+        'timeout' => (int) env('ANALYTICS_TIMEOUT_SECONDS', 30),
+    ],
+
+    /*
+    | Local LLM served by Ollama (MOD-09). Internal-only; never exposed publicly. A vLLM
+    | (OpenAI-compatible) client can replace OllamaClient behind App\Services\Ai\Contracts\LlmClient.
+    */
+    'ollama' => [
+        'base_url' => env('OLLAMA_BASE_URL', 'http://127.0.0.1:11434'),
+        'model' => env('OLLAMA_MODEL', 'qwen3:8b'),
+        'timeout' => (int) env('OLLAMA_TIMEOUT', 300),
+        'temperature' => (float) env('OLLAMA_TEMPERATURE', 0.1),
+        'seed' => (int) env('OLLAMA_SEED', 42),
+        'num_ctx' => (int) env('OLLAMA_NUM_CTX', 8192),
+        'think' => filter_var(env('OLLAMA_THINK', false), FILTER_VALIDATE_BOOL),
+    ],
+
 ];

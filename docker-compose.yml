@@ -1,16 +1,223 @@
+# Data Speak local development stack (Specification Section 13/14).
+# Service exposure follows docs/conventions/logging-and-privacy.md:
+#   frontend, backend  -> published on localhost for the browser
+#   analytics          -> internal; published on 127.0.0.1 only so developers can hit /health
+#   postgres, redis    -> published on 127.0.0.1 only
+# Named volumes: postgres_data and ollama_models (optional ollama profile). No volume can ever hold uploaded CSV content.
+
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    container_name: dataspeak-frontend
+    environment:
+      VITE_API_BASE_URL: http://localhost:${BACKEND_PORT:-8000}/api/v1
+      PORT: "5173"
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: dataspeak-backend
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      APP_ENV: local
+      APP_URL: http://localhost:${BACKEND_PORT:-8000}
+      LOG_CHANNEL: json
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB:-dataspeak}
+      DB_USERNAME: ${POSTGRES_USER:-dataspeak}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-dataspeak_dev}
+      REDIS_CLIENT: predis
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      QUEUE_CONNECTION: redis
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
+      ANALYTICS_BASE_URL: http://analytics:8000
+      ANALYTICS_INTERNAL_TOKEN: ${ANALYTICS_INTERNAL_TOKEN:-change-me-local-dev-token}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:8b}
+      # Email verification (FEAT-AUTH-001): mail goes to the Mailpit catcher, links come back to the frontend.
+      FRONTEND_URL: http://localhost:${FRONTEND_PORT:-5173}
+      MAIL_MAILER: smtp
+      MAIL_HOST: mailpit
+      MAIL_PORT: "1025"
+      MAIL_SCHEME: "null"
+      MAIL_USERNAME: "null"
+      MAIL_PASSWORD: "null"
+      MAIL_FROM_ADDRESS: noreply@dataspeak.local
+      MAIL_FROM_NAME: "Data Speak"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    # PHP built-in server with Laravel's router script, started from public/ (server.php uses getcwd()).
+    # Not `artisan serve`: it strips container env vars, so workers would read the bind-mounted .env.
+    command: ["sh", "-c", "cd public && exec php -S 0.0.0.0:8000 ../vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php"]
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+    # storage/app/tmp is the bind-mounted, gitignored project path shared by web and worker (no named volume).
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      analytics:
+        condition: service_started
+      mailpit:
+        condition: service_started
+
+  # Queue worker for RUN-API-001 jobs (same image and environment as backend).
+  backend-worker:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: dataspeak-backend-worker
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      APP_ENV: local
+      LOG_CHANNEL: json
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB:-dataspeak}
+      DB_USERNAME: ${POSTGRES_USER:-dataspeak}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-dataspeak_dev}
+      REDIS_CLIENT: predis
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      QUEUE_CONNECTION: redis
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
+      ANALYTICS_BASE_URL: http://analytics:8000
+      ANALYTICS_INTERNAL_TOKEN: ${ANALYTICS_INTERNAL_TOKEN:-change-me-local-dev-token}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:8b}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+    # storage/app/tmp is the bind-mounted, gitignored project path shared by web and worker (no named volume).
+    # queue:work finishes the current job on SIGTERM; give it time so a restart does not kill a running
+    # report (the stale-job reaper covers the case where it is killed anyway).
+    stop_grace_period: 120s
+    # --queue lists priorities: user-facing jobs (default) always run before background pre-translations.
+    command: ["php", "artisan", "queue:work", "redis", "--queue=default,translations", "--tries=1", "--timeout=600", "--sleep=1"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      analytics:
+        condition: service_started
+
+  analytics:
+    build:
+      context: .
+      dockerfile: docker/analytics/Dockerfile
+    container_name: dataspeak-analytics
+    environment:
+      ANALYTICS_INTERNAL_TOKEN: ${ANALYTICS_INTERNAL_TOKEN:-change-me-local-dev-token}
+      DATASPEAK_TMP_DIR: /tmp/dataspeak
+      MAX_UPLOAD_MB: "50"
+      LOG_LEVEL: INFO
+    # Internal-only service (NFR-SEC-001b). Loopback binding exists for local /health checks only.
+    ports:
+      - "127.0.0.1:${ANALYTICS_LOOPBACK_PORT:-8001}:8000"
+    volumes:
+      - ./analytics:/srv/analytics
+    tmpfs:
+      - /tmp/dataspeak:mode=1777  # world-writable scratch; the service runs as a non-root user
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  # Local mail catcher for the email verification flow. Web UI on http://127.0.0.1:8025 (loopback only);
+  # the backend sends to mailpit:1025. Nothing is delivered outside the machine.
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: dataspeak-mailpit
+    restart: unless-stopped
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "1"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "1"
+    ports:
+      - "127.0.0.1:${MAILPIT_UI_PORT:-8025}:8025"
+
   postgres:
     image: postgres:17
     container_name: dataspeak-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: dataspeak
-      POSTGRES_USER: dataspeak
-      POSTGRES_PASSWORD: dataspeak_dev
+      POSTGRES_DB: ${POSTGRES_DB:-dataspeak}
+      POSTGRES_USER: ${POSTGRES_USER:-dataspeak}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dataspeak_dev}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C.UTF-8"
+      LANG: C.UTF-8
     ports:
-      - "5432:5432"
+      - "127.0.0.1:${POSTGRES_LOOPBACK_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-dataspeak} -d ${POSTGRES_DB:-dataspeak}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: dataspeak-redis
+    restart: unless-stopped
+    # Queue/job metadata only. No persistence volume: nothing here is worth keeping across restarts.
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "127.0.0.1:${REDIS_LOOPBACK_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # ---------------------------------------------------------------------------
+  # AI Gateway (MOD-09): Qwen served by Ollama. Internal-only (loopback). Receives evidence records,
+  # never dataset rows. Started only with:  docker compose --profile ollama up -d
+  # On macOS Docker has no GPU access, so running Ollama natively on the host is usually faster;
+  # the backend then uses OLLAMA_BASE_URL=http://host.docker.internal:11434 (the default above).
+  # With this container set OLLAMA_BASE_URL=http://ollama:11434 in the root .env.
+  # Pull the model once during setup:  docker compose exec ollama ollama pull qwen3:8b
+  # ---------------------------------------------------------------------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: dataspeak-ollama
+    profiles: ["ollama"]
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    # GPU (Linux + NVIDIA Container Toolkit): uncomment.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
 
 volumes:
   postgres_data:
+  ollama_models:

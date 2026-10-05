@@ -1,0 +1,14 @@
+{
+  "title": "Dataspeak",
+  "description": "Transform CSV data into clear insights with verified narratives and charts, empowering business managers to make informed decisions.",
+  "robots": {
+    "index": false
+  },
+  "icons": {
+    "icon": "/favicon.svg"
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

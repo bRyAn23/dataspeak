@@ -1,0 +1,25 @@
+# FrankenPHP (Caddy + PHP) serving the Laravel API with automatic HTTPS (Let's Encrypt).
+# SERVER_NAME is the API host name (DNS A record -> this EC2's Elastic IP); ACME_EMAIL receives certificate notices.
+{
+	email {$ACME_EMAIL:noreply@localhost}
+	frankenphp
+}
+
+{$SERVER_NAME} {
+	root * /app/public
+	encode zstd gzip
+
+	# Uploads are limited by the application (UPLOAD_MAX_MB, default 50); keep the proxy limit slightly above it.
+	request_body {
+		max_size 60MB
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy no-referrer
+		-Server
+	}
+
+	php_server
+}

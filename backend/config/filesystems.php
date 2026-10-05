@@ -30,6 +30,17 @@ return [
 
     'disks' => [
 
+        /*
+        | Transient CSV uploads (FEAT-UPL-003). Never a Docker volume, gitignored,
+        | purged by dataspeak:purge-uploads. Nothing else may be written here.
+        */
+        'transient' => [
+            'driver' => 'local',
+            'root' => storage_path('app/tmp'),
+            'serve' => false,
+            'throw' => true,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

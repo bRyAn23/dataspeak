@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend (lint, typecheck, test, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run: { working-directory: frontend }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  backend:
+    name: Backend (Pint, PHPUnit)
+    runs-on: ubuntu-latest
+    defaults:
+      run: { working-directory: backend }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, intl, pdo_pgsql, pdo_sqlite, redis, gd
+          coverage: none
+      - uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-${{ hashFiles('backend/composer.lock') }}
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: cp .env.example .env && php artisan key:generate --force
+      - run: vendor/bin/pint --test
+      - run: php artisan test
+
+  analytics:
+    name: Analytics (Ruff, PyTest)
+    runs-on: ubuntu-latest
+    defaults:
+      run: { working-directory: analytics }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: analytics/requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest -q
+        env:
+          ANALYTICS_INTERNAL_TOKEN: ci-test-token
+
+  compose-config:
+    name: Compose file validates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env && docker compose config --quiet

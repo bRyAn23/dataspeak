@@ -68,7 +68,9 @@ return [
             'driver' => 'redis',
             'connection' => env('REDIS_QUEUE_CONNECTION', 'default'),
             'queue' => env('REDIS_QUEUE', 'default'),
-            'retry_after' => (int) env('REDIS_QUEUE_RETRY_AFTER', 90),
+            // Must exceed the longest job timeout (dataspeak.ai.job_timeout_seconds = 900) or Redis redelivers a running
+            // job, the duplicate fails with MaxAttemptsExceeded and the analysis is left in a processing state.
+            'retry_after' => (int) env('REDIS_QUEUE_RETRY_AFTER', 960),
             'block_for' => null,
             'after_commit' => false,
         ],
