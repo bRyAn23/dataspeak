@@ -41,3 +41,9 @@ analytics/tmp/
 # Deployment templates are committed; the real production env file is not.
 !deploy/aws/.env.prod.example
 deploy/aws/.env.prod
+
+# Private keys never belong in the repository
+*.pem
+
+# coverage data
+analytics/.coverage
