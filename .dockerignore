@@ -1,0 +1,34 @@
+# Build context for every image is the repository root (docker/*/Dockerfile*). Keep the context small and never
+# ship local secrets, uploads or logs into an image.
+.git
+.github
+docs
+frontend
+scratch*
+**/.DS_Store
+
+backend/vendor
+backend/node_modules
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/storage/app/tmp
+backend/storage/app/private
+backend/storage/app/public
+backend/storage/logs
+backend/storage/fonts
+backend/storage/framework/cache
+backend/storage/framework/sessions
+backend/storage/framework/views
+backend/bootstrap/cache/*.php
+backend/tests/ai-eval/runs
+
+analytics/.venv
+analytics/tmp
+analytics/**/__pycache__
+analytics/.pytest_cache
+analytics/.ruff_cache
+analytics/.env
+
+deploy/aws/.env.prod
+database

@@ -50,7 +50,10 @@ class ChartCatalog
                 case 'group_aggregates':
                     [$dim, $measure] = [$cols[0] ?? null, $cols[1] ?? null];
                     $unit = $unitFor($measure, $p['unit'] ?? null);
-                    foreach (['sum' => 'Total', 'mean' => 'Average'] as $field => $word) {
+                    // A total is offered only for measures that accumulate (the definition's aggregation); a property of one
+                    // item such as engine size or a year is only ever averaged. Same rule as the analytics recommender.
+                    $fields = $additive($measure, $unit) ? ['sum' => 'Total', 'mean' => 'Average'] : ['mean' => 'Average'];
+                    foreach ($fields as $field => $word) {
                         $options[] = $this->item("bar_{$field}:".$e->evidence_key, 'BAR', "{$word} ".$lab($measure).' by '.$lab($dim), $cols, $e, $rankFor($cols),
                             ['field' => 'group', 'label' => $lab($dim), 'unit' => null], ['field' => $field, 'label' => $lab($measure), 'unit' => $unit],
                             array_map(fn ($g) => ['group' => $g['group'] ?? null, $field => $g[$field] ?? null, 'count' => $g['count'] ?? null], (array) ($p['groups'] ?? [])));

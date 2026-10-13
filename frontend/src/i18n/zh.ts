@@ -2,8 +2,6 @@ import type { Dictionary } from './core';
 
 export const zh: Dictionary = {
   ' (1 of {n} sheets)': '（共 {n} 个工作表中的第 1 个）',
-  ' (AI model {model})': '（AI 模型 {model}）',
-  ' by the AI model ({model})': '（由 AI 模型 {model} 提供）',
   ' by {label}': '（按 {label}）',
   '"{name}" and all of its derived results will be removed. This cannot be undone.':
     '“{name}”及其所有派生结果将被删除，且无法撤销。',
@@ -122,7 +120,6 @@ export const zh: Dictionary = {
   Meaning: '含义',
   'Meaning of {column}': '{column} 的含义',
   Missing: '缺失',
-  'Model {model}, prompt {prompt}': '模型 {model}，提示词 {prompt}',
   'Name is required.': '请输入姓名。',
   'Names and meanings were suggested by the AI model{model} from the headers and detected types. You confirm or change them in the next step; they decide what is analysed and charted.':
     'AI 模型{model}已根据表头和检测到的类型建议了名称与含义。您将在下一步确认或修改；它们决定分析和绘图的内容。',
@@ -526,4 +523,11 @@ export const zh: Dictionary = {
     '此数据集没有推荐的图表。请在下一个标签页中添加您需要的图表。',
   'No custom charts yet. Choose one above to see it drawn with your data.':
     '尚无自定义图表。在上方选择一个即可用您的数据绘制预览。',
+  'The AI model is suggesting column meanings. This usually takes under a minute.':
+    'AI 模型正在推荐列含义，通常不到一分钟。',
+  'The AI model is writing the narrative from the calculated evidence. This usually takes one to two minutes; the bar moves when it finishes.':
+    'AI 模型正在根据计算出的证据撰写叙述，通常需要一到两分钟；完成后进度条才会前进。',
+  'Every statement is being checked against the evidence.': '正在逐条核对每个陈述与证据。',
+  ' by the AI model': '（由 AI 模型）',
+  'AI model, prompt version {prompt}': 'AI 模型，提示版本 {prompt}',
 };

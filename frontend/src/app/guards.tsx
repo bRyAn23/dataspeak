@@ -14,7 +14,8 @@ export function RequireAuth() {
 /** Logged in but the email is not confirmed yet: everything except /verify-email redirects there. */
 export function RequireVerified() {
   const { user } = useAuth();
-  if (user && !user.email_verified) return <Navigate to="/verify-email" replace />;
+  if (user && !user.email_verified && user.verification_required !== false)
+    return <Navigate to="/verify-email" replace />;
   return <Outlet />;
 }
 

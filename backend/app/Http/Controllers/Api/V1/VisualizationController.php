@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VisualizationResource;
 use App\Services\Lifecycle\AnalysisLifecycle;
 use App\Services\Reports\ChartCatalog;
+use App\Services\Reports\ChartReasons;
 use App\Support\ChartThemes;
 use App\Support\ResolvesOwnedAnalysis;
 use Illuminate\Http\JsonResponse;
@@ -50,6 +51,7 @@ class VisualizationController extends Controller
             'key' => $o['key'], 'type' => $o['type'], 'title' => $o['title'], 'x_label' => $o['x']['label'] ?? null, 'y_label' => $o['y']['label'] ?? null,
             'unit' => $o['y']['unit'] ?? null, 'points' => count($o['series']), 'evidence_ids' => $o['evidence_ids'], 'insight_rank' => $o['insight_rank'],
             'x' => $o['x'], 'y' => $o['y'], 'unit_missing' => $o['unit_missing'], 'series' => $o['series'],
+            'reason' => ChartReasons::for($o, app()->getLocale()), // FEAT-VIS-006: why this chart fits the definitions
         ], $this->catalog->options($model));
 
         return response()->json(['data' => $options]);

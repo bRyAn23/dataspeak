@@ -9,6 +9,14 @@ import { t } from '@/i18n';
 const PROFILE_STAGES: AnalysisStage[] = ['PROFILING', 'DEFINITION'];
 const RUN_STAGES: AnalysisStage[] = ['STATISTICAL_ANALYSIS', 'INSIGHT_DETECTION', 'VISUALIZATION'];
 const REPORT_STAGES: AnalysisStage[] = ['AI_SYNTHESIS', 'CLAIM_VALIDATION', 'REPORTING'];
+
+// Stages that wait on the AI model: the bar cannot move while a single model call runs, so say what is happening.
+const MODEL_STAGE_HINTS: Partial<Record<AnalysisStage, string>> = {
+  DEFINITION: 'The AI model is suggesting column meanings. This usually takes under a minute.',
+  AI_SYNTHESIS:
+    'The AI model is writing the narrative from the calculated evidence. This usually takes one to two minutes; the bar moves when it finishes.',
+  CLAIM_VALIDATION: 'Every statement is being checked against the evidence.',
+};
 const FULL_STAGES: AnalysisStage[] = [...RUN_STAGES, ...REPORT_STAGES];
 
 export function AnalysisProgress({
@@ -82,6 +90,9 @@ export function AnalysisProgress({
           style={{ width: `${overall}%` }}
         />
       </div>
+      {!done && MODEL_STAGE_HINTS[currentStage] && (
+        <p className="mt-2 text-xs text-slate-500">{t(MODEL_STAGE_HINTS[currentStage])}</p>
+      )}
       <ol className="mt-5 space-y-2">
         {stages.map((stage, i) => {
           const state = failed

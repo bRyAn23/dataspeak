@@ -21,6 +21,12 @@ class OllamaClient implements LlmClient
         return (string) config('services.ollama.model');
     }
 
+    /** A local model server handles one generation at a time, so the calls simply run in sequence. */
+    public function chatMany(array $requests): array
+    {
+        return array_map(fn (array $r) => $this->chat($r['messages'], $r['schema'], $r['options'] ?? []), array_values($requests));
+    }
+
     public function chat(array $messages, array $schema, array $options = []): LlmResult
     {
         $cfg = (array) config('services.ollama');

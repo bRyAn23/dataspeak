@@ -59,4 +59,16 @@ return [
         'think' => filter_var(env('OLLAMA_THINK', false), FILTER_VALIDATE_BOOL),
     ],
 
+    // Claude Messages API (AI_LLM_DRIVER=anthropic). Receives evidence and labels, never dataset rows.
+    'anthropic' => [
+        'api_key' => env('ANTHROPIC_API_KEY'),
+        'model' => env('ANTHROPIC_MODEL', 'claude-sonnet-5-5'),
+        'base_url' => env('ANTHROPIC_BASE_URL', 'https://api.anthropic.com'),
+        'version' => env('ANTHROPIC_VERSION', '2023-06-01'),
+        'timeout' => (int) env('ANTHROPIC_TIMEOUT', 120),
+        'temperature' => (float) env('ANTHROPIC_TEMPERATURE', 0.1),
+        'max_tokens' => (int) env('ANTHROPIC_MAX_TOKENS', 4096),
+        'context_tokens' => (int) env('ANTHROPIC_CONTEXT_TOKENS', 150000),
+    ],
+
 ];

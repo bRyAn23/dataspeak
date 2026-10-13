@@ -1,0 +1,240 @@
+Data Speak Unit 6 Part C: build and health-check logs (verbatim terminal output, ANSI colour codes removed)
+Captured on 2026-10-14 (Asia/Bangkok) on the development Mac; repository commit c4a1951 plus uncommitted working tree.
+
+############ 1. Frontend production build (screenshot C02_frontend_build.png) ############
+== npm ci && npm run build  (2026-10-14 00:15:00 +07, node v24.21.0, npm 11.19.0) ==
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 417 packages, and audited 418 packages in 5s
+
+90 packages are looking for funding
+  run `npm fund` for details
+
+4 vulnerabilities (2 moderate, 2 critical)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm warn install-scripts 3 packages have install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)
+npm warn install-scripts   fsevents@2.3.3 (install: (install scripts present))
+npm warn install-scripts   msw@2.15.0 (postinstall: node -e "import('./config/scripts/postinstall.js').catch(() => void 0)")
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+
+> dataspeak-frontend@1.0.0 build
+> tsc --noEmit -p tsconfig.json && vite build
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vite.config.ts:29:27). Use `import.meta.dirname` instead
+  - JSON import "./src/config/site.json" without import attributes (vite.config.ts:6:31). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 2597 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/robots.txt                   0.02 kB │ gzip:   0.04 kB
+dist/index.html                   0.91 kB │ gzip:   0.43 kB
+dist/assets/logo-Mu38toVe.png   632.58 kB
+dist/assets/index-DK2E9A9Z.css   37.15 kB │ gzip:   7.89 kB
+dist/assets/index-9MhTT88_.js   973.89 kB │ gzip: 279.29 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 414ms
+== exit 0 ==
+total 40
+drwxr-xr-x@  8 zeyarwint  staff   256 Oct 14 00:15 .
+drwxr-xr-x@ 28 zeyarwint  staff   896 Oct  4 20:54 ..
+drwxr-xr-x   5 zeyarwint  staff   160 Oct 14 00:15 assets
+-rw-r--r--   1 zeyarwint  staff   497 Oct 14 00:15 favicon.svg
+-rw-r--r--   1 zeyarwint  staff  5031 Oct 14 00:15 icons.svg
+-rw-r--r--   1 zeyarwint  staff   914 Oct 14 00:15 index.html
+-rw-r--r--   1 zeyarwint  staff    26 Oct 14 00:15 robots.txt
+
+############ 2. Laravel version and automated tests (screenshot C02b_laravel_tests.png) ############
+== php artisan --version / php artisan test  (2026-10-14 00:15:12 +07, PHP 8.4.21 (cli) (built: May 18 2026 08:45:15) (NTS clang 15.0.0)) ==
+Laravel Framework 13.34.0
+  Tests:    148 passed (903 assertions)
+  Duration: 4.43s
+
+############ 3. Laravel API route list (php artisan route:list --path=api/v1) ############
+== php artisan --version / route:list  (2026-10-14 00:15:25 +07)
+Laravel Framework 13.34.0
+
+ GET|HEAD api/v1/analyses api.v1.analyses.index › Api\V1\AnalysisController…
+ POST api/v1/analyses api.v1.analyses.store › Api\V1\AnalysisController…
+ GET|HEAD api/v1/analyses/{analysis} api.v1.analyses.show › Api\V1\Analysis…
+ DELETE api/v1/analyses/{analysis} api.v1.analyses.destroy › Api\V1\Analy…
+ GET|HEAD api/v1/analyses/{analysis}/claims/{claim} api.v1.analyses.claims.…
+ POST api/v1/analyses/{analysis}/dataset api.v1.analyses.dataset.upload…
+ PUT api/v1/analyses/{analysis}/definitions api.v1.analyses.definition…
+ POST api/v1/analyses/{analysis}/definitions/suggest-names api.v1.analy…
+ GET|HEAD api/v1/analyses/{analysis}/insights api.v1.analyses.insights › Ap…
+ POST api/v1/analyses/{analysis}/profile api.v1.analyses.profile.run › …
+ GET|HEAD api/v1/analyses/{analysis}/profile api.v1.analyses.profile.show …
+ POST api/v1/analyses/{analysis}/report api.v1.analyses.report.generate…
+ GET|HEAD api/v1/analyses/{analysis}/report api.v1.analyses.report.show › A…
+ GET|HEAD api/v1/analyses/{analysis}/report/pdf api.v1.analyses.report.pdf …
+ POST api/v1/analyses/{analysis}/report/translate api.v1.analyses.repor…
+ POST api/v1/analyses/{analysis}/run api.v1.analyses.run › Api\V1\RunCo…
+ GET|HEAD api/v1/analyses/{analysis}/status api.v1.analyses.status › Api\V1…
+ POST api/v1/analyses/{analysis}/validate api.v1.analyses.dataset.valid…
+ GET|HEAD api/v1/analyses/{analysis}/visualizations api.v1.analyses.visuali…
+ GET|HEAD api/v1/analyses/{analysis}/visualizations/options api.v1.analyses…
+ PUT api/v1/analyses/{analysis}/visualizations/selection api.v1.analys…
+ POST api/v1/auth/email/resend api.v1.auth.resend › Api\V1\EmailVerific…
+ POST api/v1/auth/login api.v1.auth.login › Api\V1\AuthController@login
+ POST api/v1/auth/logout api.v1.auth.logout › Api\V1\AuthController@log…
+ POST api/v1/auth/register api.v1.auth.register › Api\V1\AuthController…
+ GET|HEAD api/v1/auth/verify-email/{id}/{hash} api.v1.auth.verify › Api\V1\…
+ GET|HEAD api/v1/health .. api.v1.health › Api\V1\HealthController
+ GET|HEAD api/v1/me .. api.v1.me › Api\V1\AuthController@me
+
+ Showing [28] routes
+
+
+############ 4. Health checks: local FastAPI, local Laravel, production frontend, production API (screenshot C03_application_health.png) ############
+== Health checks  (2026-10-14 00:15:59 +07) ==
+--- 1. FastAPI analytics health: GET http://127.0.0.1:8001/health  (local container, loopback only, not public)
+HTTP/1.1 200 OK
+date: Tue, 13 Oct 2026 17:15:59 GMT
+server: uvicorn
+content-length: 63
+content-type: application/json
+
+{"status":"ok","service":"dataspeak-analytics","version":"1.0"}
+
+--- 2. Laravel API health: GET http://localhost:8000/api/v1/health  (local dev stack; checks database + redis)
+HTTP/1.1 200 OK
+Host: localhost:8000
+Connection: close
+X-Powered-By: PHP/8.4.26
+Cache-Control: no-cache, private
+Date: Tue, 13 Oct 2026 17:15:59 GMT
+Content-Type: application/json
+Vary: X-Dataspeak-Language
+Content-Language: en
+Access-Control-Allow-Origin: http://localhost:5173
+Access-Control-Expose-Headers: Content-Disposition, Content-Language, Idempotent-Replayed
+
+{"data":{"status":"ok","service":"dataspeak-backend","version":"1.0","checks":{"database":"ok","redis":"ok"}}}
+
+--- 3. Production frontend: GET https://dataspeaknow.com/  (read-only)
+HTTP 200  ssl_verify=0  time=0.232751s  https://dataspeaknow.com/
+
+--- 4. Production API health: GET https://api.dataspeaknow.com/api/v1/health  (read-only; route api.v1.health)
+HTTP/2 200 
+server: nginx/1.28.3 (Ubuntu)
+date: Tue, 13 Oct 2026 17:16:00 GMT
+content-type: application/json
+content-length: 110
+cache-control: no-cache, private
+content-language: en
+referrer-policy: no-referrer
+vary: X-Dataspeak-Language, Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+
+{"data":{"status":"ok","service":"dataspeak-backend","version":"1.0","checks":{"database":"ok","redis":"ok"}}}
+
+############ 5. CI reproduction: analytics suite in a clean python:3.12-slim container (as in .github/workflows/ci.yml) ############
+== Reproduction of the CI analytics job locally (full repository layout): python:3.12-slim, pip install -r requirements-dev.txt, pytest -q  (2026-10-14 00:20:23 +07)
+Python 3.12.15
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+fastapi           0.143.0
+numpy             2.5.4
+polars            2.0.0
+pydantic          2.14.1
+pytest            9.1.1
+scipy             1.18.1
+statsmodels       0.15.0
+F................................................                        [100%]
+=================================== FAILURES ===================================
+____________________ test_openapi_file_matches_application _____________________
+
+    def test_openapi_file_matches_application():
+        current = export(
+            Path(os.environ.get("CONTRACT_OUT", str(OUT)))
+            if os.environ.get("UPDATE_CONTRACT")
+            else OUT.with_suffix(".tmp.json")
+        )
+        try:
+            assert REQUIRED_PATHS <= set(current["paths"])
+            assert OUT.exists(), "run: python -m scripts.export_openapi"
+            frozen = json.loads(OUT.read_text(encoding="utf-8"))
+>           assert frozen == current, "OpenAPI changed; regenerate docs/contracts/fastapi-openapi.json and review the diff"
+E           AssertionError: OpenAPI changed; regenerate docs/contracts/fastapi-openapi.json and review the diff
+E           assert {'components'..., ...}}, ...}} == {'openapi': '..., ...}, ...}}}
+E             
+E             Omitting 3 identical items, use -vv to show
+E             Differing items:
+E             {'components': {'schemas': {'AnalysisOptions': {'additionalProperties': False, 'properties': {'max_insights': {'defaul...': 'string'}, 'unit': {'anyOf': [...], 'title': 'Unit'}}, 'required': ['field', 'label'], 'title': 'Axis', ...}, ...}}} != {'components': {'schemas': {'AnalysisOptions': {'properties': {'seed': {'type': 'integer', 'title': 'Seed', 'default':...[...], 'title': 'Unit'}}, 'additionalProperties': False, 'type': 'object', 'required': ['field', 'label'], ...}, ...}}}
+E             Use -v to get more diff
+
+tests/contract/test_openapi_contract.py:29: AssertionError
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /usr/local/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/contract/test_openapi_contract.py::test_openapi_file_matches_application
+1 failed, 48 passed, 1 warning in 1.18s
+== container exit: 0
+
+############ 6. docker compose config validation, production and development files (screenshot C02c_docker_compose_config.png) ############
+== docker compose config: production stack  (2026-10-14 00:46:44 +07) ==
+Docker Compose version v5.5.1
+
+--- validate docker-compose.prod.yml + docker-compose.nginx.yml (env from the committed .env.prod.example; no secrets loaded)
+RESULT: configuration is valid (exit 0)
+
+--- services defined
+analytics
+redis
+app
+scheduler
+worker
+
+--- images referenced
+dataspeak-api:latest
+dataspeak-api:latest
+dataspeak-api:latest
+redis:7-alpine
+dataspeak-analytics:latest
+
+--- volumes defined
+app_storage
+redis_data
+caddy_data
+caddy_config
+
+--- app service after the nginx override (ports, healthcheck, restart; secrets omitted)
+  app:
+    container_name: dataspeak-prod-api
+        condition: service_started
+        condition: service_healthy
+      SERVER_NAME: :80
+      TRUSTED_PROXIES: '*'
+      test:
+      interval: 30s
+      retries: 5
+        host_ip: 127.0.0.1
+        target: 80
+        published: "8080"
+    restart: unless-stopped
+        target: /app/storage
+        target: /data
+        target: /config
+
+--- development stack (as run in CI): docker compose config --quiet
+RESULT: development compose configuration is valid (exit 0)

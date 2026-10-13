@@ -114,6 +114,29 @@ class ReportTranslationTest extends ApiTestCase
             ->assertJsonPath('data.claims.0.statement', 'ภาคเหนือ คิดเป็น 54.3% ของ ยอดขาย เมื่อแบ่งตาม ภูมิภาค');
     }
 
+    public function test_sentences_the_model_skips_in_a_batch_get_a_strict_second_pass_on_their_own(): void
+    {
+        $analysis = $this->englishReport();
+        $share = AiScenario::EV_SHARE;
+        $growth = AiScenario::EV_GROWTH;
+        $claims = $analysis->claims()->where('in_report', true)->orderBy('position')->get();
+        $c1 = $claims->firstWhere('claim_kind', 'EXECUTIVE_SUMMARY');
+        $c2 = $claims->first(fn ($c) => str_contains($c->statement, $growth));
+        $this->app->instance(LlmClient::class, $llm = new FakeLlmClient(['claims' => []], false, [
+            ['labels' => []],
+            // first pass: the model answers only one of the two sentences (near-identical ones get merged)
+            ['claims' => [['id' => $c1->public_id, 'text' => '{'.$share.'.group} คิดเป็น {'.$share.'.display_value} ของ {'.$share.'.label} เมื่อแบ่งตาม {'.$share.'.dimension}']]],
+            // strict pass: the missing sentence alone
+            ['claims' => [['id' => $c2->public_id, 'text' => '{'.$growth.'.label} เติบโต {'.$growth.'.display_value} ต่อ {'.$growth.'.period} โดยเฉลี่ย']]],
+        ]));
+
+        $this->postJson($this->urlFor($analysis, '/report/translate'), ['language' => 'th'])->assertOk()
+            ->assertJsonPath('data.translated', 2)->assertJsonPath('data.pending', 0)->assertJsonPath('data.ai_status', 'ready');
+        $this->assertSame(3, $llm->calls);
+        $this->assertStringContainsString('must contain exactly these placeholders', $llm->lastMessages[0]['content']);
+        $this->assertStringContainsString('{'.$growth.'.display_value}', $llm->lastMessages[0]['content']);
+    }
+
     public function test_acceptance_rules(): void
     {
         $t = app(ClaimTranslator::class);

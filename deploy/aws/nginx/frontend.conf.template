@@ -1,0 +1,26 @@
+# Frontend host(s): the built React app from /var/www/dataspeak-frontend. Installed once by push-frontend.sh as
+# /etc/nginx/sites-available/dataspeak-frontend (HTTP). HTTPS is added by certbot, which then owns the file:
+#   sudo certbot --nginx -d __FRONTEND_HOST__ -d www.__FRONTEND_HOST__ --redirect
+server {
+    listen 80;
+    listen [::]:80;
+    server_name __FRONTEND_HOST__ www.__FRONTEND_HOST__;
+
+    root /var/www/dataspeak-frontend;
+    index index.html;
+
+    location /.well-known/acme-challenge/ { root /var/www/html; }
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+    # The page itself is never cached, so every visit picks up the newest build; the hashed assets above are.
+    location = /index.html {
+        add_header Cache-Control "no-cache, must-revalidate";
+    }
+    location / {
+        add_header Cache-Control "no-cache, must-revalidate";
+        try_files $uri $uri/ /index.html;
+    }
+}

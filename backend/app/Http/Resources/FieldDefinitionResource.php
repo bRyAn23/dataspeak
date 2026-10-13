@@ -19,6 +19,7 @@ class FieldDefinitionResource extends JsonResource
             'unit' => $this->unit,
             'aggregation' => $this->aggregation?->value,
             'is_suggested' => $this->is_suggested,
+            'suggestion_reason' => $this->suggestion_reason, // FEAT-DEF-004: why this meaning and aggregation were suggested
         ];
     }
 }

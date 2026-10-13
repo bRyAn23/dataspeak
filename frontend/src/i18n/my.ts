@@ -2,8 +2,6 @@ import type { Dictionary } from './core';
 
 export const my: Dictionary = {
   ' (1 of {n} sheets)': ' ({n} ရွက်အနက် ၁ ရွက်)',
-  ' (AI model {model})': ' (AI မော်ဒယ် {model})',
-  ' by the AI model ({model})': ' AI မော်ဒယ် ({model}) မှ',
   ' by {label}': ' {label} အလိုက်',
   '"{name}" and all of its derived results will be removed. This cannot be undone.':
     '"{name}" နှင့် ၎င်းမှ ရရှိသော ရလဒ်အားလုံး ဖယ်ရှားခံရမည်။ ပြန်လည်ရယူ၍ မရပါ။',
@@ -126,7 +124,6 @@ export const my: Dictionary = {
   Meaning: 'အဓိပ္ပာယ်',
   'Meaning of {column}': '{column} ၏ အဓိပ္ပာယ်',
   Missing: 'ပျောက်ဆုံး',
-  'Model {model}, prompt {prompt}': 'မော်ဒယ် {model}၊ ပရွန့် {prompt}',
   'Name is required.': 'အမည် လိုအပ်သည်။',
   'Names and meanings were suggested by the AI model{model} from the headers and detected types. You confirm or change them in the next step; they decide what is analysed and charted.':
     'AI မော်ဒယ်{model}က ခေါင်းစီးများနှင့် တွေ့ရှိသော အမျိုးအစားများမှ အမည်နှင့် အဓိပ္ပာယ်များ အကြံပြုထားသည်။ နောက်တစ်ဆင့်တွင် အတည်ပြု သို့မဟုတ် ပြောင်းလဲနိုင်ပြီး ၎င်းတို့က ဘာကို ခွဲခြမ်းစိတ်ဖြာမည်၊ ဇယားဆွဲမည်ကို ဆုံးဖြတ်သည်။',
@@ -553,4 +550,12 @@ export const my: Dictionary = {
     'ဤဒေတာအစုအတွက် အကြံပြုထားသော ဇယား မရှိပါ။ နောက်တက်ဘ်တွင် သင်လိုအပ်သည်များကို ထည့်ပါ။',
   'No custom charts yet. Choose one above to see it drawn with your data.':
     'စိတ်ကြိုက်ဇယား မရှိသေးပါ။ သင့်ဒေတာဖြင့် ရေးဆွဲထားသည်ကို ကြည့်ရန် အပေါ်တွင် တစ်ခု ရွေးပါ။',
+  'The AI model is suggesting column meanings. This usually takes under a minute.':
+    'AI မော်ဒယ်က ကော်လံအဓိပ္ပာယ်များကို အကြံပြုနေပါသည်။ ပုံမှန်အားဖြင့် တစ်မိနစ်အောက် ကြာပါသည်။',
+  'The AI model is writing the narrative from the calculated evidence. This usually takes one to two minutes; the bar moves when it finishes.':
+    'AI မော်ဒယ်က တွက်ချက်ထားသော အထောက်အထားများမှ ဇာတ်ကြောင်းကို ရေးသားနေပါသည်။ ပုံမှန်အားဖြင့် တစ်မိနစ်မှ နှစ်မိနစ် ကြာပြီး ပြီးမှသာ တိုးတက်မှုဘား ရွေ့ပါမည်။',
+  'Every statement is being checked against the evidence.':
+    'ဖော်ပြချက်တိုင်းကို အထောက်အထားနှင့် စစ်ဆေးနေပါသည်။',
+  ' by the AI model': ' AI မော်ဒယ်မှ',
+  'AI model, prompt version {prompt}': 'AI မော်ဒယ်၊ ပရွမ့်ဗားရှင်း {prompt}',
 };

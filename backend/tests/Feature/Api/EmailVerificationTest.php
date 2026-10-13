@@ -88,8 +88,16 @@ class EmailVerificationTest extends ApiTestCase
     public function test_verification_can_be_switched_off_for_closed_environments(): void
     {
         config(['dataspeak.require_verified_email' => false]);
-        $this->actingAsUser(User::factory()->unverified()->create());
+        Notification::fake();
 
+        // Registration sends no mail and tells the client it can skip the confirmation page
+        $response = $this->postJson('/api/v1/auth/register', ['name' => 'No Mail', 'email' => 'nomail@example.com', 'password' => 'secret-pass-1', 'password_confirmation' => 'secret-pass-1']);
+        $response->assertCreated()->assertJsonPath('data.verification.required', false)->assertJsonPath('data.verification.email_sent', false)
+            ->assertJsonPath('data.user.verification_required', false)->assertJsonPath('data.user.email_verified', false);
+        Notification::assertNothingSent();
+
+        $this->actingAsUser(User::factory()->unverified()->create());
+        $this->getJson('/api/v1/me')->assertOk()->assertJsonPath('data.verification_required', false);
         $this->postJson('/api/v1/analyses', ['name' => 'X'])->assertCreated();
     }
 }

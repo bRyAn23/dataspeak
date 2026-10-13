@@ -3,7 +3,8 @@
 # the same EC2 (systemd) and is reached as http://host.docker.internal:11434; a separate GPU EC2 is optional later.
 #   cd deploy/aws && docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
 # Raw uploads live only in the app_storage volume (storage/app/tmp) and are purged by the scheduler.
-name: dataspeak
+# Own project name and container names so this stack can never collide with the development stack (docker-compose.yml).
+name: dataspeak-prod
 
 x-app: &app
   image: dataspeak-api:latest
@@ -28,7 +29,7 @@ x-app: &app
 services:
   app:
     <<: *app
-    container_name: dataspeak-api
+    container_name: dataspeak-prod-api
     ports:
       - "80:80"
       - "443:443"
@@ -47,20 +48,25 @@ services:
 
   worker:
     <<: *app
-    container_name: dataspeak-worker
+    container_name: dataspeak-prod-worker
     stop_grace_period: 120s
+    healthcheck:
+      disable: true   # the base image's HEALTHCHECK probes the web server, which does not run here
     command: ["php", "artisan", "queue:work", "redis", "--queue=default,translations", "--tries=1", "--timeout=600", "--sleep=1", "--max-jobs=200"]
 
   scheduler:
     <<: *app
-    container_name: dataspeak-scheduler
+    container_name: dataspeak-prod-scheduler
+    healthcheck:
+      disable: true
     command: ["php", "artisan", "schedule:work"]
 
   redis:
     image: redis:7-alpine
-    container_name: dataspeak-redis
+    container_name: dataspeak-prod-redis
     restart: unless-stopped
-    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "512mb", "--maxmemory-policy", "noeviction"]
+    # Small footprint: cache keys all carry a TTL, so volatile-lru evicts them first and queue entries are never dropped.
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "128mb", "--maxmemory-policy", "volatile-lru"]
     volumes:
       - redis_data:/data
     healthcheck:
@@ -74,7 +80,7 @@ services:
       context: ../..
       dockerfile: docker/analytics/Dockerfile
     image: dataspeak-analytics:latest
-    container_name: dataspeak-analytics
+    container_name: dataspeak-prod-analytics
     restart: unless-stopped
     environment:
       ANALYTICS_INTERNAL_TOKEN: ${ANALYTICS_INTERNAL_TOKEN}

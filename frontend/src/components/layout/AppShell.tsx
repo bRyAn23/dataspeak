@@ -9,7 +9,9 @@ import { t } from '@/i18n';
 export function AppShell() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    // Pinned to the viewport: the window itself can never scroll (a focused field scrolling an ancestor used to
+    // leave a blank band under the page); only <main> scrolls.
+    <div className="fixed inset-0 flex bg-slate-50 overflow-hidden">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-2 focus:px-3 focus:py-2 focus:bg-white focus:rounded-lg"

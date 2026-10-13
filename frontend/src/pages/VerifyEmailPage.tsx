@@ -16,7 +16,8 @@ export function VerifyEmailPage() {
   const [error, setError] = useState<string | undefined>(undefined);
   const [busy, setBusy] = useState<'resend' | 'check' | null>(null);
 
-  if (user?.email_verified) return <Navigate to="/analyses" replace />;
+  if (user?.email_verified || user?.verification_required === false)
+    return <Navigate to="/analyses" replace />;
 
   const resend = async () => {
     setBusy('resend');

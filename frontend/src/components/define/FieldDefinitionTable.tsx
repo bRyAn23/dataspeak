@@ -86,6 +86,9 @@ export function FieldDefinitionTable({ columns, definitions, errors, onChange, d
                       {d.name_source === 'ai'
                         ? t('AI suggestion, check it')
                         : t('Suggested, check it')}
+                      {d.suggestion_reason ? (
+                        <span className="block text-slate-600">{d.suggestion_reason}</span>
+                      ) : null}
                     </p>
                   )}
                 </td>

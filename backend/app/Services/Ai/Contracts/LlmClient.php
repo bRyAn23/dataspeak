@@ -20,5 +20,16 @@ interface LlmClient
      */
     public function chat(array $messages, array $schema, array $options = []): LlmResult;
 
+    /**
+     * Several independent calls at once. Clients that can run them concurrently (HTTP APIs) do; a local model
+     * server answers them one after another. Results keep the order of the requests.
+     *
+     * @param  list<array{messages: array, schema: array, options?: array}>  $requests
+     * @return list<LlmResult>
+     *
+     * @throws LlmUnavailableException when none of the calls could be made
+     */
+    public function chatMany(array $requests): array;
+
     public function modelTag(): string;
 }

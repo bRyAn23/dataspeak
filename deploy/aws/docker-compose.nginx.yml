@@ -1,0 +1,14 @@
+# Override for the nginx reverse-proxy layout: nginx on the host terminates HTTP/HTTPS and forwards to the API
+# container on 127.0.0.1:8080. Used automatically by deploy.sh when .env.prod has PROXY=nginx.
+#   docker compose -f docker-compose.prod.yml -f docker-compose.nginx.yml --env-file .env.prod up -d
+services:
+  app:
+    environment:
+      SERVER_NAME: ":80"            # plain HTTP inside; nginx owns the public ports and the certificate
+      TRUSTED_PROXIES: "*"          # honour X-Forwarded-Proto/Host from nginx
+    ports: !override
+      - "127.0.0.1:8080:80"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "-o", "/dev/null", "http://localhost/up"]
+  redis:
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "64mb", "--maxmemory-policy", "volatile-lru"]

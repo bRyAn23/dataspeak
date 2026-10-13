@@ -2,8 +2,6 @@ import type { Dictionary } from './core';
 
 export const th: Dictionary = {
   ' (1 of {n} sheets)': ' (1 จาก {n} แผ่นงาน)',
-  ' (AI model {model})': ' (โมเดล AI {model})',
-  ' by the AI model ({model})': 'โดยโมเดล AI ({model})',
   ' by {label}': ' ตาม {label}',
   '"{name}" and all of its derived results will be removed. This cannot be undone.':
     '"{name}" และผลลัพธ์ทั้งหมดที่ได้จากการวิเคราะห์นี้จะถูกลบ ไม่สามารถย้อนกลับได้',
@@ -124,7 +122,6 @@ export const th: Dictionary = {
   Meaning: 'ความหมาย',
   'Meaning of {column}': 'ความหมายของ {column}',
   Missing: 'ขาดหาย',
-  'Model {model}, prompt {prompt}': 'โมเดล {model}, พรอมต์ {prompt}',
   'Name is required.': 'กรุณากรอกชื่อ',
   'Names and meanings were suggested by the AI model{model} from the headers and detected types. You confirm or change them in the next step; they decide what is analysed and charted.':
     'โมเดล AI{model} เสนอชื่อและความหมายจากหัวคอลัมน์และประเภทที่ตรวจพบ คุณจะยืนยันหรือแก้ไขในขั้นตอนถัดไป ซึ่งจะกำหนดว่าสิ่งใดถูกวิเคราะห์และแสดงเป็นแผนภูมิ',
@@ -539,4 +536,11 @@ export const th: Dictionary = {
     'ไม่มีแผนภูมิที่แนะนำสำหรับชุดข้อมูลนี้ เพิ่มแผนภูมิที่คุณต้องการได้ในแท็บถัดไป',
   'No custom charts yet. Choose one above to see it drawn with your data.':
     'ยังไม่มีแผนภูมิที่กำหนดเอง เลือกด้านบนเพื่อดูแผนภูมิที่วาดด้วยข้อมูลของคุณ',
+  'The AI model is suggesting column meanings. This usually takes under a minute.':
+    'โมเดล AI กำลังแนะนำความหมายของคอลัมน์ โดยปกติใช้เวลาไม่ถึงหนึ่งนาที',
+  'The AI model is writing the narrative from the calculated evidence. This usually takes one to two minutes; the bar moves when it finishes.':
+    'โมเดล AI กำลังเขียนบทสรุปจากหลักฐานที่คำนวณได้ โดยปกติใช้เวลาหนึ่งถึงสองนาที แถบความคืบหน้าจะขยับเมื่อเสร็จ',
+  'Every statement is being checked against the evidence.': 'กำลังตรวจสอบทุกข้อความกับหลักฐาน',
+  ' by the AI model': ' โดยโมเดล AI',
+  'AI model, prompt version {prompt}': 'โมเดล AI เวอร์ชันพรอมต์ {prompt}',
 };

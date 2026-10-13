@@ -16,6 +16,11 @@ class SetLocale
         // Default is a constant: app()->setLocale() rewrites config('app.locale'), so it must not be the fallback.
         app()->setLocale(Locale::normalize(is_string($requested) ? $requested : null, 'en'));
 
-        return $next($request);
+        $response = $next($request);
+        // The same URL answers differently per language: tell browsers and proxies never to reuse a cached copy.
+        $response->headers->set('Vary', trim(($response->headers->get('Vary') ? $response->headers->get('Vary').', ' : '').'X-Dataspeak-Language', ', '));
+        $response->headers->set('Content-Language', app()->getLocale());
+
+        return $response;
     }
 }

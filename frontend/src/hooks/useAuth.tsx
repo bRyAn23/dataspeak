@@ -13,14 +13,14 @@ import { authService, type RegisterInput } from '@/services/auth.service';
 import { setUnauthorizedHandler } from '@/services/apiClient';
 import { session } from '@/lib/session';
 import { logger } from '@/lib/logger';
-import type { User } from '@/types/analysis.types';
+import type { AuthResponse, User } from '@/types/analysis.types';
 
 interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (input: RegisterInput) => Promise<void>;
+  register: (input: RegisterInput) => Promise<AuthResponse>;
   logout: () => Promise<void>;
   /** Re-read /me (used after the user confirms their email in another tab). */
   refresh: () => Promise<User | null>;
@@ -75,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const result = await authService.register(input);
     session.set({ token: result.token, userId: result.user.id });
     setUser(result.user);
+    return result;
   }, []);
 
   const refresh = useCallback(async () => {

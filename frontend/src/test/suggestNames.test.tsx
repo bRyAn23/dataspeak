@@ -16,7 +16,10 @@ describe('suggested definitions (FEAT-DEF-003)', () => {
     const table = await screen.findByRole('table', { name: 'Column profile' });
     expect(within(table).getByText('Sales (THB)')).toBeInTheDocument();
     expect(within(table).getByText('Region')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toHaveTextContent(/suggested by the AI model \(qwen3:8b\)/);
+    expect(screen.getByRole('status')).toHaveTextContent(
+      /suggested by the AI model from the headers/,
+    );
+    expect(screen.getByRole('status')).not.toHaveTextContent(/qwen|claude/i); // no model names in the interface
   });
 
   it('prefills Define from the profile, applies "Suggest again" to untouched rows only', async () => {
@@ -31,6 +34,9 @@ describe('suggested definitions (FEAT-DEF-003)', () => {
     expect(screen.getByLabelText('Business name for ဒေသ')).toHaveValue('Region');
     expect(screen.getByRole('status')).toHaveTextContent(/suggested when the file was profiled/);
     expect(screen.getAllByText('Suggested, check it')).toHaveLength(3);
+    expect(
+      screen.getAllByText('Detected as a quantity that adds up across records.').length,
+    ).toBeGreaterThan(0); // FEAT-DEF-004 reasoning
 
     // The user renames one column; a new suggestion run must not overwrite it but updates the others
     await user.clear(sales);
@@ -40,6 +46,9 @@ describe('suggested definitions (FEAT-DEF-003)', () => {
       expect(screen.getByRole('status')).toHaveTextContent(/were suggested by the AI model/),
     );
     expect(sales).toHaveValue('Net Sales');
+    expect(
+      screen.getAllByText('Sales amounts add up across orders, so they are totalled.').length,
+    ).toBeGreaterThan(0);
     expect(screen.getByLabelText('Meaning of ยอดขาย_thb')).toHaveValue('NUMBER');
     expect(screen.getAllByText('AI suggestion, check it')).toHaveLength(1); // ဒေသ came back from the model
   });

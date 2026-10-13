@@ -360,6 +360,7 @@ Owner: Laravel. Primary key: id bigint (identity).
 | semantic_type | varchar(32) | no |  | semantic_type | enum semantic_type |
 | unit | varchar(32) | yes |  |  | Free text / ISO currency code. Never defaulted. |
 | aggregation | varchar(16) | yes |  | aggregation | enum aggregation |
+| suggestion_reason | varchar(300) | yes |  |  | Why the suggested meaning and aggregation were chosen, from the model or the software baseline; shown at Profile and Define (FEAT-DEF-004) |
 | is_suggested | boolean | no | false |  | True when system-suggested and not yet edited |
 | created_at | timestamptz | yes |  |  |  |
 | updated_at | timestamptz | yes |  |  |  |

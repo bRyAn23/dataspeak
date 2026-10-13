@@ -23,6 +23,11 @@ const verifiedUser: User = {
   created_at: '2026-10-04T00:00:00Z',
 };
 let user: User = verifiedUser;
+/** Mirrors REQUIRE_VERIFIED_EMAIL on the server; tests flip it with setVerificationRequired(). */
+let verificationRequired = true;
+export function setVerificationRequired(required: boolean): void {
+  verificationRequired = required;
+}
 /** Flip the signed-in user to verified (what clicking the email link does on the server). */
 export function markVerified(): void {
   user = { ...user, email_verified: true, email_verified_at: '2026-10-04T00:05:00Z' };
@@ -54,6 +59,7 @@ export const state: State = {
 };
 
 export function resetState(): void {
+  verificationRequired = true;
   user = verifiedUser;
   state.charts.clear();
   state.reportLanguage.clear();
@@ -137,6 +143,8 @@ export const CHART_OPTIONS: ChartOption[] = [
     key: 'bar_mean:ev_aaaaaaaaaaa1',
     type: 'BAR',
     title: 'Average ยอดขาย by ဒေသ',
+    reason:
+      'ยอดขาย was defined as a property of each record (averaged, never totalled), so the average per ဒေသ is compared.',
     x_label: 'ဒေသ',
     y_label: 'ยอดขาย',
     unit: 'THB',
@@ -232,6 +240,7 @@ const profile = (id: string): ProfileResponse => ({
         unit: null,
         aggregation: null,
         is_suggested: true,
+        suggestion_reason: 'Detected as a quantity that adds up across records.',
       },
     },
     {
@@ -249,6 +258,7 @@ const profile = (id: string): ProfileResponse => ({
         unit: null,
         aggregation: null,
         is_suggested: true,
+        suggestion_reason: 'Detected as a quantity that adds up across records.',
       },
     },
     {
@@ -266,6 +276,7 @@ const profile = (id: string): ProfileResponse => ({
         unit: null,
         aggregation: 'SUM',
         is_suggested: true,
+        suggestion_reason: 'Detected as a quantity that adds up across records.',
       },
     },
   ],
@@ -428,9 +439,16 @@ export const handlers = [
       email: body.email,
       email_verified: false,
       email_verified_at: null,
+      verification_required: verificationRequired,
     };
     return HttpResponse.json(
-      { data: { token: state.token, user, verification: { required: true, email_sent: true } } },
+      {
+        data: {
+          token: state.token,
+          user,
+          verification: { required: verificationRequired, email_sent: verificationRequired },
+        },
+      },
       { status: 201 },
     );
   }),
@@ -575,6 +593,7 @@ export const handlers = [
           unit: null,
           aggregation: null,
           description: null,
+          reason: 'Sales amounts add up across orders, so they are totalled.',
           source: 'software',
         },
         {
@@ -584,6 +603,7 @@ export const handlers = [
           unit: null,
           aggregation: null,
           description: 'Sales region of the order.',
+          reason: 'Sales amounts add up across orders, so they are totalled.',
           source: 'ai',
         },
         {
@@ -593,6 +613,7 @@ export const handlers = [
           unit: 'THB',
           aggregation: 'SUM',
           description: 'Sales amount per order.',
+          reason: 'Sales amounts add up across orders, so they are totalled.',
           source: 'ai',
         },
       ],

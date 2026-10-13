@@ -67,6 +67,7 @@ export function DataDefinitionPage() {
             aggregation: s.aggregation,
             description: s.description ?? d.description,
             is_suggested: true,
+            suggestion_reason: s.reason ?? null,
             name_source: s.source,
           };
         }),
@@ -160,11 +161,7 @@ export function DataDefinitionPage() {
                     (naming.meta?.ai_status === 'ready'
                       ? t(
                           'Names, meanings, units and aggregations were suggested{model}. They decide what is analysed and charted, so check them before saving.',
-                          {
-                            model: naming.meta.model
-                              ? t(' by the AI model ({model})', { model: naming.meta.model })
-                              : '',
-                          },
+                          { model: t(' by the AI model') },
                         )
                       : t(
                           'The AI model is not available right now. Type English business names and pick the meaning yourself so the report reads well.',
@@ -177,11 +174,7 @@ export function DataDefinitionPage() {
                     (profiledByAi
                       ? t(
                           'Names and meanings were suggested when the file was profiled{model}. They decide what is analysed and charted, so check them before saving.',
-                          {
-                            model: profile.data?.suggestions?.model
-                              ? t(' (AI model {model})', { model: profile.data.suggestions.model })
-                              : '',
-                          },
+                          { model: '' },
                         )
                       : t(
                           'Some headers are in another language. English business names make the report easier to read.',

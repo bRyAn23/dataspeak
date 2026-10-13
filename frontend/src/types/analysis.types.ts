@@ -40,6 +40,8 @@ export interface User {
   role: 'USER' | 'ADMIN' | null;
   email_verified: boolean;
   email_verified_at: string | null;
+  /** False when the server runs without email verification (REQUIRE_VERIFIED_EMAIL=false). */
+  verification_required?: boolean;
   created_at: string | null;
 }
 

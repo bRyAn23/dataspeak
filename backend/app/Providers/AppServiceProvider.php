@@ -6,6 +6,7 @@ use App\Exceptions\ServiceNotConfiguredException;
 use App\Models\Analysis;
 use App\Models\User;
 use App\Policies\AnalysisPolicy;
+use App\Services\Ai\Clients\AnthropicClient;
 use App\Services\Ai\Clients\OllamaClient;
 use App\Services\Ai\Contracts\LlmClient;
 use App\Services\Validation\Contracts\ClaimValidator;
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(LlmClient::class, function () {
             return match ((string) config('dataspeak.ai.driver', 'ollama')) {
                 'ollama' => new OllamaClient,
+                'anthropic' => new AnthropicClient,
                 default => throw new ServiceNotConfiguredException('LLM driver '.config('dataspeak.ai.driver')),
             };
         });

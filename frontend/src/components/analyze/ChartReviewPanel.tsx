@@ -34,6 +34,7 @@ function asChart(o: ChartOption, position: number): Visualization {
     position,
     source: 'USER',
     is_selected: true,
+    reason: o.reason,
   };
 }
 
@@ -153,6 +154,7 @@ export function ChartReviewPanel({
             </span>
           </span>
         </label>
+        {c.reason ? <p className="mt-1 pl-7 text-xs text-slate-600">{c.reason}</p> : null}
         <div className="mt-2 pointer-events-none text-[11px]">
           <ChartRenderer spec={c} theme={theme} />
         </div>
@@ -342,6 +344,9 @@ export function ChartReviewPanel({
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
                   {t('Preview with your data')}
                 </p>
+                {picked.reason ? (
+                  <p className="mb-2 text-xs text-slate-600">{picked.reason}</p>
+                ) : null}
                 <div className="pointer-events-none text-[11px]">
                   <ChartRenderer spec={asChart(picked, 99)} theme={theme} />
                 </div>
@@ -385,6 +390,9 @@ export function ChartReviewPanel({
                         <Trash2 size={14} aria-hidden="true" />
                       </button>
                     </div>
+                    {o.reason ? (
+                      <p className="mt-1 pl-7 text-xs text-slate-600">{o.reason}</p>
+                    ) : null}
                     <div className="mt-2 pointer-events-none text-[11px]">
                       <ChartRenderer
                         spec={asChart(o, (charts.data?.length ?? 0) + i)}

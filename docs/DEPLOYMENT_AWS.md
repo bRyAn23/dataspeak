@@ -36,10 +36,13 @@ them with your own.
 
 | File | Purpose |
 |---|---|
-| `deploy/aws/docker-compose.prod.yml` | Production stack for the API host: `app`, `worker`, `scheduler`, `redis`, `analytics`. |
+| `deploy/aws/docker-compose.prod.yml` | Production stack for the server: `app`, `worker`, `scheduler`, `redis`, `analytics`. Compose project `dataspeak-prod` with `dataspeak-prod-*` container names, so it never collides with the development stack if started on a laptop by mistake (it would still try to reach RDS). |
 | `deploy/aws/.env.prod.example` | Template for `deploy/aws/.env.prod` (never committed). |
 | `deploy/aws/Caddyfile` | HTTPS site definition baked into the API image (`SERVER_NAME`, `ACME_EMAIL`). |
-| `deploy/aws/deploy.sh` | Pull, build, migrate, restart, health check. |
+| `deploy/aws/deploy.sh` | Pull (or `--no-pull`, or `--images` for pre-built images), build, migrate, restart, nginx site, health check. |
+| `deploy/aws/push.sh` | Run on your computer: build the images for the server's CPU (`linux/arm64` by default), ship them over SSH with `docker save`/`docker load`, copy the deploy folder and run `deploy.sh --images`. No git access on the server needed. |
+| `deploy/aws/push-frontend.sh`, `deploy/aws/nginx/api-ssl.conf.template`, `deploy/aws/nginx/frontend.conf.template` | Alternative to Amplify: build the React app here and serve it from nginx on the same server under its own host name (`dataspeaknow.com` and `www`), with `api.dataspeaknow.com` staying API-only. Frontend HTTPS: `sudo certbot --nginx -d dataspeaknow.com -d www.dataspeaknow.com --redirect` once DNS points at the server. |
+| `deploy/aws/docker-compose.nginx.yml`, `deploy/aws/nginx/api.conf` | nginx layout (`PROXY=nginx` in `.env.prod`): the API container listens on `127.0.0.1:8080`, nginx on the host owns ports 80/443 and the Let's Encrypt certificate (`certbot --nginx`). |
 | `docker/backend/Dockerfile.prod`, `docker/backend/entrypoint.prod.sh` | API image (code baked in, caches warmed at start, no `.env` file). |
 | `docker/analytics/Dockerfile` | Analytics image (shared with development; production runs it without `--reload`). |
 | `amplify.yml` | Amplify build specification for the monorepo (`appRoot: frontend`). |
@@ -264,6 +267,17 @@ next start needs no reconfiguration.
 ---
 
 ## 10. Variations
+
+- **nginx on the host instead of FrankenPHP's own HTTPS (the layout used for the MVP server).** Set `PROXY=nginx` and
+  `TRUSTED_PROXIES=*` in `.env.prod`; `deploy.sh` then adds `docker-compose.nginx.yml` (API on `127.0.0.1:8080`,
+  smaller Redis) and installs `nginx/api.conf`. Issue the certificate once with
+  `sudo certbot --nginx -d api.<domain> --redirect`; certbot renews it automatically.
+- **Claude API instead of a model server (the production choice since 6 October 2026).** Set `AI_LLM_DRIVER=anthropic` and `ANTHROPIC_API_KEY=<key>` (model
+  `claude-sonnet-5-5` by default) in `.env.prod` and redeploy; Ollama is no longer needed on the server and the
+  instance can be small again. About five cents per report on Sonnet 5.5, two cents on Haiku 4.5.
+- **Small instance without a model server.** On a 2 GB instance (`t4g.small`) run with `AI_ENABLED=false` and
+  `PRETRANSLATE_REPORTS=false`: reports contain the calculated findings and charts without the narrative, and the
+  stack fits in memory (add a 2 GB swap file). Add a model server later and switch the two flags back on.
 
 - **ALB in front of the API.** Terminate TLS on an Application Load Balancer with an ACM certificate, target the
   instance on port 80, set `SERVER_NAME=:80` and `TRUSTED_PROXIES=*` so Laravel honours `X-Forwarded-Proto`.

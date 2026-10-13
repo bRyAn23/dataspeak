@@ -70,6 +70,7 @@ describe('end-to-end workflow against the Laravel contract (MSW)', () => {
     expect(screen.getByText(/No custom charts yet/)).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText('Chart to add'), 'bar_mean:ev_aaaaaaaaaaa1');
     expect(screen.getByText('Preview with your data')).toBeInTheDocument(); // drawn before it is added
+    expect(screen.getByText(/averaged, never totalled/)).toBeInTheDocument(); // FEAT-VIS-006 reason from the definitions
     await user.click(screen.getByRole('button', { name: 'Add chart' }));
     expect(screen.getByText('Added by you')).toBeInTheDocument(); // now a card in the grid, with its data
     expect(
@@ -124,7 +125,8 @@ describe('end-to-end workflow against the Laravel contract (MSW)', () => {
       .getByText('Technical details')
       .closest('details') as HTMLDetailsElement;
     expect(details.open).toBe(false);
-    expect(within(details).getByText(/Model qwen3:8b/)).toBeInTheDocument();
+    expect(within(details).getByText(/prompt version exec-interp/)).toBeInTheDocument();
+    expect(screen.queryByText(/qwen3/)).not.toBeInTheDocument(); // model names never shown
     expect(within(details).getByText(/\{ev_aaaaaaaaaaa1\.group\}/)).toBeInTheDocument();
   }, 30000);
 

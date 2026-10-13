@@ -53,6 +53,11 @@ class ChartSelectionTest extends ApiTestCase
         $this->assertSame(['type' => 'LINE', 'title' => 'Revenue by month', 'unit' => 'THB', 'points' => 2], ['type' => $line['type'], 'title' => $line['title'], 'unit' => $line['unit'], 'points' => $line['points']]);
         $this->assertSame([['period' => '2025-01', 'value' => 1000], ['period' => '2025-02', 'value' => 1200]], $line['series']); // data for the preview
         $this->assertSame('value', $line['y']['field']);
+        // FEAT-VIS-006: every option and every saved chart explains itself from the definitions, in the interface language
+        $this->assertSame('Revenue was defined as a measure recorded over time, so a line shows how it moved from period to period.', $line['reason']);
+        $mean = collect($response->json('data'))->firstWhere('key', 'bar_mean:ev_bbbbbbbbbbb1');
+        $this->assertStringContainsString('property of each record', $mean['reason']);
+        $this->assertStringContainsString('ถูกกำหนด', $this->getJson($this->urlFor($analysis, '/visualizations'), ['X-Dataspeak-Language' => 'th'])->assertOk()->json('data.0.reason'));
         $this->getJson($this->urlFor($analysis, '/visualizations'))->assertOk()->assertJsonPath('data.0.source', 'RECOMMENDED')->assertJsonPath('data.0.is_selected', true);
     }
 

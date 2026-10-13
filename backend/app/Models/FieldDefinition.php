@@ -15,7 +15,7 @@ class FieldDefinition extends Model
     /** @use HasFactory<FieldDefinitionFactory> */
     use HasFactory;
 
-    protected $fillable = ['dataset_column_id', 'business_name', 'description', 'semantic_type', 'unit', 'aggregation', 'is_suggested'];
+    protected $fillable = ['dataset_column_id', 'business_name', 'description', 'semantic_type', 'unit', 'aggregation', 'is_suggested', 'suggestion_reason'];
 
     protected function casts(): array
     {

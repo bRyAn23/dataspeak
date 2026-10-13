@@ -31,12 +31,13 @@ class AuthController extends Controller
         Log::info('auth.registered', ['user_id' => $user->id]);
 
         // Registration never fails because of the mail server; the user can ask for the email again.
-        $sent = EmailVerificationController::send($user);
+        $required = (bool) config('dataspeak.require_verified_email');
+        $sent = $required && EmailVerificationController::send($user);
 
         return response()->json(['data' => [
             'token' => $token,
             'user' => new UserResource($user),
-            'verification' => ['required' => (bool) config('dataspeak.require_verified_email'), 'email_sent' => $sent],
+            'verification' => ['required' => $required, 'email_sent' => $sent],
         ]], 201);
     }
 

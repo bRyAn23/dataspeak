@@ -296,7 +296,7 @@ AI (the only code that talks to the model, section 2.3):
 
 | Program | Functions | Explanation |
 |---|---|---|
-| `Ai/Contracts/LlmClient` | `chat(messages, schema, options)`, `modelTag()` | Interface; `OllamaClient` is bound when `AI_LLM_DRIVER=ollama`. |
+| `Ai/Contracts/LlmClient` | `chat(messages, schema, options)`, `chatMany(requests)`, `modelTag()` | Interface; `OllamaClient` (sequential) or `AnthropicClient` (`chatMany` runs the calls concurrently with an HTTP pool) depending on `AI_LLM_DRIVER`. |
 | `Ai/Clients/OllamaClient` | `chat`, `modelTag` | Schema-constrained chat call, `<think>` stripping, typed failures. |
 | `Ai/AiGateway` | `interpret(analysis, resolver, persist, locale)`, `repair(generation, claims, resolver)` | Executive interpretation with up to two attempts and one repair pass; records every attempt in `ai_generations`; never throws for availability problems. |
 | `Ai/Prompts/ExecutiveInterpretationPrompt` | `version`, `system`, `user`, `messages`, `repairMessage`, `retryMessage` | Versioned prompt (`exec-interp-v7`): ten hard rules, placeholders instead of numbers, security rule. |
@@ -304,9 +304,9 @@ AI (the only code that talks to the model, section 2.3):
 | `Ai/EvidencePayloadBuilder` | `build` | Evidence, insights, charts and placeholders for the prompt, trimmed to the context window; no raw rows. |
 | `Ai/PlaceholderResolver` | `for`, `resolve`, `viewFor`, `all` | Resolves `{ev_xxx.field}` placeholders (display_value, label, unit, dimension, group, period, period_from, period_to) per locale. |
 | `Ai/EvidenceSentences` | `for(evidence, resolver, locale)` | Software-written sentence per metric from `lang/{locale}/sentences.php`. |
-| `Ai/ClaimTranslator` | `translate(analysis, locale, attempt)`, `options`, `batchSize`, `normalizeText`, `acceptable` | Translates verified statements (never re-interprets) in batches; accepts only when placeholders match, no digits appear and the text is in the target script. |
+| `Ai/ClaimTranslator` | `translate(analysis, locale, attempt)`, `options`, `batchSize`, `normalizeText`, `acceptable` | Translates verified statements (never re-interprets) in batches sent concurrently (`chatMany`); sentences the model skipped or garbled get a strict one-sentence second pass that spells out the required placeholders. Accepts only when placeholders match, no digits appear and the text is in the target script; rejections are logged as `claims.translation_rejected`. |
 | `Ai/DisplayLabelTranslator` | `translate(analysis, locale)`, `candidates`, `batchSize`, `needsTranslation` | Per-language map of column and category labels in `analyses.label_translations`. |
-| `Ai/ColumnDefinitionSuggester` | `suggest(columns, datasetName)`, `apply(analysis)` | Suggested business names, meanings, units and aggregations at profiling, on top of a software baseline. |
+| `Ai/ColumnDefinitionSuggester` | `suggest(columns, datasetName)`, `apply(analysis)` | Suggested business names, meanings, units, aggregations and a one-sentence reason at profiling (prompt `column-definitions-v3`: SUM only for amounts that accumulate, AVERAGE for a property of one item such as engine size or year). Columns go in batches of 12 sent concurrently (`chatMany`), each row carries an `index` so answers are matched back by position rather than by header text; a 54-column file takes about 7 seconds instead of 30 to 60. The software baseline applies the same rule from header words. Stored in `field_definitions.suggestion_reason` and shown on the Profile and Define pages. |
 | `Ai/LlmResult`, `Ai/LlmUnavailableException` | | Result value object; failure codes `AI_UNAVAILABLE`, `AI_TIMEOUT`, `AI_HTTP_ERROR`. |
 
 Validation and reports:
@@ -319,6 +319,7 @@ Validation and reports:
 | `Reports/ReportAssembler` | `assemble(analysis, generation, aiStatus, locale)` | Writes the report row: summary metrics, sections (executive summary, findings, limitations, chart summaries), data notes. |
 | `Reports/ChartCatalog` | `all`, `options`, `build` | Every chart the stored evidence supports: line (period series), bar total and average (group aggregates), pie (share of total for additive measures with 2 to 8 non-negative parts), histogram, correlation table, missing-values bar. |
 | `Reports/ChartGrounding` | `for`, `chartFor`, `chartsFor`, `evidenceKeysFor` | Maps claims to the kept charts so each chart gets its readings. |
+| `Reports/ChartReasons` | `for(spec, locale)` | Software-written reason for a recommended or offered chart, from the chart type and the measure's aggregation (`lang/{locale}/charts.php` `reasons`), returned as `reason` by VIS-API-001/002. |
 | `Reports/ChartTitles`, `Reports/DisplayLabels` | `localize`; `for`, `mapFor`, `text`, `row`, `isLatin` | Localised chart titles; label substitution per language with English business names as the fallback. |
 | `Reports/Pdf/ReportPdfBuilder` | `build(report, request)`, `fileName` | dompdf A4 report: cover, letterhead, charts, footer with timestamp and page numbers, script fonts (Noto Sans Thai, Myanmar, SC), colour theme palette. |
 | `Reports/Pdf/ChartSvg`, `ChartHtml`, `ScriptSpans`, `PdfWording` | `render`, `renderWithKey`, `color`; `wantsHtml`, `bars`; `html`; `dataNote`, `metric` | SVG bars, lines, histograms and pies; HTML bars for long or non-Latin labels; font spans per script; localized note wording. |
@@ -374,6 +375,15 @@ analysis goes to FAILED with the upstream code in `last_error_code`. Logs carry 
 status only, never payloads. The FastAPI `/health` endpoint is not called by the backend.
 
 ### 2.3 Integration API list with Ollama
+
+**Driver choice.** `AI_LLM_DRIVER` selects the model client behind the `LlmClient` interface: `ollama` (local model
+server, below) or `anthropic` (the Claude Messages API, `app/Services/Ai/Clients/AnthropicClient.php`). The Claude
+client sends the same messages and output schema: the schema becomes the input schema of one forced tool call
+(`tool_choice: {type: tool}`), so the reply is a schema-conforming JSON object. Settings in `config/services.php`
+(`anthropic`): `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` (default `claude-sonnet-5-5`; `claude-haiku-4-5-20251001` is
+the cheaper option), `ANTHROPIC_TIMEOUT` (120 s), `ANTHROPIC_MAX_TOKENS`, `ANTHROPIC_CONTEXT_TOKENS` (prompt budget).
+Failures map to the same codes as Ollama (`AI_UNAVAILABLE` including a missing key, `AI_TIMEOUT`, `AI_HTTP_ERROR` for
+429/529/5xx), so the pipeline degrades identically. A report costs roughly 10k input and 3k output tokens.
 
 Client: `app/Services/Ai/Clients/OllamaClient.php`, bound to the `LlmClient` interface when `AI_LLM_DRIVER=ollama`.
 Configuration in `config/services.php` (`ollama`) and `config/dataspeak.php` (`ai`):

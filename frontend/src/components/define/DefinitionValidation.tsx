@@ -40,6 +40,7 @@ export function initialDefinitions(columns: ColumnProfile[]): FieldDefinition[] 
       c.definition?.aggregation ??
       (MEASURES.includes(suggestedType(c.inferred_type)) ? 'SUM' : null),
     is_suggested: c.definition?.is_suggested ?? true,
+    suggestion_reason: c.definition?.suggestion_reason ?? null,
   }));
 }
 

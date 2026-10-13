@@ -282,6 +282,7 @@ TABLES: list[dict] = [
             ("semantic_type", "varchar(32)", False, "", "enum semantic_type"),
             ("unit", "varchar(32)", True, "", "Free text / ISO currency code. Never defaulted."),
             ("aggregation", "varchar(16)", True, "", "enum aggregation"),
+            ("suggestion_reason", "varchar(300)", True, "", "Why the suggested meaning and aggregation were chosen, from the model or the software baseline; shown at Profile and Define (FEAT-DEF-004)"),
             ("is_suggested", "boolean", False, "false", "True when system-suggested and not yet edited"),
             ("created_at", TS, True, "", ""),
             ("updated_at", TS, True, "", ""),

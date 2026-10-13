@@ -1,6 +1,10 @@
 // FE-PRO-002 ColumnProfileTable: column name, type, completeness and a derived summary (no raw values).
 import type { ColumnProfile } from '@/types/dataset.types';
-import { INFERRED_TYPE_LABELS, SEMANTIC_TYPE_LABELS } from '@/utils/statusLabels';
+import {
+  AGGREGATION_LABELS,
+  INFERRED_TYPE_LABELS,
+  SEMANTIC_TYPE_LABELS,
+} from '@/utils/statusLabels';
 import { formatInt, formatPct } from '@/utils/format';
 import { summarize } from '@/utils/profileSummary';
 import { t } from '@/i18n';
@@ -42,7 +46,15 @@ export function ColumnProfileTable({ columns }: { columns: ColumnProfile[] }) {
                     <div className="text-xs text-slate-500">
                       {t(SEMANTIC_TYPE_LABELS[c.definition.semantic_type])}
                       {c.definition.unit ? ` · ${c.definition.unit}` : ''}
+                      {c.definition.aggregation
+                        ? ` · ${t(AGGREGATION_LABELS[c.definition.aggregation])}`
+                        : ''}
                     </div>
+                    {c.definition.suggestion_reason ? (
+                      <div className="mt-0.5 text-xs text-slate-600">
+                        {c.definition.suggestion_reason}
+                      </div>
+                    ) : null}
                   </>
                 ) : (
                   <span className="text-slate-400">—</span>

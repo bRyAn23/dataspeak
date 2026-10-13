@@ -35,6 +35,11 @@ class FakeLlmClient implements LlmClient
         return new LlmResult($json, (string) json_encode($json), 'qwen3:8b', 10, 10, 5);
     }
 
+    public function chatMany(array $requests): array
+    {
+        return array_map(fn (array $r) => $this->chat($r['messages'], $r['schema'], $r['options'] ?? []), array_values($requests));
+    }
+
     public function modelTag(): string
     {
         return 'qwen3:8b';

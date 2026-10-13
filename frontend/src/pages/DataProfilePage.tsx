@@ -155,9 +155,7 @@ export function DataProfilePage() {
                 {data.suggestions.ai_status === 'ready'
                   ? t(
                       'Names and meanings were suggested by the AI model{model} from the headers and detected types. You confirm or change them in the next step; they decide what is analysed and charted.',
-                      {
-                        model: data.suggestions.model ? ` (${data.suggestions.model})` : '',
-                      },
+                      { model: '' },
                     )
                   : t(
                       'The AI model was not available, so names and meanings were suggested from the detected types only. You can adjust them in the next step.',

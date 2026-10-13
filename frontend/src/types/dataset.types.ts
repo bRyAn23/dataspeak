@@ -51,6 +51,8 @@ export interface FieldDefinition {
   unit?: string | null;
   aggregation?: Aggregation | null;
   is_suggested?: boolean;
+  /** Why this meaning and aggregation were suggested (FEAT-DEF-004); present while the row is still a suggestion. */
+  suggestion_reason?: string | null;
   /** Client-only: where the current business name came from (AI translation or software). */
   name_source?: 'ai' | 'software';
 }
@@ -63,6 +65,8 @@ export interface DefinitionSuggestion {
   unit: string | null;
   aggregation: Aggregation | null;
   description: string | null;
+  /** Why this meaning and aggregation were chosen, in plain words. */
+  reason?: string | null;
   source: 'ai' | 'software';
 }
 

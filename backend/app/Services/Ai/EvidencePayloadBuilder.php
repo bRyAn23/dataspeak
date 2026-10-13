@@ -26,7 +26,9 @@ class EvidencePayloadBuilder
     {
         $analysis->loadMissing(['insights.evidence', 'insights.visualizations', 'evidence', 'selectedVisualizations']);
         $maxInsights = (int) config('dataspeak.ai.max_insights_in_prompt', 10);
-        $budget = (int) config('services.ollama.num_ctx', 8192) - (int) config('dataspeak.ai.prompt_overhead_tokens', 1200);
+        // Context window of the active driver: Ollama's num_ctx, or the Claude API's much larger window.
+        $window = config('dataspeak.ai.driver') === 'anthropic' ? (int) config('services.anthropic.context_tokens', 150000) : (int) config('services.ollama.num_ctx', 8192);
+        $budget = $window - (int) config('dataspeak.ai.prompt_overhead_tokens', 1200);
 
         $insights = $analysis->insights->where('is_selected', true)->sortBy('rank')->values();
         $summaryKeys = $analysis->evidence

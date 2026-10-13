@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderApp } from './render';
-import { markVerified } from './msw/handlers';
+import { markVerified, setVerificationRequired } from './msw/handlers';
 
 describe('sign-up with email verification', () => {
   it('registers, waits on the verify page, resends, and continues after confirmation', async () => {
@@ -32,6 +32,21 @@ describe('sign-up with email verification', () => {
     markVerified();
     await user.click(screen.getByRole('button', { name: 'I have confirmed my email' }));
     expect(await screen.findByRole('heading', { name: 'Analyses' })).toBeInTheDocument();
+  });
+
+  it('opens the app straight after sign-up when the server does not require verification', async () => {
+    setVerificationRequired(false);
+    const user = userEvent.setup();
+    renderApp(['/register']);
+
+    await user.type(await screen.findByLabelText('Full name'), 'No Mail');
+    await user.type(screen.getByLabelText('Email address'), 'nomail@example.com');
+    await user.type(screen.getByLabelText('Password'), 'secret-pass-1');
+    await user.type(screen.getByLabelText('Confirm password'), 'secret-pass-1');
+    await user.click(screen.getByRole('button', { name: 'Create account' }));
+
+    expect(await screen.findByRole('heading', { name: 'Analyses' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Confirm your email' })).not.toBeInTheDocument();
   });
 
   it('shows the confirmation banner on the login page after the API redirect', async () => {

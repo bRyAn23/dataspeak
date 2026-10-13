@@ -69,7 +69,11 @@ class TranslateReportJob implements ShouldBeUniqueUntilProcessing, ShouldQueue
             if (! isset(DisplayLabels::normalizeStored($analysis->label_translations)[$locale])) {
                 $labels->translate($analysis, $locale);
             }
-            $result = $claims->translate($analysis->fresh(), $locale, $this->attempt);
+            $fresh = $analysis->fresh();
+            if ($fresh === null || $fresh->status !== AnalysisStatus::COMPLETED) {
+                return; // deleted or re-run while the labels were being translated
+            }
+            $result = $claims->translate($fresh, $locale, $this->attempt);
             $context = ['analysis_id' => $analysis->public_id, 'locale' => $locale, 'attempt' => $this->attempt, 'translated' => $result['translated'], 'pending' => $result['pending'], 'ai_status' => $result['ai_status']];
             $retry = $result['pending'] > 0 && in_array($result['ai_status'], ['unavailable', 'invalid_output'], true) && $this->attempt < self::MAX_ATTEMPTS;
             Log::info($retry ? 'report.pretranslate_retry' : 'report.pretranslated', $context);

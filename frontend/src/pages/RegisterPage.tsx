@@ -28,8 +28,16 @@ export function RegisterPage() {
     if (Object.keys(next).length) return;
     setBusy(true);
     try {
-      await register({ name: name.trim(), email, password, password_confirmation: confirm });
-      navigate('/verify-email', { replace: true }); // the account exists; the email must be confirmed first
+      const result = await register({
+        name: name.trim(),
+        email,
+        password,
+        password_confirmation: confirm,
+      });
+      // The account exists. With email verification switched off on the server the app opens straight away.
+      navigate(result.verification?.required === false ? '/analyses' : '/verify-email', {
+        replace: true,
+      });
     } catch (err) {
       if (err instanceof ApiError && err.status === 422)
         setErrors({ ...err.fieldErrors(), form: t('Please check the highlighted fields.') });

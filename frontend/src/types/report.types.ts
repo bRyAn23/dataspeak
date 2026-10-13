@@ -77,6 +77,8 @@ export interface Visualization {
   source: 'RECOMMENDED' | 'USER';
   /** Kept for the report. */
   is_selected: boolean;
+  /** Why this chart fits the column definitions (FEAT-VIS-006), in the interface language. */
+  reason?: string | null;
   /** Plain-language reading of this chart: checked narrative statements, or calculated sentences. */
   summary?: ChartSummaryItem[];
 }
@@ -177,4 +179,6 @@ export interface ChartOption {
   y: Axis | null;
   unit_missing: boolean;
   series: Record<string, string | number | null>[];
+  /** Why this chart fits the column definitions (FEAT-VIS-006). */
+  reason?: string | null;
 }

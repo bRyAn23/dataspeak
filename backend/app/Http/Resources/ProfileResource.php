@@ -33,6 +33,7 @@ class ProfileResource extends JsonResource
                     'unit' => $c->definition->unit,
                     'aggregation' => $c->definition->aggregation?->value,
                     'is_suggested' => $c->definition->is_suggested,
+                    'suggestion_reason' => $c->definition->suggestion_reason,
                 ] : null,
             ])->values()->all(),
             'suggestions' => $this->suggestionsMeta(),

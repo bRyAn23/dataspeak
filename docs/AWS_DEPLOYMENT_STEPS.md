@@ -209,6 +209,20 @@ Edit these lines; leave the rest:
 
 ### 6e. Deploy
 
+**Shortcut used for the MVP server (nginx layout, no git on the server).** From your computer, with
+`PROXY=nginx` and `TRUSTED_PROXIES=*` in `deploy/aws/.env.prod`:
+
+```bash
+# once: nginx + certbot on the server, then the certificate
+ssh -i ~/.ssh/dataspeak.pem ubuntu@<Elastic IP> 'sudo apt-get install -y nginx certbot python3-certbot-nginx rsync'
+# every deploy: build for the server's CPU, ship the images and the deploy folder, run deploy.sh --images there
+deploy/aws/push.sh ~/.ssh/dataspeak.pem ubuntu@<Elastic IP> linux/arm64     # linux/amd64 for x86 instances
+# once, after the first deploy: HTTPS
+ssh -i ~/.ssh/dataspeak.pem ubuntu@<Elastic IP> 'sudo certbot --nginx -d api.dataspeaknow.com --redirect'
+```
+
+The classic path below builds on the server from a git clone instead.
+
 ```bash
 cd ~/dataspeak/deploy/aws
 ./deploy.sh --no-pull
@@ -229,6 +243,9 @@ If `database` is `down`: wrong endpoint or password, or the `dataspeak-rds` rule
 ---
 
 ## Step 7. Email for account verification (SES)
+
+You can skip this step for now: with `REQUIRE_VERIFIED_EMAIL=false` in `.env.prod` accounts work without confirming
+the address and no mail is sent. Come back when you want verification, set it to `true` and fill in the SES values.
 
 1. **Amazon SES** → **Identities** → **Create identity** → *Email address*, the address you will send from; click
    the link SES mails you. (Later, verify the whole domain with the DKIM records SES shows.)
@@ -253,6 +270,8 @@ then `./deploy.sh --no-pull`.
 ---
 
 ## Step 8. Deploy the frontend (Amplify Hosting)
+
+**No GitHub yet?** Serve the frontend from the same server instead: `deploy/aws/push-frontend.sh ~/.ssh/dataspeak.pem ubuntu@<Elastic IP> api.dataspeaknow.com` builds the app on your computer, uploads it and configures nginx to serve it on `dataspeaknow.com` and `www.dataspeaknow.com` (the API stays on `api.dataspeaknow.com`). Create A records for both names pointing at the server, then run `sudo certbot --nginx -d dataspeaknow.com -d www.dataspeaknow.com --redirect` on the server once. Re-run the script after every frontend change. The Amplify steps below remain the long-term set-up.
 
 1. **AWS Amplify** → **Create new app** → **GitHub** → authorise → choose the repository and the `main` branch.
 2. Tick **My app is a monorepo**, root directory `frontend`. Keep the detected `amplify.yml`.

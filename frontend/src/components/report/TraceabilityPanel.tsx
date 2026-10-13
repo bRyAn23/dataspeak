@@ -141,8 +141,7 @@ export function TraceabilityPanel({ claim, loading, error, onClose, onRetry }: P
                     <>
                       <dt className="text-slate-400">{t('Written by')}</dt>
                       <dd className="col-span-2">
-                        {t('Model {model}, prompt {prompt}', {
-                          model: claim.generation.model ?? '—',
+                        {t('AI model, prompt version {prompt}', {
                           prompt: claim.generation.prompt_version ?? '—',
                         })}
                       </dd>

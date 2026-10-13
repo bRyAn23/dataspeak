@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\Reports\ChartReasons;
 use App\Services\Reports\ChartTitles;
 use App\Services\Reports\DisplayLabels;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class VisualizationResource extends JsonResource
             'evidence_ids' => $this->evidence_keys,
             'insight_rank' => $this->insight?->rank,
             'position' => $this->position,
+            'reason' => ChartReasons::for(['type' => $this->chart_type->value, 'x' => $axis($this->spec['x'] ?? null), 'y' => $axis($this->spec['y'] ?? null)], $locale), // FEAT-VIS-006
         ];
     }
 }
