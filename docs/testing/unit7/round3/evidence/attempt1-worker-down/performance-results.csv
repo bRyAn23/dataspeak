@@ -1,0 +1,26 @@
+scenario,dataset,rows,metric,runs,median,p95,min,max,unit,note,values
+P1 FastAPI direct,small,100,fastapi_validate,5,0.007,0.01,0.006,0.01,s,"loopback, 5 sequential runs, same file",0.010;0.008;0.007;0.007;0.006
+P1 FastAPI direct,small,100,fastapi_profile,5,0.015,0.019,0.014,0.019,s,"loopback, 5 sequential runs, same file",0.019;0.016;0.015;0.014;0.015
+P1 FastAPI direct,small,100,fastapi_analyze,5,0.042,0.045,0.04,0.045,s,"loopback, 5 sequential runs, same file",0.042;0.044;0.045;0.040;0.041
+P1 FastAPI direct,small,100,evidence_records,1,75.0,75.0,75.0,75.0,count,records returned by /v1/analyze,75.000
+P1 FastAPI direct,medium,1000,fastapi_validate,5,0.008,0.008,0.008,0.008,s,"loopback, 5 sequential runs, same file",0.008;0.008;0.008;0.008;0.008
+P1 FastAPI direct,medium,1000,fastapi_profile,5,0.02,0.02,0.019,0.02,s,"loopback, 5 sequential runs, same file",0.020;0.020;0.020;0.019;0.019
+P1 FastAPI direct,medium,1000,fastapi_analyze,5,0.061,0.063,0.06,0.063,s,"loopback, 5 sequential runs, same file",0.063;0.061;0.061;0.060;0.060
+P1 FastAPI direct,medium,1000,evidence_records,1,75.0,75.0,75.0,75.0,count,records returned by /v1/analyze,75.000
+P1 FastAPI direct,large,10000,fastapi_validate,5,0.014,0.015,0.014,0.015,s,"loopback, 5 sequential runs, same file",0.014;0.014;0.014;0.015;0.014
+P1 FastAPI direct,large,10000,fastapi_profile,5,0.045,0.047,0.044,0.047,s,"loopback, 5 sequential runs, same file",0.047;0.044;0.045;0.044;0.046
+P1 FastAPI direct,large,10000,fastapi_analyze,5,0.098,0.1,0.097,0.1,s,"loopback, 5 sequential runs, same file",0.100;0.099;0.097;0.098;0.097
+P1 FastAPI direct,large,10000,evidence_records,1,75.0,75.0,75.0,75.0,count,records returned by /v1/analyze,75.000
+P3 end-to-end via Laravel,small,100,upload_plus_validate,1,0.037,0.037,0.037,0.037,s,HTTP round trips incl. FastAPI call,0.037
+P3 end-to-end via Laravel,small,100,profiling_job_to_PROFILED,1,620.384,620.384,620.384,620.384,s,queue job: FastAPI profile + local Ollama column suggestions; polled every 2 s,620.384
+P3 end-to-end via Laravel,small,100,run_job_to_ANALYZED,1,2.065,2.065,2.065,2.065,s,queue job: analyze + insights + charts + label translation; polled every 2 s,2.065
+P3 end-to-end via Laravel,small,100,total_upload_to_ANALYZED,1,622.527,622.527,622.527,622.527,s,excludes the AI narrative stage,622.527
+P3 end-to-end via Laravel,medium,1000,upload_plus_validate,1,0.045,0.045,0.045,0.045,s,HTTP round trips incl. FastAPI call,0.045
+P3 end-to-end via Laravel,medium,1000,profiling_job_to_PROFILED,1,12.206,12.206,12.206,12.206,s,queue job: FastAPI profile + local Ollama column suggestions; polled every 2 s,12.206
+P3 end-to-end via Laravel,medium,1000,run_job_to_ANALYZED,1,2.058,2.058,2.058,2.058,s,queue job: analyze + insights + charts + label translation; polled every 2 s,2.058
+P3 end-to-end via Laravel,medium,1000,total_upload_to_ANALYZED,1,14.346,14.346,14.346,14.346,s,excludes the AI narrative stage,14.346
+P3 end-to-end via Laravel,large,10000,upload_plus_validate,1,0.055,0.055,0.055,0.055,s,HTTP round trips incl. FastAPI call,0.055
+P3 end-to-end via Laravel,large,10000,profiling_job_to_PROFILED,1,12.199,12.199,12.199,12.199,s,queue job: FastAPI profile + local Ollama column suggestions; polled every 2 s,12.199
+P3 end-to-end via Laravel,large,10000,run_job_to_ANALYZED,1,2.06,2.06,2.06,2.06,s,queue job: analyze + insights + charts + label translation; polled every 2 s,2.060
+P3 end-to-end via Laravel,large,10000,total_upload_to_ANALYZED,1,14.359,14.359,14.359,14.359,s,excludes the AI narrative stage,14.359
+P2 Laravel API latency,large,10000,GET_status_latency,30,9.782,10.774,9.33,10.853,ms,"5 warm-up + 30 sequential, single connection",10.532;10.853;10.164;9.715;9.567;9.571;9.464;10.214;10.095;9.841;9.766;10.268;10.209;9.485;9.491;9.781;10.127;9.921;9.593;10.774;9.638;9.728;10.211;10.470;9.784;9.630;9.330;9.465;9.520;9.793

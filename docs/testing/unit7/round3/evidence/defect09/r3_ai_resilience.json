@@ -1,0 +1,83 @@
+{
+  "started": "2026-10-16T22:53:14+07:00",
+  "results": {
+    "R3-AI-06": {
+      "analysis": "003343ab-50b3-4315-8e3e-3cf854587209",
+      "wall_s": 10.2,
+      "report": {
+        "status": "READY",
+        "ai": "unavailable",
+        "claims_total": 0,
+        "claims_supported": 0
+      },
+      "generations": [
+        [
+          "FAILED",
+          "AI_TIMEOUT",
+          "0",
+          "1"
+        ]
+      ],
+      "lock_keys_after": "laravel-database-laravel-cache-llm:model:1d4b9fca6ce29191f6fd64ab33534697",
+      "busy_retry_logged": false,
+      "recovery_analysis": "aa06f5fe-436f-4cc9-986e-48af3cf8a623",
+      "recovery_wall_s": 111.7,
+      "recovery_report": {
+        "status": "READY",
+        "ai": "ready",
+        "claims_total": 23,
+        "claims_supported": 14
+      },
+      "recovery_generations": [
+        [
+          "SUCCEEDED",
+          "",
+          "108298",
+          "1"
+        ]
+      ],
+      "pass": false
+    },
+    "R3-AI-07": {
+      "analysis": "aa06f5fe-436f-4cc9-986e-48af3cf8a623",
+      "restart_at_utc": "2026-10-16T15:57:44+00:00",
+      "state_before_restart": {
+        "queue_len": "0",
+        "reserved": "0",
+        "lock": "",
+        "flags": []
+      },
+      "drained": true,
+      "drain_s": 3.2,
+      "remaining_flags": [],
+      "remaining_lock": "",
+      "reserved_after": "0",
+      "delayed_after": "0",
+      "claims_total_th_zh_my": [
+        "23",
+        "2",
+        "2",
+        "2"
+      ],
+      "worker_log_counts": {
+        "TranslateReportJob": 6,
+        "DONE": 3,
+        "FAIL": 0,
+        "report.pretranslated": 3,
+        "report.pretranslate_retry": 0,
+        "report.pretranslate_failed": 0,
+        "llm.lock.timeout": 0,
+        "Lock wait": 0,
+        "Broken pipe": 0
+      },
+      "report_after": {
+        "status": "READY",
+        "ai": "ready",
+        "claims_total": 23,
+        "claims_supported": 14
+      },
+      "pass": false
+    }
+  },
+  "finished": "2026-10-16T22:57:48+07:00"
+}

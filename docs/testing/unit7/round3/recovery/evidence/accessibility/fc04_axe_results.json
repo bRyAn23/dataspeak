@@ -1,0 +1,16 @@
+{
+  "executed": "2026-10-16T23:23:29+07:00",
+  "report_analysis": "40411ded-94d5-4b9e-8734-d516d798ecb1",
+  "profile_analysis": "93ce306b-8ca3-4155-b23e-a53a2adba2e3",
+  "violations": {
+    "new_analysis": [],
+    "profile": [],
+    "report": []
+  },
+  "serious_or_critical": {
+    "new_analysis": 0,
+    "profile": 0,
+    "report": 0
+  },
+  "pass": true
+}

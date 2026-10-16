@@ -1,0 +1,81 @@
+{
+  "started": "2026-10-16T23:13:00+07:00",
+  "results": {
+    "RT-04": {
+      "defect": "DEF-04",
+      "profile_job_wall_seconds_during_translations": 22.4,
+      "profile_status": "PROFILED",
+      "translate_jobs_seen_on": [],
+      "profile_job_seen_on": [
+        "dataspeak-backend-worker"
+      ],
+      "baseline_before_fix_seconds": 73.3,
+      "pass": false
+    },
+    "RT-01": {
+      "defect": "DEF-01",
+      "claims": 2,
+      "statements_with_braces": 0,
+      "validator_reasons_brace_related": [],
+      "validator_method": [
+        "rule_based_v2"
+      ],
+      "pass": true
+    },
+    "RT-02": {
+      "defect": "DEF-02",
+      "repeated_lead_sentences_under_charts": [],
+      "pass": true
+    },
+    "RT-03": {
+      "defect": "DEF-03",
+      "statements_with_rho": 0,
+      "pass": true
+    },
+    "RT-05": {
+      "defect": "DEF-05",
+      "explanation_shown": true,
+      "upload_again_button": true,
+      "disabled_run_again_present": false,
+      "destination_url": "http://localhost:5173/analyses/new?id=40411ded-94d5-4b9e-8734-d516d798ecb1",
+      "pass": true
+    },
+    "RT-08": {
+      "defect": "DEF-08",
+      "warning_top_px": 401,
+      "viewport_px": 1080,
+      "visible_without_scroll": true,
+      "baseline_before_fix_px": 1187,
+      "pass": true
+    },
+    "RT-07": {
+      "defect": "DEF-07",
+      "color_contrast_nodes": {
+        "new_analysis": 0,
+        "profile": 0,
+        "report": 0
+      },
+      "baseline_before_fix": {
+        "new_analysis": 4,
+        "profile": 10,
+        "report": 1
+      },
+      "other_violations": {
+        "new_analysis": [],
+        "profile": [],
+        "report": []
+      },
+      "claim_link_size_px": {
+        "width": 27,
+        "height": 24
+      },
+      "baseline_link_px": "21x16",
+      "pass": true
+    }
+  },
+  "finished": "2026-10-16T23:16:07+07:00",
+  "analyses": {
+    "X": "40411ded-94d5-4b9e-8734-d516d798ecb1",
+    "Y": "93ce306b-8ca3-4155-b23e-a53a2adba2e3"
+  }
+}

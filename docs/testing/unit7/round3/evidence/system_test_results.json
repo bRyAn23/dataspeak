@@ -1,5 +1,5 @@
 {
-  "run_started": "2026-10-16T21:42:53+07:00",
+  "run_started": "2026-10-16T22:58:16+07:00",
   "environment": "local development stack",
   "results": [
     {
@@ -13,8 +13,8 @@
       "result": "PASS",
       "evidence": "evidence/integration/int02_laravel_to_fastapi_validate.json",
       "defect": "",
-      "duration_s": 1.1,
-      "executed_at": "2026-10-16T21:42:55+07:00"
+      "duration_s": 1.2,
+      "executed_at": "2026-10-16T22:58:18+07:00"
     },
     {
       "id": "INT-03",
@@ -28,7 +28,7 @@
       "evidence": "evidence/integration/int03_laravel_postgres.json",
       "defect": "",
       "duration_s": 0.1,
-      "executed_at": "2026-10-16T21:42:55+07:00"
+      "executed_at": "2026-10-16T22:58:18+07:00"
     },
     {
       "id": "INT-04",
@@ -42,7 +42,7 @@
       "evidence": "evidence/integration/int04_fastapi_valid_csv.json",
       "defect": "",
       "duration_s": 0.1,
-      "executed_at": "2026-10-16T21:42:55+07:00"
+      "executed_at": "2026-10-16T22:58:19+07:00"
     },
     {
       "id": "INT-05",
@@ -56,7 +56,7 @@
       "evidence": "evidence/integration/int05_invalid_input.json",
       "defect": "",
       "duration_s": 0.1,
-      "executed_at": "2026-10-16T21:42:55+07:00"
+      "executed_at": "2026-10-16T22:58:19+07:00"
     },
     {
       "id": "INT-06",
@@ -69,8 +69,8 @@
       "result": "PASS",
       "evidence": "evidence/integration/int06_analytics_outage.json",
       "defect": "",
-      "duration_s": 10.6,
-      "executed_at": "2026-10-16T21:43:06+07:00"
+      "duration_s": 8.6,
+      "executed_at": "2026-10-16T22:58:27+07:00"
     },
     {
       "id": "SYS-10",
@@ -83,22 +83,22 @@
       "result": "PASS",
       "evidence": "evidence/system/sys10-analytics-outage-ui-error.png; evidence/system/sys10-analytics-recovered-ui.png",
       "defect": "",
-      "duration_s": 10.6,
-      "executed_at": "2026-10-16T21:43:06+07:00"
+      "duration_s": 8.6,
+      "executed_at": "2026-10-16T22:58:27+07:00"
     },
     {
       "id": "INT-07",
       "level": "integration",
-      "objective": "Completed results retrieval",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: 'data'",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "Backend retrieves completed analysis results associated with the right analysis",
+      "preconditions": "A1 VALIDATED; worker and analytics up; local Ollama for suggestions",
+      "steps": "POST profile; wait PROFILED; PUT definitions (accepted suggestions); POST run; wait ANALYZED; GET insights, visualizations, status; psql counts",
+      "expected": "ANALYZED with job SUCCEEDED; insights and visualizations non-empty, each insight carries evidence keys; DB counts match the API",
+      "actual": "final ANALYZED; insights 7 (9 evidence keys), charts 8; job SUCCEEDED; db evidence|insights|charts = 75|7|8",
+      "result": "PASS",
+      "evidence": "evidence/integration/int07_results_retrieval.json",
       "defect": "",
-      "duration_s": 601.7,
-      "executed_at": "2026-10-16T21:53:07+07:00"
+      "duration_s": 20.5,
+      "executed_at": "2026-10-16T22:58:48+07:00"
     },
     {
       "id": "SYS-01",
@@ -112,7 +112,7 @@
       "evidence": "evidence/system/sys01-login-wrong-password.png; evidence/system/sys01-dashboard-after-login.png",
       "defect": "",
       "duration_s": 3.8,
-      "executed_at": "2026-10-16T21:53:11+07:00"
+      "executed_at": "2026-10-16T22:58:52+07:00"
     },
     {
       "id": "INT-01",
@@ -126,7 +126,7 @@
       "evidence": "evidence/system/sys01_api_calls_from_react.json",
       "defect": "",
       "duration_s": 3.8,
-      "executed_at": "2026-10-16T21:53:11+07:00"
+      "executed_at": "2026-10-16T22:58:52+07:00"
     },
     {
       "id": "SYS-02",
@@ -139,22 +139,36 @@
       "result": "PASS",
       "evidence": "evidence/system/figure-03-valid-csv-workflow.png",
       "defect": "",
-      "duration_s": 0.8,
-      "executed_at": "2026-10-16T21:53:12+07:00"
+      "duration_s": 1.1,
+      "executed_at": "2026-10-16T22:58:53+07:00"
+    },
+    {
+      "id": "SYS-05",
+      "level": "system",
+      "objective": "Data profiling results are displayed",
+      "preconditions": "SYS-02 analysis",
+      "steps": "Continue to profile; wait for suggestions",
+      "expected": "Cards show 240 rows, 7 columns, 97.9% completeness; columns table with types and summaries",
+      "actual": "cards present=True",
+      "result": "PASS",
+      "evidence": "evidence/system/sys05-profile-overview.png",
+      "defect": "",
+      "duration_s": 20.8,
+      "executed_at": "2026-10-16T22:59:14+07:00"
     },
     {
       "id": "SYS-03",
       "level": "system",
-      "objective": "Missing values",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: Page.wait_for_selector: Timeout 240000ms exceeded.\nCall log:\n  - waiting for locator(\"text=Suggested meaning\") to be visible\n",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "CSV containing missing values is flagged",
+      "preconditions": "Same profile",
+      "steps": "Scroll to Data quality",
+      "expected": "Warning 'discount_pct: 14.6% of values are missing; statistics use the remaining rows'",
+      "actual": "warning present=True; red 14.6% (35) in table",
+      "result": "PASS",
+      "evidence": "evidence/system/sys03-missing-values-warning.png",
       "defect": "",
-      "duration_s": 240.0,
-      "executed_at": "2026-10-16T21:57:12+07:00"
+      "duration_s": 20.8,
+      "executed_at": "2026-10-16T22:59:14+07:00"
     },
     {
       "id": "SYS-04",
@@ -168,63 +182,63 @@
       "evidence": "evidence/system/figure-04-invalid-csv-feedback.png; evidence/system/sys04-unsupported-file-feedback.png",
       "defect": "",
       "duration_s": 2.0,
-      "executed_at": "2026-10-16T21:57:14+07:00"
+      "executed_at": "2026-10-16T22:59:16+07:00"
     },
     {
       "id": "SYS-06",
       "level": "system",
-      "objective": "Analysis completes",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: Locator.wait_for: Timeout 60000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Save and continue\") to be visible\n",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "Statistical analysis completes from the UI",
+      "preconditions": "Profiled analysis",
+      "steps": "Define: Save and continue; Analyze: 'Analyze and recommend charts'; wait for chart review",
+      "expected": "Status ANALYZED; chart review panel appears",
+      "actual": "status=ANALYZED in 2.4s; chart review shown",
+      "result": "PASS",
+      "evidence": "evidence/system/sys06-define-step.png; evidence/system/sys06-analysis-complete-chart-review.png",
       "defect": "",
-      "duration_s": 60.0,
-      "executed_at": "2026-10-16T21:58:14+07:00"
+      "duration_s": 4.3,
+      "executed_at": "2026-10-16T22:59:20+07:00"
     },
     {
       "id": "SYS-09",
       "level": "system",
-      "objective": "Report generation",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Write the executive summary\").first\n",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "Executive report generation (local Qwen via Ollama)",
+      "preconditions": "ANALYZED analysis; Ollama running locally",
+      "steps": "Click 'Write the executive summary'; wait; open report",
+      "expected": "Report READY with claims; executive summary and charts displayed",
+      "actual": "report status=READY claims_total=9 supported=5 generation 132s",
+      "result": "PASS",
+      "evidence": "evidence/system/sys09-report-ready.png; evidence/system/sys09-executive-report.png",
       "defect": "",
-      "duration_s": 30.0,
-      "executed_at": "2026-10-16T21:58:44+07:00"
+      "duration_s": 135.1,
+      "executed_at": "2026-10-16T23:01:35+07:00"
     },
     {
       "id": "SYS-07",
       "level": "system",
-      "objective": "Visualization",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: Page.wait_for_selector: Timeout 60000ms exceeded.\nCall log:\n  - waiting for locator(\"text=Executive summary\") to be visible\n",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "Correct visualization is rendered for the selected chart specs",
+      "preconditions": "Report READY",
+      "steps": "Open report; count rendered Recharts SVG surfaces; compare with selected visualizations from the API",
+      "expected": "At least one chart SVG rendered; chart titles match API chart specs",
+      "actual": "svg charts rendered=7; api selected charts=8 types=['BAR', 'BAR', 'TABLE', 'LINE', 'BAR', 'BAR', 'LINE', 'LINE']; matching titles found=21",
+      "result": "PASS",
+      "evidence": "evidence/system/sys07-chart-rendered.png",
       "defect": "",
-      "duration_s": 60.1,
-      "executed_at": "2026-10-16T21:59:44+07:00"
+      "duration_s": 3.7,
+      "executed_at": "2026-10-16T23:01:39+07:00"
     },
     {
       "id": "SYS-08",
       "level": "system",
-      "objective": "Evidence display",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href*='/claims/']\").first\n",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "Insight statement displays its supporting evidence",
+      "preconditions": "Report READY",
+      "steps": "Click a claim link in the executive summary",
+      "expected": "'How we know' panel with the verification badge and the evidence card",
+      "actual": "badge present=True",
+      "result": "PASS",
+      "evidence": "evidence/system/sys08-insight-evidence-panel.png",
       "defect": "",
-      "duration_s": 30.0,
-      "executed_at": "2026-10-16T22:00:14+07:00"
+      "duration_s": 1.8,
+      "executed_at": "2026-10-16T23:01:41+07:00"
     },
     {
       "id": "SYS-11",
@@ -237,36 +251,36 @@
       "result": "PASS",
       "evidence": "evidence/system/sys11-logged-out-redirect.png; evidence/system/sys11_unauthorized.json",
       "defect": "",
-      "duration_s": 2.3,
-      "executed_at": "2026-10-16T22:00:17+07:00"
+      "duration_s": 1.1,
+      "executed_at": "2026-10-16T23:01:42+07:00"
     },
     {
       "id": "INT-08",
       "level": "integration",
-      "objective": "Claim validation",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: 'data'",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "Claim validation: only SUPPORTED claims enter the report; unsupported claims are kept out",
+      "preconditions": "Report READY on U1 (local Ollama narrative)",
+      "steps": "GET report; GET each referenced claim; psql group by status,in_report (read-only)",
+      "expected": "All claims referenced by report sections are SUPPORTED with evidence; no non-SUPPORTED claim has in_report=true",
+      "actual": "claims_total=9 supported=5; sampled statuses=['SUPPORTED', 'SUPPORTED', 'SUPPORTED']; db=REJECTED|f|4 ; SUPPORTED|f|2 ; SUPPORTED|t|3",
+      "result": "PASS",
+      "evidence": "evidence/integration/int08_claim_validation.json",
       "defect": "",
-      "duration_s": 0.0,
-      "executed_at": "2026-10-16T22:00:17+07:00"
+      "duration_s": 0.8,
+      "executed_at": "2026-10-16T23:01:43+07:00"
     },
     {
       "id": "SYS-12",
       "level": "system",
-      "objective": "Repeated processing",
-      "preconditions": "",
-      "steps": "",
-      "expected": "",
-      "actual": "exception: 'data'",
-      "result": "FAIL",
-      "evidence": "",
+      "objective": "Repeated processing does not duplicate or corrupt results",
+      "preconditions": "Fresh DEFINED analysis with the golden CSV",
+      "steps": "POST /run twice with one Idempotency-Key; wait; re-upload the same file (the transient copy is purged after a run); profile; run again; compare evidence keys",
+      "expected": "Second call replayed (Idempotent-Replayed: true); both runs ANALYZED; evidence counts equal distinct counts; identical key sets across runs",
+      "actual": "run 202/202 replayed=true; run1 ANALYZED 75|75; reupload 201; run2 ANALYZED 75|75; identical key sets=True",
+      "result": "PASS",
+      "evidence": "evidence/system/sys12_repeat_processing.json",
       "defect": "",
-      "duration_s": 601.8,
-      "executed_at": "2026-10-16T22:10:18+07:00"
+      "duration_s": 45.4,
+      "executed_at": "2026-10-16T23:02:28+07:00"
     }
   ]
 }

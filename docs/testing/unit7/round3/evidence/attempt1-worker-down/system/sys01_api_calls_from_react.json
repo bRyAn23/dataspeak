@@ -1,0 +1,19 @@
+{
+  "api_responses_observed": [
+    [
+      "POST",
+      "/auth/login",
+      401
+    ],
+    [
+      "POST",
+      "/auth/login",
+      200
+    ],
+    [
+      "GET",
+      "/analyses?page=1&per_page=20",
+      200
+    ]
+  ]
+}

@@ -49,9 +49,9 @@ lock_pattern = "*llm:model:*"
 
 # R3-AI-06 model timeout (real) and recovery
 print("R3-AI-06: preparing analyses", flush=True); T1 = analyzed("Unit7 R3-AI-06 timeout"); T2 = analyzed("Unit7 R3-AI-06 recovery"); idle()
-sh(["docker", "compose", "stop", "backend-worker"], 120)
-sh(["docker", "compose", "run", "-d", "--rm", "--no-deps", "--name", "dataspeak-worker-short-timeout", "-e", "OLLAMA_TIMEOUT=8", "backend-worker", "php", "artisan", "queue:work", "redis", "--queue=default", "--tries=1", "--timeout=600", "--sleep=1"], 120); time.sleep(4)
 try:
+    sh(["docker", "compose", "stop", "-t", "130", "backend-worker"], 400)  # restored in finally even if this step fails
+    sh(["docker", "compose", "run", "-d", "--rm", "--no-deps", "--name", "dataspeak-worker-short-timeout", "-e", "OLLAMA_TIMEOUT=8", "backend-worker", "php", "artisan", "queue:work", "redis", "--queue=default", "--tries=1", "--timeout=600", "--sleep=1"], 120); time.sleep(4)
     t0 = time.perf_counter(); A.post(f"/analyses/{T1}/report", headers={"Idempotency-Key": f"r3t-{int(time.time())}"}); s, _ = wait(T1, {"COMPLETED"}); wall = time.perf_counter() - t0
     time.sleep(2); lock_after = redis("--scan", "--pattern", lock_pattern); wlog = sh(["docker", "logs", "dataspeak-worker-short-timeout"]); (LOGS / "r3_ai_06_short_timeout_worker.log").write_text(wlog)
     r = {"analysis": T1, "wall_s": round(wall, 1), "report": report(T1), "generations": gens(T1), "lock_keys_after": lock_after, "busy_retry_logged": "report.model_busy_retry" in wlog}

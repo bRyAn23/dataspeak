@@ -1,0 +1,46 @@
+{
+  "definitions_status": 200,
+  "run_status": 202,
+  "final_status": {
+    "analysis_id": "d9c77029-1c96-4cfb-b648-0985185761c9",
+    "status": "ANALYZED",
+    "stage": "VISUALIZATION",
+    "progress": 100,
+    "job": {
+      "job_id": "job_0e6b37c4-acb0-40cf-bf8f-27e7d72f598c",
+      "kind": "run",
+      "status": "SUCCEEDED",
+      "stage": "VISUALIZATION",
+      "progress": 100,
+      "error": null,
+      "updated_at": "2026-10-16T15:58:44+00:00"
+    },
+    "is_terminal": false,
+    "last_error": null,
+    "poll_seconds": 2
+  },
+  "insights": 7,
+  "visualizations": 8,
+  "insight_types": [
+    "GROUP_DIFFERENCE",
+    "GROUP_DIFFERENCE",
+    "ASSOCIATION",
+    "TREND_CHANGE",
+    "CONCENTRATION",
+    "CONCENTRATION",
+    "DATA_QUALITY"
+  ],
+  "chart_types": [
+    "BAR",
+    "BAR",
+    "TABLE",
+    "LINE",
+    "BAR",
+    "BAR",
+    "LINE",
+    "LINE"
+  ],
+  "postgres_counts_evidence_insights_visualizations": "75|7|8",
+  "insight_evidence_keys": 9,
+  "visualization_evidence_keys": 0
+}

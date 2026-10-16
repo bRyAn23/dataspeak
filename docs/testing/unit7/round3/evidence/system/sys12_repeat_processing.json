@@ -1,0 +1,18 @@
+{
+  "analysis": "70cf4afc-3c25-4f16-b6b6-f8db83511d6c",
+  "first_run": 202,
+  "second_run_same_key": 202,
+  "idempotent_replayed_header": "true",
+  "run1": {
+    "status": "ANALYZED",
+    "evidence_total": "75",
+    "distinct": "75"
+  },
+  "reupload": 201,
+  "run2": {
+    "status": "ANALYZED",
+    "evidence_total": "75",
+    "distinct": "75"
+  },
+  "identical_evidence_key_sets": true
+}

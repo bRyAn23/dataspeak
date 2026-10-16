@@ -1,6 +1,6 @@
 # DEF-09 Fix Summary: ModelAccessCoordinator
 
-Data Speak, Unit 7 final verification, 2026-10-16. Commit: see `final-defect-register.md` (recorded after the verification passed).
+Data Speak, Unit 7 Test Round 3, 2026-10-16. Commit: see `final-defect-register.md` (recorded after the verification passed).
 
 ## 1. Design
 

@@ -45,10 +45,10 @@ def analyzed(name):
 # FC-01 AI-unavailable fallback with a real worker whose model endpoint is unreachable
 print("FC-01: preparing analysis, then swapping in a worker with an unreachable model endpoint", flush=True)
 Z = analyzed("Unit7 final FC-01 AI unavailable")
-sh(["docker", "compose", "stop", "backend-worker"], 120)
-sh(["docker", "compose", "run", "-d", "--rm", "--no-deps", "--name", "dataspeak-worker-no-model", "-e", "OLLAMA_BASE_URL=http://127.0.0.1:9", "backend-worker", "php", "artisan", "queue:work", "redis", "--queue=default", "--tries=1", "--timeout=600", "--sleep=1"], 120)
-time.sleep(4)
 try:
+    sh(["docker", "compose", "stop", "-t", "130", "backend-worker"], 400)  # restored in finally even if this step fails
+    sh(["docker", "compose", "run", "-d", "--rm", "--no-deps", "--name", "dataspeak-worker-no-model", "-e", "OLLAMA_BASE_URL=http://127.0.0.1:9", "backend-worker", "php", "artisan", "queue:work", "redis", "--queue=default", "--tries=1", "--timeout=600", "--sleep=1"], 120)
+    time.sleep(4)
     t0 = time.perf_counter(); A.post(f"/analyses/{Z}/report", headers={"Idempotency-Key": f"fc1-{int(time.time())}"}); s, _ = wait(Z, {"COMPLETED"}); wall = time.perf_counter() - t0
     rep = A.get(f"/analyses/{Z}/report").json()["data"]; gens = [l.split("|") for l in psql(f"select g.status, coalesce(g.error_code,''), g.attempt_no from ai_generations g join analyses a on a.id=g.analysis_id where a.public_id='{Z}' order by g.created_at").strip().splitlines()]
     wlog = sh(["docker", "logs", "dataspeak-worker-no-model"]); (FV / "logs/fc01_no_model_worker.log").write_text(wlog)

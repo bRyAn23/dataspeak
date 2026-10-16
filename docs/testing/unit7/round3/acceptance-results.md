@@ -1,0 +1,20 @@
+# Round 3 Acceptance Verification (investigator-led)
+
+Data Speak, Unit 7 Test Round 3, 2026-10-16. This is a **requirements-based acceptance verification performed by the investigator** on the local development stack, using the Round 3 execution records as evidence. **No business users participated; no satisfaction scores, ratings or task-success rates were collected or are claimed.** The twelve criteria are those of the Round 1 checklist (`../acceptance-checklist.md`), re-inspected against the current build.
+
+| Req. ID | A business user can… | Round 3 procedure | Round 3 outcome | Result | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| ACC-01 (FEAT-UPL-001) | upload a valid CSV | SYS-02, INT-02 | "File checked successfully, 240 rows and 7 columns detected" | MET | `evidence/system/figure-03-valid-csv-workflow.png` |
+| ACC-02 (FEAT-UPL-002) | understand invalid-data errors | SYS-04, INT-05 | plain-language message naming the empty and duplicate headers; `.txt` and empty files refused with the defined codes | MET | `figure-04-invalid-csv-feedback.png`, `sys04-unsupported-file-feedback.png` |
+| ACC-03 (FEAT-PRO-001) | review data-profiling information | SYS-05, SYS-03, RT-08 | overview cards, per-column table, missing-value warning visible without scrolling (DEF-08 fixed) | MET | `sys05-profile-overview.png`, `sys03-missing-values-warning.png` |
+| ACC-04 (FEAT-ANL-001) | rely on statistical outputs | golden 33/33 (26 numeric), pytest 49, INT-04 cross-check | all reference assertions hold, identical to Rounds 1–2 | MET | `recovery/evidence/regression/golden_reference_recovery.log` |
+| ACC-05 (FEAT-VIS-001/003) | view understandable visualisations | SYS-07 | 7 charts rendered for the 8 selected specs with matching titles; software-authored chart reasons shown | MET | `sys07-chart-rendered.png` |
+| ACC-06 (FEAT-AI-002, NFR-TRC-001) | identify the evidence behind an insight | SYS-08, INT-07 | verification badge and evidence panel; every insight references stored evidence keys | MET | `sys08-insight-evidence-panel.png`, `int07_results_retrieval.json` |
+| ACC-07 (FEAT-VAL-001) | trust that unsupported claims are not presented as verified | INT-08, RT-01, FC-03 | only SUPPORTED claims enter the report; rejected claims (150 today across all reports) stay out; no literal braces (DEF-01 fixed) | MET | `int08_claim_validation.json`, RT-01 |
+| ACC-08 (NFR-REL-001) | receive controlled error feedback | SYS-10/INT-06, R3-AI-05/06, W5b | analytics outage, unreachable model, model timeout and busy model all end in a truthful state (error shown or report without AI narrative), never a false success | MET | `sys10-analytics-outage-ui-error.png`, `evidence/defect09/` |
+| ACC-09 (NFR-SEC-001) | be sure data is visible only to its owner | SYS-11 | 401 without token, 404 for another user's analysis and report, logged-out redirect | MET | `sys11_unauthorized.json`, `sys11-logged-out-redirect.png` |
+| ACC-10 (NFR-PRI-001) | know that raw data is transient | SYS-12, RT-05 | purged file explained in the panel with "Upload the file again" (DEF-05 fixed); re-run requires re-upload | MET | `sys12_repeat_processing.json`, `evidence/defects/rt05_*.png` |
+| ACC-11 (FEAT-OPS-002) | repeat processing safely | SYS-12 | duplicate request replayed; identical 75 evidence keys after re-processing | MET | `sys12_repeat_processing.json` |
+| ACC-12 (FEAT-RPT-001) | review an executive report | SYS-09, W1–W5 | READY reports with verified claims, KPIs and charts; narrative in 118–171 s on the local model; translations available in th/zh/my afterwards | MET | `sys09-executive-report.png`, `defect09-verification.md` |
+
+Summary: 12 criteria inspected, 12 met on the development stack with the current build; the two exceptions noted in Round 1 (ACC-07 brace defect, ACC-10 re-upload messaging) are closed by DEF-01 and DEF-05. Accessibility of the three main pages was checked with axe-core (0 WCAG 2.0/2.1 A/AA violations, FC-04); this is an automated check, not a user test. Production behaviour with the Claude API was not re-inspected in this round.

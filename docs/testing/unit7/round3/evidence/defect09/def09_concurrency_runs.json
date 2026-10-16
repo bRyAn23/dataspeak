@@ -347,5 +347,85 @@
     "workload": "W5 bounded wait expiry and recovery (wait 20 s)",
     "run": 2,
     "recorded_at": "2026-10-16T21:15:00+07:00"
+  },
+  {
+    "narrative_wall_s": 38.8,
+    "generations": [
+      [
+        "FAILED",
+        "AI_BUSY",
+        "0",
+        "1"
+      ],
+      [
+        "FAILED",
+        "AI_BUSY",
+        "0",
+        "2"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "unavailable",
+      "claims_total": 0,
+      "claims_supported": 0
+    },
+    "events": {
+      "lock_waited": [],
+      "lock_timeout": 0,
+      "bg_yielded": 0,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        26.0,
+        25.0,
+        22.0
+      ]
+    },
+    "job_rows": [],
+    "mem": "dataspeak-worker-busy-test\t43.91MiB / 7.746GiB; dataspeak-backend-worker-translations\t44.45MiB / 7.746GiB; dataspeak-analytics\t527.1MiB / 7.746GiB; dataspeak-frontend\t204.8MiB / 7.746GiB; dataspeak-backend\t54.68MiB / 7.746GiB; dataspeak-postgres\t85.86MiB / 7.746GiB; dataspeak-redis\t12.27MiB / 7.746GiB; dataspeak-mailpit\t28.46MiB / 7.746GiB",
+    "workload": "W5b busy path forced (wait 3 s, retry delay 30 s)",
+    "run": 1,
+    "recorded_at": "2026-10-16T23:08:24+07:00"
+  },
+  {
+    "narrative_wall_s": 36.7,
+    "generations": [
+      [
+        "FAILED",
+        "AI_BUSY",
+        "0",
+        "1"
+      ],
+      [
+        "FAILED",
+        "AI_BUSY",
+        "0",
+        "2"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "unavailable",
+      "claims_total": 0,
+      "claims_supported": 0
+    },
+    "events": {
+      "lock_waited": [],
+      "lock_timeout": 0,
+      "bg_yielded": 0,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        35.0
+      ]
+    },
+    "job_rows": [],
+    "mem": "dataspeak-worker-busy-test\t43.95MiB / 7.746GiB; dataspeak-backend-worker-translations\t44.25MiB / 7.746GiB; dataspeak-analytics\t528.5MiB / 7.746GiB; dataspeak-frontend\t204.8MiB / 7.746GiB; dataspeak-backend\t54.6MiB / 7.746GiB; dataspeak-postgres\t85.96MiB / 7.746GiB; dataspeak-redis\t11.69MiB / 7.746GiB; dataspeak-mailpit\t30.23MiB / 7.746GiB",
+    "workload": "W5b busy path forced (wait 3 s, retry delay 30 s)",
+    "run": 2,
+    "recorded_at": "2026-10-16T23:10:32+07:00"
   }
 ]

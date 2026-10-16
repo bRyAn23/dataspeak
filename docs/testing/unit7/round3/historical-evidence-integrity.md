@@ -21,4 +21,18 @@ Data Speak, Unit 7 Test Round 3. Baseline taken **2026-10-16 20:30:58 (+07)** be
 
 ## 3. Closing check
 
-_appended at the end of the round_
+Executed 2026-10-16 23:30:57 (+07) after every Round 3 and recovery execution had finished (`recovery/closing-integrity-check.log`, produced by recomputing SHA-256 for every path in `historical-evidence-manifest.csv`).
+
+| Check | Result |
+| --- | --- |
+| Historical files checked | 166 |
+| Unchanged (checksum and size equal to baseline) | **166** |
+| Modified | 0 |
+| Missing | 0 |
+| Unexpected new files under `docs/testing/unit7/` outside `round3/` | 0 |
+| `git diff HEAD` on historical paths | none (the only differences in `docs/testing/unit7/` outside `round3/` are the deletions of the temporary `final-verification/` working folder, whose files were moved unchanged into `round3/`, as listed in the log) |
+| Round 3 pre-recovery snapshot (59 files, `recovery/round3-pre-recovery-manifest.csv`) | 36 unchanged in place, 16 moved unchanged into `round3/`, 2 edited in place (`regression-results.md` updated with the re-execution; `round3_chain2.log` appended by the running chain), 5 regenerated or appended after the snapshot (the DEF-09 run records that gained the W5b rows, the CSV rebuilt from them, the two DEF-09 documents edited after the move, the W5b log written by the chain); **0 artefacts of the failed first attempt (`evidence/attempt1-worker-down/`) altered** |
+
+Files outside the testing folders changed during the round by this work: `backend/` (DEF-09 commit `57b7bce`), `docker/backend/Dockerfile*` (DEF-10 commit `c68be35`), and the stray `backend/.coverage` produced by a mis-targeted pytest invocation at 20:09, which was removed. `.DS_Store` and `docs/testing/unit7.zip` were modified by the project owner, not by this round.
+
+**Overall integrity result: HISTORICAL EVIDENCE PRESERVED.** Every historical file matches its baseline checksum and all 166 are present.

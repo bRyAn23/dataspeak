@@ -14,9 +14,9 @@ def rec(workload, run, **kw):
 srcs = sh(["docker", "compose", "exec", "-T", "postgres", "psql", "-U", "dataspeak", "-d", "dataspeak", "-tAc", "select public_id from analyses where name like 'Unit7 DEF-09 W1 run%' and status='COMPLETED' order by created_at"]).split()
 print("W5b started", datetime.now().isoformat(timespec="seconds"), flush=True)
 pool = [analyzed(f"Unit7 DEF-09 W5b run{i+1}") for i in range(REPS)]; idle_model()
-sh(["docker", "compose", "stop", "-t", "30", "backend-worker"], 300)
-sh(["docker", "compose", "run", "-d", "--rm", "--no-deps", "--name", "dataspeak-worker-busy-test", "-e", "AI_MODEL_LOCK_WAIT=3", "-e", "AI_MODEL_BUSY_RETRY_DELAY=30", "backend-worker", "php", "artisan", "queue:work", "redis", "--queue=default", "--tries=2", "--timeout=600", "--sleep=1"], 180); time.sleep(5)
 try:
+    sh(["docker", "compose", "stop", "-t", "130", "backend-worker"], 400)
+    sh(["docker", "compose", "run", "-d", "--rm", "--no-deps", "--name", "dataspeak-worker-busy-test", "-e", "AI_MODEL_LOCK_WAIT=3", "-e", "AI_MODEL_BUSY_RETRY_DELAY=30", "backend-worker", "php", "artisan", "queue:work", "redis", "--queue=default", "--tries=2", "--timeout=600", "--sleep=1"], 180); time.sleep(5)
     for i in range(REPS):
         idle_model(); src = srcs[i % len(srcs)]; aid = pool[i]; t0 = utc()
         sh(["docker", "compose", "exec", "-T", "backend", "php", "artisan", "tinker", "--execute", f"$a=App\\Models\\Analysis::where('public_id','{src}')->first(); App\\Models\\Claim::where('analysis_id',$a->id)->update(['statement_translations'=>null]); App\\Jobs\\TranslateReportJob::dispatchForOtherLanguages($a,'en'); echo 'dispatched';"], 60)

@@ -1,6 +1,6 @@
 # Round 3 Regression Results
 
-Data Speak, Unit 7 Test Round 3, executed 2026-10-16 20:08–20:12 (+07) on the working tree described in `environment-report.md` (commit `e4ae051` plus the DEF-09 correction). Logs: `evidence/logs/phpunit_def09.log`, `evidence/logs/pytest_final.log`, `evidence/logs/golden_reference_final.log`, `evidence/logs/frontend_final.log`. Terminal capture: `evidence/regression/figure-r3-regression-suites.png`. Historical reference values are quoted from the Round 1 and Round 2 documents and were not re-derived.
+Data Speak, Unit 7 Test Round 3. First execution 2026-10-16 20:08–20:12 (+07) on the working tree (commit `e4ae051` plus the DEF-09 correction, later committed as `57b7bce`); logs `evidence/logs/phpunit_def09.log`, `evidence/logs/pytest_final.log`, `evidence/logs/golden_reference_final.log`, `evidence/logs/frontend_final.log`. **Re-executed 2026-10-16 23:23 after the DEF-10 image change at commit `c68be35`** in a real Terminal window with identical results (`recovery/evidence/regression/suites_terminal.log`, `recovery/evidence/regression/golden_reference_recovery.log`); the Terminal screenshot `recovery/evidence/regression/figure-r3-regression-suites.png` is captured when the screen is unlocked (see `recapture_watcher.log`). Historical reference values are quoted from the Round 1 and Round 2 documents and were not re-derived.
 
 ## 1. Automated suites
 
@@ -14,7 +14,7 @@ Data Speak, Unit 7 Test Round 3, executed 2026-10-16 20:08–20:12 (+07) on the 
 | React frontend (Vitest + MSW) | `npm test` | 28 passed, 14 files | 28 passed | **28 passed, 14 files** | 28 / 0 / 0 / 0 | none |
 | Frontend lint / format / types / build | `npm run lint`, `format:check`, `typecheck`, `build` | clean (2 pre-existing warnings), built | same | **0 errors, same 2 pre-existing warnings (`no-explicit-any` in `vite.config.ts`); Prettier clean; `tsc` exit 0; built in 168 ms** | | none |
 
-Total automated: **272 executed, 272 passed, 0 failed, 0 skipped, 0 errors** (49 + 162 + 28 + 33 golden assertions).
+Total automated: **272 executed, 272 passed, 0 failed, 0 skipped, 0 errors** (49 + 162 + 28 + 33 golden assertions), identical in both executions (20:08 and 23:23).
 
 ## 2. What the suites verify (mapping to the Round 3 checklist)
 

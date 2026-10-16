@@ -1,6 +1,21 @@
 # Hosted CI Verification (GitHub Actions)
 
-Data Speak, Unit 7 Test Round 3, 2026-10-16. Status: **PENDING** for every defect-fix commit, because the fix commits have not been pushed. Nothing was pushed in this session; the project owner pushes.
+Data Speak, Unit 7 Test Round 3, 2026-10-16. Status: **PASSED** for the DEF-09 fix commit `57b7bce` (which contains every earlier fix commit), verified on GitHub Actions after the project owner authorised the push at the end of Round 3. The earlier part of this document (sections 1–3) records the state before the push, when the status was PENDING.
+
+## 0. Hosted result (after the push, 2026-10-16 22:44 +07)
+
+| Item | Value |
+| --- | --- |
+| Workflow | `CI` (`.github/workflows/ci.yml`) |
+| Run | #2, id `38926418330`, event `push`, branch `main` |
+| Commit | `57b7bce61b2246c5d5d6267c480d900d1ae4a041` (DEF-09 fix; includes DEF-01..08 fix commits 0b33df0..524842f) |
+| Started / finished | 2026-10-16 15:44:47 UTC / 15:45:37 UTC (22:44–22:45 +07) |
+| Outcome | **success** |
+| Jobs | Backend (Pint, PHPUnit) success 15:44:50–15:45:21; Analytics (Ruff, PyTest) success 15:44:50–15:45:30; Frontend (lint, typecheck, test, build) success 15:44:50–15:45:36; Compose file validates success 15:44:50–15:44:59 |
+| URL | https://github.com/bRyAn23/dataspeak/actions/runs/38926418330 |
+| Source of the record | public GitHub REST API (`/repos/bRyAn23/dataspeak/actions/runs`, `/actions/runs/38926418330/jobs`), read without a token on 2026-10-16 22:50 +07; no `gh` CLI on this machine |
+
+This is the first hosted run that includes the Analytics job with the DEF-06 pins; its pass closes the hosted-verification gap recorded for DEF-06 in Round 2. The round's documentation commits follow later and will trigger run #3 and later; those runs do not change the code under test.
 
 ## 1. What was checked
 
