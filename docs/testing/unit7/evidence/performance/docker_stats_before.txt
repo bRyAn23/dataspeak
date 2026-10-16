@@ -1,0 +1,8 @@
+# docker stats --no-stream at 2026-10-15T15:40:00
+dataspeak-analytics	0.24%	316.6MiB / 7.746GiB
+dataspeak-frontend	0.00%	370.5MiB / 7.746GiB
+dataspeak-backend	0.01%	100.6MiB / 7.746GiB
+dataspeak-backend-worker	0.01%	50.62MiB / 7.746GiB
+dataspeak-postgres	2.67%	80.3MiB / 7.746GiB
+dataspeak-redis	0.49%	41.05MiB / 7.746GiB
+dataspeak-mailpit	0.00%	50.41MiB / 7.746GiB

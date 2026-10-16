@@ -1,0 +1,57 @@
+{
+  "source": "read-only GET /report on the production reference analysis (test account), 2026-10-15",
+  "claims_total": 12,
+  "malformed": [
+    {
+      "claim": "80861062",
+      "kind": "FINDING",
+      "status": "SUPPORTED",
+      "in_report": true,
+      "field": "statement",
+      "fragments": [
+        "{Sales Amount (THB)}",
+        "{Region}"
+      ],
+      "text": "Average Sales Amount (THB) was +73.8% higher for North than for the lowest Region group. The difference in {Sales Amount (THB)} between {Region} groups is statistically meaningful, not a coincidence.",
+      "validation": {
+        "status": "SUPPORTED",
+        "method": "rule_based_v1",
+        "reasons": []
+      }
+    },
+    {
+      "claim": "80861062",
+      "kind": "FINDING",
+      "status": "SUPPORTED",
+      "in_report": true,
+      "field": "statement_template",
+      "fragments": [
+        "{{ev_d7f6a70c9c81.label}",
+        "{{ev_d7f6a70c9c81.dimension}"
+      ],
+      "text": "Average {ev_d7d539fb6c07.label} was {ev_d7d539fb6c07.display_value} higher for {ev_d7d539fb6c07.group} than for the lowest {ev_d7d539fb6c07.dimension} group. The difference in {{ev_d7f6a70c9c81.label}} between {{ev_d7f6a",
+      "validation": {
+        "status": "SUPPORTED",
+        "method": "rule_based_v1",
+        "reasons": []
+      }
+    },
+    {
+      "claim": "80861062",
+      "kind": "FINDING",
+      "status": "SUPPORTED",
+      "in_report": true,
+      "field": "original_statement_template",
+      "fragments": [
+        "{{ev_d7f6a70c9c81.label}",
+        "{{ev_d7f6a70c9c81.dimension}"
+      ],
+      "text": "Average {ev_d7d539fb6c07.label} was {ev_d7d539fb6c07.display_value} higher for {ev_d7d539fb6c07.group} than for the lowest {ev_d7d539fb6c07.dimension} group. The difference in {{ev_d7f6a70c9c81.label}} between {{ev_d7f6a",
+      "validation": {
+        "status": "SUPPORTED",
+        "method": "rule_based_v1",
+        "reasons": []
+      }
+    }
+  ]
+}

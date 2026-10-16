@@ -1,0 +1,19 @@
+{
+  "analysis": "aca1c39b-e9ba-41de-9ba6-cb106caa378b",
+  "run1": 202,
+  "run2_same_key": 202,
+  "idempotent_replayed": "true",
+  "first_processing": {
+    "status": "ANALYZED",
+    "evidence_total": "75",
+    "distinct": "75"
+  },
+  "reupload": 201,
+  "second_processing": {
+    "status": "ANALYZED",
+    "evidence_total": "75",
+    "distinct": "75"
+  },
+  "evidence_key_sets_identical": true,
+  "stage_rows_recorded": "12"
+}

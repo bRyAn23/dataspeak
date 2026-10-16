@@ -1,0 +1,23 @@
+{
+  "run_started": "2026-10-16T10:34:51+07:00",
+  "by_level": {
+    "integration": {
+      "executed": 9,
+      "PASS": 8,
+      "FAIL": 1
+    },
+    "system": {
+      "executed": 14,
+      "PASS": 12,
+      "FAIL": 2
+    }
+  },
+  "executed": 23,
+  "passed": 20,
+  "failed": 3,
+  "failed_ids": [
+    "SYS-09",
+    "SYS-08",
+    "INT-08"
+  ]
+}

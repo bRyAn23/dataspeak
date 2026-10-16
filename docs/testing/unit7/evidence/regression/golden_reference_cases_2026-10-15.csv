@@ -1,0 +1,34 @@
+case_id,test,dataset,calculation,library,expected_value,actual_value,tolerance,case_type,outcome
+SA-01,test_tiny_golden_hand_verified_values,tiny.csv,row_count,Polars,6,6.0,exact (==),numeric_reference,PASS
+SA-02,test_tiny_golden_hand_verified_values,tiny.csv,mean(amount),Polars/NumPy,30,30.0,exact (==),numeric_reference,PASS
+SA-03,test_tiny_golden_hand_verified_values,tiny.csv,median(amount),Polars/NumPy,30,30.0,exact (==),numeric_reference,PASS
+SA-04,test_tiny_golden_hand_verified_values,tiny.csv,min(amount),Polars/NumPy,10,10.0,exact (==),numeric_reference,PASS
+SA-05,test_tiny_golden_hand_verified_values,tiny.csv,max(amount),Polars/NumPy,50,50.0,exact (==),numeric_reference,PASS
+SA-06,test_tiny_golden_hand_verified_values,tiny.csv,sum(amount),Polars/NumPy,180,180.0,exact (==),numeric_reference,PASS
+SA-07,test_tiny_golden_hand_verified_values,tiny.csv,group mean(amount | region=N),Polars,20,20.0,exact (==),numeric_reference,PASS
+SA-08,test_tiny_golden_hand_verified_values,tiny.csv,group mean(amount | region=S),Polars,40,40.0,exact (==),numeric_reference,PASS
+SA-09,test_tiny_golden_hand_verified_values,tiny.csv,group sum(amount | region=S),Polars,120,120.0,exact (==),numeric_reference,PASS
+SA-10,test_tiny_golden_hand_verified_values,tiny.csv,top_bottom_mean_difference = (40-20)/20,NumPy,1.0,1.0,exact (==),numeric_reference,PASS
+SA-11,test_tiny_golden_hand_verified_values,tiny.csv,group test selection with 3 rows per group,SciPy (selection rule),none_applicable / insufficient,none_applicable / insufficient,exact match,structural_reference,PASS
+SA-12,test_tiny_golden_hand_verified_values,tiny.csv,trend granularity for 6 monthly dates,rules.choose_granularity,month,month,exact match,structural_reference,PASS
+SA-13,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,"mean(revenue THB), n=240",Polars vs statistics.fmean,383.4678333333333,383.4678333333334,rel 1e-9,numeric_reference,PASS
+SA-14,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,"median(revenue THB), n=240",Polars vs statistics.median,372.16999999999996,372.16999999999996,rel 1e-9,numeric_reference,PASS
+SA-15,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,"std(revenue THB), n=240",Polars vs statistics.stdev,106.90131567569158,106.90131567569159,rel 1e-9,numeric_reference,PASS
+SA-16,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,sum display value carries unit,formatting,ends with 'THB',"92,032 THB",string suffix,structural_reference,PASS
+SA-17,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,group mean(revenue | region=North),Polars vs statistics.fmean,485.4252427184466,485.4252427184466,rel 1e-9,numeric_reference,PASS
+SA-18,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,group count(region=North),Polars vs len(),103,103,exact (==),numeric_reference,PASS
+SA-19,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,top_group_share = sum(North)/sum(all),Polars vs Python sum(),0.5432745988690055,0.5432745988690055,rel 1e-6 (pytest.approx default),numeric_reference,PASS
+SA-20,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,top group identity,Polars,North,North,exact match,structural_reference,PASS
+SA-21,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,"group difference test method (4 regions, n>=30)",SciPy,one_way_anova or kruskal_wallis,kruskal_wallis,set membership,structural_reference,PASS
+SA-22,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,group difference test p-value,SciPy,< 0.05,4.285005651730344e-39,threshold,numeric_reference,PASS
+SA-23,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,trend granularity (240 daily rows over 2025),rules.choose_granularity,month,month,exact match,structural_reference,PASS
+SA-24,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,number of periods in series,Polars,12,12,exact (==),numeric_reference,PASS
+SA-25,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,trend slope sign (growth baked into data),statsmodels OLS,> 0,178.91517482517474,sign,numeric_reference,PASS
+SA-26,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,trend slope n_periods,statsmodels OLS,12,12,exact (==),numeric_reference,PASS
+SA-27,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,null_rate(discount_pct),Polars vs null_count/height,0.14583333333333334,0.14583333333333334,rel 1e-6 (pytest.approx default),numeric_reference,PASS
+SA-28,test_retail_golden_cross_checked_with_statistics_module,retail_sales.csv,null_rate quality flag at 15% missing,rules.HIGH_NULL_WARN,warning,warning,exact match,structural_reference,PASS
+SA-29,test_descriptive_statistics_match_reference_values,SAMPLE (8-row CSV in test file),"sum(revenue), n=7 non-null",Polars vs Python sum(),879.0,879.0,rel 1e-6 (pytest.approx default),numeric_reference,PASS
+SA-30,test_descriptive_statistics_match_reference_values,SAMPLE (8-row CSV in test file),"mean(revenue), n=7 non-null",Polars vs statistics.fmean,125.57142857142857,125.57142857142857,rel 1e-6 (pytest.approx default),numeric_reference,PASS
+SA-31,test_descriptive_statistics_match_reference_values,SAMPLE (8-row CSV in test file),"median(revenue), n=7 non-null",Polars vs statistics.median,60.0,60.0,rel 1e-6 (pytest.approx default),numeric_reference,PASS
+SA-32,test_descriptive_statistics_match_reference_values,SAMPLE (8-row CSV in test file),min(revenue),Polars,25.0,25.0,exact (==),numeric_reference,PASS
+SA-33,test_descriptive_statistics_match_reference_values,SAMPLE (8-row CSV in test file),max(revenue),Polars,495.0,495.0,exact (==),numeric_reference,PASS

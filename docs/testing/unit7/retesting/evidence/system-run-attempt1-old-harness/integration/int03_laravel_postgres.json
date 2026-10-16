@@ -1,0 +1,60 @@
+{
+  "get_analysis": {
+    "id": "39e444fd-8421-4865-976f-e3c23cb90092",
+    "name": "Unit7 INT A1",
+    "status": "VALIDATED",
+    "current_stage": "VALIDATION",
+    "dataset": {
+      "file_name": "retail_sales.csv",
+      "size_bytes": 11377,
+      "sha256": "e2b1a859c2ac08669309a47f54cf0654ba9f42e73b645c6190fcb9a53be6d537",
+      "row_count": 240,
+      "column_count": 7,
+      "completeness_pct": null,
+      "uploaded_at": "2026-10-16T03:31:53Z",
+      "purged_at": null,
+      "transient_file_present": true
+    },
+    "report_language": "en",
+    "chart_theme": "emerald",
+    "last_error": null,
+    "created_at": "2026-10-16T03:31:53Z",
+    "updated_at": "2026-10-16T03:31:53Z",
+    "job": null,
+    "stages": [
+      {
+        "stage": "UPLOAD",
+        "status": "SUCCEEDED",
+        "attempt_no": 1,
+        "progress": 100,
+        "started_at": "2026-10-16T03:31:53Z",
+        "finished_at": "2026-10-16T03:31:53Z",
+        "duration_ms": 19,
+        "error_code": null,
+        "result_summary": {
+          "size_bytes": 11377
+        }
+      },
+      {
+        "stage": "VALIDATION",
+        "status": "SUCCEEDED",
+        "attempt_no": 1,
+        "progress": 100,
+        "started_at": "2026-10-16T03:31:53Z",
+        "finished_at": "2026-10-16T03:31:53Z",
+        "duration_ms": 39,
+        "error_code": null,
+        "result_summary": {
+          "row_count": 240,
+          "column_count": 7,
+          "warning_count": 0
+        }
+      }
+    ],
+    "has_definitions": false,
+    "has_report": false,
+    "can_rebuild_report": false
+  },
+  "listed": true,
+  "postgres_row": "VALIDATED|240|7|retail_sales.csv"
+}

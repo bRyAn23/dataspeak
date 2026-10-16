@@ -1,0 +1,9 @@
+{
+  "first_run": 409,
+  "second_run_same_key": 409,
+  "idempotent_replayed_header": null,
+  "final_status": "COMPLETED",
+  "evidence_count_before_total_distinct": "75|75",
+  "evidence_count_after_total_distinct": "75|75",
+  "insights_after": 7
+}

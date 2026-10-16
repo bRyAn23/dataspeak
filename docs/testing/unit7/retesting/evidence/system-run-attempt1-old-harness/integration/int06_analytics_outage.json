@@ -1,0 +1,29 @@
+{
+  "validate_during_outage": {
+    "status": 503,
+    "body": {
+      "error": {
+        "code": "ANALYTICS_UNAVAILABLE",
+        "message": "The analytics service is unavailable."
+      }
+    }
+  },
+  "analysis_status_after_failure": "UPLOADED",
+  "analytics_healthy_after_restart": true,
+  "validate_after_restart": {
+    "status": 200,
+    "body": {
+      "data": {
+        "analysis_id": "533b55dd-7295-4ded-9efd-c53e666090b8",
+        "status": "VALIDATED",
+        "valid": true,
+        "row_count": 240,
+        "column_count": 7,
+        "warnings": [],
+        "errors": []
+      }
+    }
+  },
+  "ui_error_text_excerpt": "1\nUpload\n2\nProfile\n3\nDefine\n4\nAnalyze\n5\nReport\nNew analysis\nUpload a CSV or Excel file and Data Speak will check it, profile it and guide you through the rest.\nAnalysis name\n\nDrop your CSV or Excel file here or click to choose\n\nCSV or Excel (.xlsx), up to 50 MB. For Excel the worksheet with the most data is used. One dataset per analysis.\n\nretail_sales.csv11.1 KB\nUse the sample retail dataset\n\nThe",
+  "ui_retry_succeeded": true
+}

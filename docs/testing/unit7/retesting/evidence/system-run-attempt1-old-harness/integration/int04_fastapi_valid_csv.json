@@ -1,0 +1,93 @@
+{
+  "validate": {
+    "status": 200,
+    "body": {
+      "valid": true,
+      "row_count": 240,
+      "column_count": 7,
+      "columns": [
+        "order_date",
+        "region",
+        "product_category",
+        "ยอดขาย_thb",
+        "ရောင်းအား_units",
+        "discount_pct",
+        "customer_id"
+      ],
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "profile": {
+    "status": 200,
+    "dataset": {
+      "rows": 240,
+      "columns": 7,
+      "completeness": 0.979167,
+      "duplicate_rows": 0
+    },
+    "columns": [
+      [
+        "order_date",
+        "date",
+        0.0
+      ],
+      [
+        "region",
+        "category",
+        0.0
+      ],
+      [
+        "product_category",
+        "category",
+        0.0
+      ],
+      [
+        "ยอดขาย_thb",
+        "numeric",
+        0.0
+      ],
+      [
+        "ရောင်းအား_units",
+        "integer",
+        0.0
+      ],
+      [
+        "discount_pct",
+        "numeric",
+        0.145833
+      ],
+      [
+        "customer_id",
+        "identifier",
+        0.0
+      ]
+    ],
+    "quality_findings": [
+      {
+        "code": "HIGH_NULL_RATE",
+        "severity": "warning",
+        "message": "14.6% of values are missing.",
+        "column": "discount_pct"
+      }
+    ]
+  },
+  "analyze": {
+    "status": 200,
+    "summary": {
+      "evidence_count": 75,
+      "families_run": [
+        "descriptive",
+        "trend",
+        "group_comparison",
+        "association",
+        "quality",
+        "statistical_test"
+      ],
+      "skipped": []
+    },
+    "evidence_count": 75,
+    "mean_revenue_engine": 383.4678333333334,
+    "mean_revenue_independent": 383.4678333333333
+  }
+}

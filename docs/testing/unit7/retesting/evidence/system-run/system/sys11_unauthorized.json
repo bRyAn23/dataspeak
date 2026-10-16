@@ -1,0 +1,5 @@
+{
+  "no_token_GET_analyses": 401,
+  "other_user_GET_analysis": 404,
+  "other_user_GET_report": 404
+}

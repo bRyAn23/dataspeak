@@ -43,6 +43,16 @@ Earlier versions of B01, B02 and B03 in this folder were images rendered from lo
 | C03_application_health.png | Four read-only health requests: local FastAPI 200, local Laravel 200 (database ok, redis ok), production frontend HTTPS 200, production API HTTP/2 200 via nginx 1.28.3 (database ok, redis ok) | Execution; log `logs/C03_health_checks.log` | 2026-10-14 00:16 | Part C: health-check evidence |
 | B04b_latency_chart_run2.png | 300 DPI line chart of run 2 (mean 9.874 ms line) | Generated from `latency_results_run2.csv` | 2026-10-13 | Part B: companion to B03 |
 
+## Usability evaluation (added 2026-10-14)
+
+| File | What it shows | Actual source or execution | Captured | Rubric criterion |
+| --- | --- | --- | --- | --- |
+| usability/test_plan.md, participant_instructions.md, observation_form.md, participant_feedback_form.md, researcher_runbook.md | Prepared participant-study instruments; **no sessions run, data files empty** | Prepared documents | 2026-10-14 | Part B: participant evaluation (planned, not conducted) |
+| usability/cognitive_walkthrough.md | AI-assisted cognitive walkthrough of the four tasks on production, 10 severity-rated findings | Inspection of real step screenshots by the AI evaluator; labelled as inspection, not participant testing | 2026-10-14 20:00 | Part B: usability inspection |
+| usability/instrumented_measurements.md, .csv, .json | Shortest paths, time to feedback, element position and size, axe-core violations per screen, readability of the generated summary, content defects | Playwright script against https://dataspeaknow.com with the test account and synthetic data | 2026-10-14 19:57 to 20:10 | Part B: instrumented usability measures |
+| usability/walkthrough/*.png, usability/B05_walkthrough_steps.png | Unedited step screenshots and a four-panel composite (Figure 13) | Playwright screenshots of production | 2026-10-14 | Part B: figure |
+| usability/inspection_section.md | Part B insert with Table 2, Table 3 and the Figure 13 caption | Written from the two documents above | 2026-10-14 | Part B: write-up |
+
 ## Preserved logs and data
 
 | File | Content |

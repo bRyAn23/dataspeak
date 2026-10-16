@@ -1,0 +1,51 @@
+{
+  "tally_after_retests": {
+    "integration": {
+      "executed": 8,
+      "PASS": 8,
+      "FAIL": 0,
+      "BLOCKED": 0,
+      "SKIPPED": 0,
+      "MEASURED": 0
+    },
+    "system": {
+      "executed": 15,
+      "PASS": 15,
+      "FAIL": 0,
+      "BLOCKED": 0,
+      "SKIPPED": 0,
+      "MEASURED": 0
+    },
+    "regression": {
+      "executed": 4,
+      "PASS": 4,
+      "FAIL": 0,
+      "BLOCKED": 0,
+      "SKIPPED": 0,
+      "MEASURED": 0
+    },
+    "performance": {
+      "executed": 3,
+      "PASS": 0,
+      "FAIL": 0,
+      "BLOCKED": 0,
+      "SKIPPED": 0,
+      "MEASURED": 3
+    }
+  },
+  "first_run_failures": [
+    "INT-07",
+    "SYS-05",
+    "SYS-04",
+    "SYS-12",
+    "LIM-01"
+  ],
+  "retests": [
+    "INT-07R",
+    "SYS-05R",
+    "SYS-04R",
+    "SYS-12R",
+    "LIM-01R"
+  ],
+  "cases_total_listed": 35
+}

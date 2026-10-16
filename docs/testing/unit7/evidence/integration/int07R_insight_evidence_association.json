@@ -1,0 +1,25 @@
+{
+  "insights": 7,
+  "evidence_keys_referenced": [
+    "ev_1898848cb02e",
+    "ev_2964f36f4b6c",
+    "ev_5ad07579974c",
+    "ev_6d88a28f91e8",
+    "ev_92ab7add6554",
+    "ev_9a7504789c1e",
+    "ev_9acd9193dc5c",
+    "ev_d7d539fb6c07",
+    "ev_d7f6a70c9c81"
+  ],
+  "keys_missing_in_db": [],
+  "sample": {
+    "rank": 1,
+    "insight_type": "GROUP_DIFFERENCE",
+    "headline": "Average Sales Units differs between Region groups: North is +75.5% higher than South",
+    "evidence_id": "ev_2964f36f4b6c",
+    "evidence_ids": [
+      "ev_2964f36f4b6c",
+      "ev_6d88a28f91e8"
+    ]
+  }
+}

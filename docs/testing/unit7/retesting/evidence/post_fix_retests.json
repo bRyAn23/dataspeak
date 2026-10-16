@@ -1,0 +1,123 @@
+{
+  "started": "2026-10-16T10:08:40+07:00",
+  "results": {
+    "RT-04": {
+      "defect": "DEF-04",
+      "profile_job_wall_seconds_during_translations": 12.2,
+      "profile_status": "PROFILED",
+      "translate_jobs_seen_on": [],
+      "profile_job_seen_on": [
+        "dataspeak-backend-worker"
+      ],
+      "baseline_before_fix_seconds": 73.3,
+      "pass": false
+    },
+    "RT-01": {
+      "defect": "DEF-01",
+      "claims": 2,
+      "statements_with_braces": 0,
+      "validator_reasons_brace_related": [],
+      "validator_method": [
+        "rule_based_v2"
+      ],
+      "pass": true
+    },
+    "RT-02": {
+      "defect": "DEF-02",
+      "repeated_lead_sentences_under_charts": [],
+      "pass": true
+    },
+    "RT-03": {
+      "defect": "DEF-03",
+      "statements_with_rho": 0,
+      "pass": true
+    },
+    "RT-05": {
+      "defect": "DEF-05",
+      "explanation_shown": true,
+      "upload_again_button": true,
+      "disabled_run_again_present": false,
+      "destination_url": "http://localhost:5173/analyses/new?id=92e8969f-a258-47a6-aa99-a0ffe1730de4",
+      "pass": true
+    },
+    "RT-08": {
+      "defect": "DEF-08",
+      "warning_top_px": 401,
+      "viewport_px": 1080,
+      "visible_without_scroll": true,
+      "baseline_before_fix_px": 1187,
+      "pass": true
+    },
+    "RT-07": {
+      "defect": "DEF-07",
+      "color_contrast_nodes": {
+        "new_analysis": 0,
+        "profile": 0,
+        "report": 1
+      },
+      "baseline_before_fix": {
+        "new_analysis": 4,
+        "profile": 10,
+        "report": 1
+      },
+      "other_violations": {
+        "new_analysis": [],
+        "profile": [],
+        "report": []
+      },
+      "claim_link_size_px": {
+        "width": 27,
+        "height": 24
+      },
+      "baseline_link_px": "21x16",
+      "pass": false
+    },
+    "RT-07b": {
+      "defect": "DEF-07",
+      "note": "re-scan after changing the 'calculated' badge colour",
+      "axe_violations": {
+        "report": [],
+        "traceability_panel": [
+          {
+            "id": "aria-allowed-role",
+            "impact": "minor",
+            "nodes": 1
+          }
+        ],
+        "claim_link_px": {
+          "width": 27,
+          "height": 24
+        }
+      },
+      "claim_link_px": {
+        "width": 27,
+        "height": 24
+      },
+      "pass": true
+    },
+    "RT-04b": {
+      "defect": "DEF-04",
+      "report_generation_s": 177.9,
+      "profile_job_wall_seconds_during_translations": 37.0,
+      "profile_status": "PROFILED",
+      "translate_jobs_seen_on": [
+        "dataspeak-backend-worker-translations"
+      ],
+      "profile_job_seen_on": [
+        "dataspeak-backend-worker"
+      ],
+      "translations_queue_length_after": "2",
+      "baseline_before_fix_seconds": 73.3,
+      "analyses": {
+        "X": "f4de3703-1512-47b4-a34a-e1952e85023c",
+        "Y": "0e1c86bd-ad35-4445-9c7d-868190dfb6ef"
+      },
+      "pass": true
+    }
+  },
+  "finished": "2026-10-16T10:11:15+07:00",
+  "analyses": {
+    "X": "92e8969f-a258-47a6-aa99-a0ffe1730de4",
+    "Y": "15857f14-dc63-4c25-ab61-93ceabb23f7b"
+  }
+}

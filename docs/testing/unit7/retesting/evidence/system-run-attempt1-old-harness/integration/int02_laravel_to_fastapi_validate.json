@@ -1,0 +1,16 @@
+{
+  "upload_status": 201,
+  "validate_status": 200,
+  "validate_body": {
+    "data": {
+      "analysis_id": "39e444fd-8421-4865-976f-e3c23cb90092",
+      "status": "VALIDATED",
+      "valid": true,
+      "row_count": 240,
+      "column_count": 7,
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "analytics_container_log_lines": []
+}

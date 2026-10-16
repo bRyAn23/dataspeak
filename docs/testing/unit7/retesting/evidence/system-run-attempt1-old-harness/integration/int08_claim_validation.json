@@ -1,0 +1,26 @@
+{
+  "claims_total": 21,
+  "claims_supported": 17,
+  "sampled_claim_statuses": [
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED"
+  ],
+  "sampled_evidence_counts": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "db_status_in_report_counts": "NEEDS_REVIEW|f|3\nREJECTED|f|1\nSUPPORTED|f|3\nSUPPORTED|t|14",
+  "non_supported_in_report": []
+}
