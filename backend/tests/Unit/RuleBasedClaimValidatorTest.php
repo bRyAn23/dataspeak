@@ -158,4 +158,51 @@ class RuleBasedClaimValidatorTest extends TestCase
         $ok = $this->validator->validate($this->claim('Revenue fell by {'.AiScenario::EV_DROP.'.display_value} from {'.AiScenario::EV_DROP.'.period_from} to {'.AiScenario::EV_DROP.'.period_to}.', [AiScenario::EV_DROP]), $this->resolver);
         $this->assertSame(ClaimStatus::SUPPORTED, $ok->status, implode(',', $ok->reasons));
     }
+
+    /** DEF-01: a placeholder wrapped in doubled braces is normalised, supported, and renders without braces. */
+    public function test_def01_doubled_braces_are_normalised_and_render_cleanly(): void
+    {
+        $text = 'The gap in {{'.AiScenario::EV_SHARE.'.label}} between {{'.AiScenario::EV_SHARE.'.dimension}} groups is large.';
+        $result = $this->validator->validate($this->claim($text, [AiScenario::EV_SHARE]), $this->resolver);
+
+        $this->assertSame(ClaimStatus::SUPPORTED, $result->status, implode(',', $result->reasons));
+        $this->assertContains('BRACES_NORMALISED', $result->reasons);
+        $stored = (string) $result->claim['text'];
+        $this->assertStringNotContainsString('{{', $stored);
+        $rendered = (new NarrativeRenderer)->render($stored, $this->resolver);
+        $this->assertStringNotContainsString('{', $rendered);
+        $this->assertStringNotContainsString('}', $rendered);
+    }
+
+    /** DEF-01: an invented placeholder such as {Sales Amount} can never be SUPPORTED. */
+    public function test_def01_stray_braces_are_rejected(): void
+    {
+        $r = $this->validator->validate($this->claim('The difference in {Sales Amount (THB)} between {Region} groups is meaningful, see {'.AiScenario::EV_SHARE.'.display_value}.', [AiScenario::EV_SHARE]), $this->resolver);
+        $this->assertSame(ClaimStatus::REJECTED, $r->status);
+        $this->assertContains('STRAY_BRACES', $r->reasons);
+
+        // A stray brace next to a valid token is a formatting slip: it is normalised, not rejected, and never rendered.
+        $half = $this->validator->validate($this->claim('{'.AiScenario::EV_SHARE.'.group} leads {'.AiScenario::EV_SHARE.'.label}} clearly.', [AiScenario::EV_SHARE]), $this->resolver);
+        $this->assertSame(ClaimStatus::SUPPORTED, $half->status, implode(',', $half->reasons));
+        $this->assertContains('BRACES_NORMALISED', $half->reasons);
+        $this->assertDoesNotMatchRegularExpression('/[{}]/', (new NarrativeRenderer)->render((string) $half->claim['text'], $this->resolver));
+
+        // A brace that is not attached to a token is rejected even when it stands alone.
+        $lone = $this->validator->validate($this->claim('{'.AiScenario::EV_SHARE.'.group} leads } clearly.', [AiScenario::EV_SHARE]), $this->resolver);
+        $this->assertSame(ClaimStatus::REJECTED, $lone->status);
+        $this->assertContains('STRAY_BRACES', $lone->reasons);
+    }
+
+    /** DEF-01: the exact template stored for the production claim 80861062 (two valid tokens, two doubled). */
+    public function test_def01_production_template_shape_is_normalised(): void
+    {
+        $a = AiScenario::EV_SHARE;
+        $b = AiScenario::EV_MEAN;
+        $text = 'Average {'.$a.'.label} was {'.$a.'.display_value} higher for {'.$a.'.group} than for the lowest {'.$a.'.dimension} group. '
+            .'The difference in {{'.$b.'.label}} between {{'.$a.'.dimension}} groups is statistically meaningful, not a coincidence.';
+        $result = $this->validator->validate($this->claim($text, [$a, $b]), $this->resolver);
+        $this->assertNotSame(ClaimStatus::REJECTED, $result->status, implode(',', $result->reasons));
+        $rendered = (new NarrativeRenderer)->render((string) $result->claim['text'], $this->resolver);
+        $this->assertDoesNotMatchRegularExpression('/[{}]/', $rendered);
+    }
 }

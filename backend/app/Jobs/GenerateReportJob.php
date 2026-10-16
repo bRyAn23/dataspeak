@@ -143,7 +143,7 @@ class GenerateReportJob implements ShouldBeUnique, ShouldQueue
     }
 
     /** Reason codes that a single model rewrite can fix. Anything else is final. */
-    private const REPAIRABLE = ['DIGITS_OUTSIDE_PLACEHOLDER', 'PLACEHOLDER_FIELD_NOT_ALLOWED', 'PLACEHOLDER_UNRESOLVABLE', 'PLACEHOLDER_UNKNOWN_EVIDENCE', 'WRONG_LANGUAGE'];
+    private const REPAIRABLE = ['DIGITS_OUTSIDE_PLACEHOLDER', 'PLACEHOLDER_FIELD_NOT_ALLOWED', 'PLACEHOLDER_UNRESOLVABLE', 'PLACEHOLDER_UNKNOWN_EVIDENCE', 'WRONG_LANGUAGE', 'STRAY_BRACES'];
 
     /** @return array{validated: int, supported: int, rejected: int, needs_review: int, repaired: int} */
     private function persistClaims(Analysis $analysis, AiGeneration $generation, PlaceholderResolver $resolver, ClaimValidator $validator): array

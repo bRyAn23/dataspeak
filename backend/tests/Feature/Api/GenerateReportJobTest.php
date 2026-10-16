@@ -99,7 +99,7 @@ class GenerateReportJobTest extends ApiTestCase
         $this->getJson($this->urlFor($analysis, '/claims/'.$claimId))
             ->assertOk()
             ->assertJsonPath('data.validation.status', 'SUPPORTED')
-            ->assertJsonPath('data.validation.method', 'rule_based_v1')
+            ->assertJsonPath('data.validation.method', 'rule_based_v2')
             ->assertJsonPath('data.generation.model', 'qwen3:8b')
             ->assertJsonPath('data.evidence.0.metric', 'average_period_growth')
             ->assertJsonPath('data.evidence.0.source_columns.0', 'order_date');

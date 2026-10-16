@@ -18,7 +18,7 @@ use App\Support\Locale;
  */
 class RuleBasedClaimValidator implements ClaimValidator
 {
-    public const METHOD = 'rule_based_v1';
+    public const METHOD = 'rule_based_v2';
 
     /** Share and gap metrics are meaningless without the group they refer to. */
     public const GROUP_METRICS = ['top_group_share', 'top_category_share', 'top_bottom_mean_difference'];
@@ -45,6 +45,15 @@ class RuleBasedClaimValidator implements ClaimValidator
         $info = [];
         $text = (string) ($claim['text'] ?? '');
         $kind = (string) ($claim['claim_kind'] ?? ClaimKind::FINDING->value);
+
+        // Normalisation 0 (DEF-01): models sometimes wrap a valid placeholder in extra braces ({{ev_x.label}}).
+        // The renderer would substitute the inner token and leave literal braces in the report, so the extra
+        // braces are collapsed here before any rule runs; the normalised text is what gets stored.
+        $collapsed = preg_replace('/\{+(ev_[a-f0-9]{12}\.[a-z_]+)\}+/u', '{$1}', $text) ?? $text;
+        if ($collapsed !== $text) {
+            $text = $collapsed;
+            $info[] = 'BRACES_NORMALISED';
+        }
         $ids = array_values(array_unique(array_map('strval', (array) ($claim['evidence_ids'] ?? []))));
 
         // Normalisation 1: a placeholder is a citation. Known evidence referenced in the text is added to the list.
@@ -97,6 +106,11 @@ class RuleBasedClaimValidator implements ClaimValidator
         $stripped = preg_replace(ClaimOutputSchema::PLACEHOLDER_REGEX, '', $text) ?? $text;
         if (preg_match('/\p{N}/u', $stripped)) {
             $reject[] = 'DIGITS_OUTSIDE_PLACEHOLDER';
+        }
+        // Rule 9 (DEF-01): once every valid placeholder is removed, no brace may remain. A leftover brace is
+        // a malformed or invented placeholder (for example {Sales Amount}) that would reach the reader verbatim.
+        if (str_contains($stripped, '{') || str_contains($stripped, '}')) {
+            $reject[] = 'STRAY_BRACES';
         }
         // Rule 4b: the claim must be written in the report language (FEAT-I18N-002/003); labels and groups arrive
         // through placeholders already translated, so only the model's own words are checked.
@@ -167,7 +181,7 @@ class RuleBasedClaimValidator implements ClaimValidator
 
         $reasons = array_values(array_unique(array_merge($reject, $review, $info)));
         $status = $reject !== [] ? ClaimStatus::REJECTED : ($review !== [] ? ClaimStatus::NEEDS_REVIEW : ClaimStatus::SUPPORTED);
-        $normalized = array_merge($claim, ['claim_kind' => $kind, 'evidence_ids' => $ids]);
+        $normalized = array_merge($claim, ['claim_kind' => $kind, 'evidence_ids' => $ids, 'text' => $text]);
 
         return new ValidationResult($status, $reasons, self::METHOD, $normalized);
     }
