@@ -15,7 +15,9 @@ Data Speak, Unit 7 Test Round 3, 2026-10-16. Status: **PASSED** for the DEF-09 f
 | URL | https://github.com/bRyAn23/dataspeak/actions/runs/38926418330 |
 | Source of the record | public GitHub REST API (`/repos/bRyAn23/dataspeak/actions/runs`, `/actions/runs/38926418330/jobs`), read without a token on 2026-10-16 22:50 +07; no `gh` CLI on this machine |
 
-This is the first hosted run that includes the Analytics job with the DEF-06 pins; its pass closes the hosted-verification gap recorded for DEF-06 in Round 2. The round's documentation commits follow later and will trigger run #3 and later; those runs do not change the code under test.
+This is the first hosted run that includes the Analytics job with the DEF-06 pins; its pass closes the hosted-verification gap recorded for DEF-06 in Round 2.
+
+**Run #3** (`38932833712`) on `1930c64` (DEF-10 `c68be35` + the Round 3 evidence commit), event `push`, 2026-10-16 16:33:04–16:33:50 UTC: **success**; Backend 16:33:07–16:33:38, Analytics 16:33:07–16:33:40, Frontend 16:33:06–16:33:49, Compose 16:33:07–16:33:15, all success. https://github.com/bRyAn23/dataspeak/actions/runs/38932833712 (read from the public API at 23:34 +07). The Dockerfile change is not exercised by the workflow (CI does not build the images); its verification is the local image build with the pcntl assertion.
 
 ## 1. What was checked
 

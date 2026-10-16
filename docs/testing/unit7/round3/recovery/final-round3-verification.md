@@ -75,7 +75,7 @@ After the DEF-10 change the suites were re-run at commit `c68be35` (23:23): anal
 
 ## 9. Hosted CI status
 
-GitHub Actions run #2 (`38926418330`) on `57b7bce`: **success**, four jobs (backend, analytics, frontend, compose), 2026-10-16 15:44–15:45 UTC, read from the public API. Commits after it (DEF-10 `c68be35` and the documentation commit of this round) trigger further runs, recorded in `../hosted-ci-verification.md` when available. No claim is made for runs not observed.
+GitHub Actions run #2 (`38926418330`) on `57b7bce`: **success**, four jobs (backend, analytics, frontend, compose), 2026-10-16 15:44–15:45 UTC, read from the public API. Run #3 (`38932833712`) on `1930c64` (DEF-10 `c68be35` plus the Round 3 evidence commit): **success**, four jobs, 16:33:04–16:33:50 UTC. Both runs were read from the public GitHub API; no claim is made for runs not observed.
 
 ## 10. Historical evidence integrity outcome
 
