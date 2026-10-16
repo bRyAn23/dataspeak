@@ -77,6 +77,13 @@ class ReportAssembler
             // columns already used it; only the second line is skipped when it repeats.
             $items = [];
             $add = function (string $text, array $item) use (&$items, &$usedTexts): void {
+                // DEF-02: a second statement often restates the chart headline before adding its own point;
+                // show only the new part so the reader never sees the same sentence twice under one chart.
+                $text = self::trimRepeatedLead($text, array_keys($usedTexts));
+                $item['text'] = $text;
+                if ($text === '') {
+                    return;
+                }
                 if ($items !== [] && isset($usedTexts[$text])) {
                     return;
                 }
@@ -174,6 +181,31 @@ class ReportAssembler
     }
 
     /** "240.0" -> "240": whole numbers are shown without a trailing decimal in headline figures. */
+    /**
+     * DEF-02: when $text begins with a sentence that was already shown ($used), drop that leading sentence.
+     * Only whole leading sentences are removed; the stored claim is never changed, only its display here.
+     *
+     * @param  list<string>  $used
+     */
+    public static function trimRepeatedLead(string $text, array $used): string
+    {
+        $text = trim($text);
+        foreach ($used as $prior) {
+            $prior = trim((string) $prior);
+            if ($prior === '' || $text === $prior) {
+                continue;
+            }
+            if (str_starts_with($text, $prior)) {
+                $rest = ltrim(substr($text, strlen($prior)));
+                if ($rest !== '' && preg_match('/^\p{Lu}/u', $rest) === 1) {
+                    return $rest;
+                }
+            }
+        }
+
+        return $text;
+    }
+
     private static function tidy(string $display): string
     {
         return preg_replace('/^(-?[\d,]+)\.0(?=\s|$)/u', '$1', $display) ?? $display;
