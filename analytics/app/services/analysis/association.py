@@ -74,7 +74,7 @@ def run(df: pl.DataFrame, roles: Dict[str, ColumnRole]) -> List[Dict[str, Any]]:
                 metric="spearman_correlation",
                 method="spearman_rank_correlation",
                 value=rho,
-                display_value=f"rho={rho:+.2f}",
+                display_value=f"{rho:+.2f}",  # DEF-03: signed strength only; the statistic name stays in method/payload
                 parameters={"n": n},
                 quality="acceptable",
                 payload={
