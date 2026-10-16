@@ -4,8 +4,10 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN apk add --no-cache postgresql-dev icu-dev oniguruma-dev libzip-dev git unzip \
         libpng-dev libjpeg-turbo-dev freetype-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_pgsql pgsql intl zip gd \
+    && docker-php-ext-install pdo_pgsql pgsql intl zip gd pcntl \
     && docker-php-ext-enable opcache
+# DEF-10: queue workers need pcntl to handle SIGTERM (graceful stop); fail the build if it is missing.
+RUN php -r 'exit(extension_loaded("pcntl") ? 0 : 1);'
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY backend/composer.json backend/composer.lock ./

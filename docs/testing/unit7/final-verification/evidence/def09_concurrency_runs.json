@@ -1,0 +1,351 @@
+[
+  {
+    "narrative_wall_s": 118.0,
+    "generations": [
+      [
+        "SUCCEEDED",
+        "",
+        "115421",
+        "1"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "ready",
+      "claims_total": 18,
+      "claims_supported": 13
+    },
+    "events": {
+      "lock_waited": [],
+      "lock_timeout": 0,
+      "bg_yielded": 0,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": []
+    },
+    "mem": "dataspeak-backend-worker-translations\t43.02MiB / 7.746GiB; dataspeak-analytics\t518.1MiB / 7.746GiB; dataspeak-backend-worker\t48.75MiB / 7.746GiB; dataspeak-frontend\t351.7MiB / 7.746GiB; dataspeak-backend\t100.8MiB / 7.746GiB; dataspeak-postgres\t83.59MiB / 7.746GiB; dataspeak-redis\t41.16MiB / 7.746GiB; dataspeak-mailpit\t52.65MiB / 7.746GiB",
+    "workload": "W1 narrative only",
+    "run": 1,
+    "recorded_at": "2026-10-16T20:16:39+07:00"
+  },
+  {
+    "narrative_wall_s": 171.3,
+    "generations": [
+      [
+        "SUCCEEDED",
+        "",
+        "143342",
+        "1"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "ready",
+      "claims_total": 21,
+      "claims_supported": 8
+    },
+    "events": {
+      "lock_waited": [
+        23596,
+        25604
+      ],
+      "lock_timeout": 0,
+      "bg_yielded": 1,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": []
+    },
+    "mem": "dataspeak-backend-worker-translations\t44.43MiB / 7.746GiB; dataspeak-analytics\t527.4MiB / 7.746GiB; dataspeak-backend-worker\t48.39MiB / 7.746GiB; dataspeak-frontend\t351.7MiB / 7.746GiB; dataspeak-backend\t101.3MiB / 7.746GiB; dataspeak-postgres\t85.01MiB / 7.746GiB; dataspeak-redis\t41.55MiB / 7.746GiB; dataspeak-mailpit\t52.66MiB / 7.746GiB",
+    "workload": "W1 narrative only",
+    "run": 2,
+    "recorded_at": "2026-10-16T20:20:54+07:00"
+  },
+  {
+    "translations_wall_s": 140.1,
+    "events": {
+      "lock_waited": [],
+      "lock_timeout": 0,
+      "bg_yielded": 0,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        73.0,
+        24.0,
+        21.0,
+        34.0
+      ]
+    },
+    "mem": "dataspeak-backend-worker-translations\t44.38MiB / 7.746GiB; dataspeak-analytics\t526.9MiB / 7.746GiB; dataspeak-backend-worker\t48.37MiB / 7.746GiB; dataspeak-frontend\t351.7MiB / 7.746GiB; dataspeak-backend\t101MiB / 7.746GiB; dataspeak-postgres\t84.95MiB / 7.746GiB; dataspeak-redis\t41.2MiB / 7.746GiB; dataspeak-mailpit\t52.31MiB / 7.746GiB",
+    "workload": "W2 translation only",
+    "run": 1,
+    "recorded_at": "2026-10-16T20:25:02+07:00"
+  },
+  {
+    "translations_wall_s": 122.3,
+    "events": {
+      "lock_waited": [],
+      "lock_timeout": 0,
+      "bg_yielded": 0,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        34.0,
+        31.0
+      ]
+    },
+    "mem": "dataspeak-backend-worker-translations\t44.54MiB / 7.746GiB; dataspeak-analytics\t526.9MiB / 7.746GiB; dataspeak-backend-worker\t49.11MiB / 7.746GiB; dataspeak-frontend\t351.7MiB / 7.746GiB; dataspeak-backend\t100.7MiB / 7.746GiB; dataspeak-postgres\t84.66MiB / 7.746GiB; dataspeak-redis\t41.6MiB / 7.746GiB; dataspeak-mailpit\t52.54MiB / 7.746GiB",
+    "workload": "W2 translation only",
+    "run": 2,
+    "recorded_at": "2026-10-16T20:27:07+07:00"
+  },
+  {
+    "narrative_wall_s": 159.2,
+    "generations": [
+      [
+        "SUCCEEDED",
+        "",
+        "147479",
+        "1"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "ready",
+      "claims_total": 21,
+      "claims_supported": 8
+    },
+    "events": {
+      "lock_waited": [
+        9649,
+        27612
+      ],
+      "lock_timeout": 0,
+      "bg_yielded": 1,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        57.0,
+        24.0
+      ]
+    },
+    "mem": "dataspeak-backend-worker-translations\t44.34MiB / 7.746GiB; dataspeak-analytics\t526.9MiB / 7.746GiB; dataspeak-backend-worker\t48.9MiB / 7.746GiB; dataspeak-frontend\t351.4MiB / 7.746GiB; dataspeak-backend\t101.2MiB / 7.746GiB; dataspeak-postgres\t84.32MiB / 7.746GiB; dataspeak-redis\t41.47MiB / 7.746GiB; dataspeak-mailpit\t52.57MiB / 7.746GiB",
+    "workload": "W3 narrative during translation",
+    "run": 1,
+    "recorded_at": "2026-10-16T20:30:08+07:00"
+  },
+  {
+    "narrative_wall_s": 150.6,
+    "generations": [
+      [
+        "SUCCEEDED",
+        "",
+        "145111",
+        "1"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "ready",
+      "claims_total": 21,
+      "claims_supported": 8
+    },
+    "events": {
+      "lock_waited": [
+        25358,
+        4575
+      ],
+      "lock_timeout": 0,
+      "bg_yielded": 1,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": []
+    },
+    "mem": "dataspeak-backend-worker-translations\t44.68MiB / 7.746GiB; dataspeak-analytics\t528MiB / 7.746GiB; dataspeak-backend-worker\t48.23MiB / 7.746GiB; dataspeak-frontend\t352MiB / 7.746GiB; dataspeak-backend\t101.2MiB / 7.746GiB; dataspeak-postgres\t84.99MiB / 7.746GiB; dataspeak-redis\t41.74MiB / 7.746GiB; dataspeak-mailpit\t52.74MiB / 7.746GiB",
+    "workload": "W3 narrative during translation",
+    "run": 2,
+    "recorded_at": "2026-10-16T20:35:37+07:00"
+  },
+  {
+    "narrative1_wall_s": 128.4,
+    "narrative2_wall_s": 299.4,
+    "generations": {
+      "a1": [
+        [
+          "SUCCEEDED",
+          "",
+          "119239",
+          "1"
+        ]
+      ],
+      "a2": [
+        [
+          "SUCCEEDED",
+          "",
+          "143157",
+          "1"
+        ]
+      ]
+    },
+    "report": {
+      "a1": {
+        "status": "READY",
+        "ai": "ready",
+        "claims_total": 22,
+        "claims_supported": 14
+      },
+      "a2": {
+        "status": "READY",
+        "ai": "ready",
+        "claims_total": 21,
+        "claims_supported": 8
+      }
+    },
+    "events": {
+      "lock_waited": [
+        23288,
+        6178,
+        27687
+      ],
+      "lock_timeout": 0,
+      "bg_yielded": 2,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        184.0
+      ]
+    },
+    "mem": "dataspeak-backend-worker-translations\t45.7MiB / 7.746GiB; dataspeak-analytics\t526.9MiB / 7.746GiB; dataspeak-backend-worker\t48.82MiB / 7.746GiB; dataspeak-frontend\t352MiB / 7.746GiB; dataspeak-backend\t100.8MiB / 7.746GiB; dataspeak-postgres\t85MiB / 7.746GiB; dataspeak-redis\t41.01MiB / 7.746GiB; dataspeak-mailpit\t53.15MiB / 7.746GiB",
+    "workload": "W4 two narratives + translations pending",
+    "run": 1,
+    "recorded_at": "2026-10-16T20:45:08+07:00"
+  },
+  {
+    "narrative1_wall_s": 169.1,
+    "narrative2_wall_s": 325.9,
+    "generations": {
+      "a1": [
+        [
+          "SUCCEEDED",
+          "",
+          "142599",
+          "1"
+        ]
+      ],
+      "a2": [
+        [
+          "SUCCEEDED",
+          "",
+          "126530",
+          "1"
+        ]
+      ]
+    },
+    "report": {
+      "a1": {
+        "status": "READY",
+        "ai": "ready",
+        "claims_total": 21,
+        "claims_supported": 8
+      },
+      "a2": {
+        "status": "READY",
+        "ai": "ready",
+        "claims_total": 21,
+        "claims_supported": 8
+      }
+    },
+    "events": {
+      "lock_waited": [
+        22583,
+        6653,
+        25460,
+        29332
+      ],
+      "lock_timeout": 0,
+      "bg_yielded": 2,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        227.0
+      ]
+    },
+    "mem": "dataspeak-backend-worker-translations\t45.87MiB / 7.746GiB; dataspeak-analytics\t526.7MiB / 7.746GiB; dataspeak-backend-worker\t49.53MiB / 7.746GiB; dataspeak-frontend\t351.8MiB / 7.746GiB; dataspeak-backend\t101.1MiB / 7.746GiB; dataspeak-postgres\t85.2MiB / 7.746GiB; dataspeak-redis\t42MiB / 7.746GiB; dataspeak-mailpit\t52.98MiB / 7.746GiB",
+    "workload": "W4 two narratives + translations pending",
+    "run": 2,
+    "recorded_at": "2026-10-16T20:57:01+07:00"
+  },
+  {
+    "narrative_wall_s": 132.3,
+    "generations": [
+      [
+        "SUCCEEDED",
+        "",
+        "124451",
+        "1"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "ready",
+      "claims_total": 21,
+      "claims_supported": 8
+    },
+    "events": {
+      "lock_waited": [
+        4623
+      ],
+      "lock_timeout": 0,
+      "bg_yielded": 1,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": [
+        19.0
+      ]
+    },
+    "mem": "dataspeak-worker-short-wait\t49.46MiB / 7.746GiB; dataspeak-backend-worker-translations\t45MiB / 7.746GiB; dataspeak-analytics\t530.9MiB / 7.746GiB; dataspeak-frontend\t351.8MiB / 7.746GiB; dataspeak-backend\t101.2MiB / 7.746GiB; dataspeak-postgres\t84.82MiB / 7.746GiB; dataspeak-redis\t41.57MiB / 7.746GiB; dataspeak-mailpit\t52.62MiB / 7.746GiB",
+    "workload": "W5 bounded wait expiry and recovery (wait 20 s)",
+    "run": 1,
+    "recorded_at": "2026-10-16T21:09:12+07:00"
+  },
+  {
+    "narrative_wall_s": 154.8,
+    "generations": [
+      [
+        "SUCCEEDED",
+        "",
+        "144412",
+        "1"
+      ]
+    ],
+    "report": {
+      "status": "READY",
+      "ai": "ready",
+      "claims_total": 21,
+      "claims_supported": 8
+    },
+    "events": {
+      "lock_waited": [
+        24665
+      ],
+      "lock_timeout": 0,
+      "bg_yielded": 1,
+      "busy_retry": 0,
+      "ai_timeout": 0,
+      "ai_busy": 0,
+      "translate_durations": []
+    },
+    "mem": "dataspeak-worker-short-wait\t49.75MiB / 7.746GiB; dataspeak-backend-worker-translations\t45.35MiB / 7.746GiB; dataspeak-analytics\t529.7MiB / 7.746GiB; dataspeak-frontend\t351.8MiB / 7.746GiB; dataspeak-backend\t100.8MiB / 7.746GiB; dataspeak-postgres\t85.36MiB / 7.746GiB; dataspeak-redis\t41.4MiB / 7.746GiB; dataspeak-mailpit\t52.78MiB / 7.746GiB",
+    "workload": "W5 bounded wait expiry and recovery (wait 20 s)",
+    "run": 2,
+    "recorded_at": "2026-10-16T21:15:00+07:00"
+  }
+]

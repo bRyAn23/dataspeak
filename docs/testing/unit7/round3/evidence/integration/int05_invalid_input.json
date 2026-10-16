@@ -1,0 +1,110 @@
+{
+  "header_only": {
+    "status": 200,
+    "body": {
+      "valid": false,
+      "row_count": 0,
+      "column_count": 3,
+      "columns": [
+        "order_id",
+        "region",
+        "sales"
+      ],
+      "warnings": [],
+      "errors": [
+        {
+          "code": "NO_DATA_ROWS",
+          "message": "The file contains a header but no data rows.",
+          "column": null
+        }
+      ]
+    }
+  },
+  "empty_file": {
+    "status": 422,
+    "body": {
+      "error": {
+        "code": "ANALYTICS_INVALID_DATASET",
+        "message": "The file is empty."
+      }
+    }
+  },
+  "no_token": {
+    "status": 401,
+    "body": {
+      "error": {
+        "code": "ANALYTICS_UNAUTHORIZED",
+        "message": "Missing or invalid internal service token."
+      }
+    }
+  },
+  "duplicate_headers": {
+    "status": 200,
+    "body": {
+      "valid": false,
+      "row_count": 2,
+      "column_count": 4,
+      "columns": [
+        "order_id",
+        "region",
+        "",
+        "region_duplicated_0"
+      ],
+      "warnings": [],
+      "errors": [
+        {
+          "code": "EMPTY_COLUMN_NAME",
+          "message": "1 column header(s) are empty.",
+          "column": null
+        },
+        {
+          "code": "DUPLICATE_COLUMN",
+          "message": "Duplicate column header.",
+          "column": "region"
+        }
+      ]
+    }
+  },
+  "laravel_duplicate_headers": {
+    "status": 422,
+    "body": {
+      "error": {
+        "code": "CSV_VALIDATION_FAILED",
+        "message": "The dataset could not be validated.",
+        "details": [
+          {
+            "field": "file",
+            "issue": "1 column header(s) are empty."
+          },
+          {
+            "field": "region",
+            "issue": "Duplicate column header."
+          }
+        ]
+      }
+    }
+  },
+  "laravel_txt_upload": {
+    "status": 422,
+    "body": {
+      "error": {
+        "code": "VALIDATION_FAILED",
+        "message": "The request could not be validated.",
+        "details": [
+          {
+            "field": "file",
+            "issue": "Only CSV or Excel (.xlsx) files are supported."
+          }
+        ]
+      }
+    }
+  },
+  "checks": {
+    "header_only_NO_DATA_ROWS": true,
+    "empty_INVALID_DATASET": true,
+    "no_token_401": true,
+    "duplicate_headers_errors": true,
+    "laravel_422_CSV_VALIDATION_FAILED": true,
+    "laravel_txt_422": true
+  }
+}

@@ -1,0 +1,20 @@
+measure,task_or_page,value,unit,method,source
+minimum_user_actions,T1,4,actions,"click New analysis; type name; choose file via dropzone; click Create and upload (scripted path, counted)",instrumented_measurements.json
+minimum_user_actions,T2,2,actions,"click Continue to profile; scroll to the Data quality box",instrumented_measurements.json
+minimum_user_actions,T3,3,actions,"click Analyses; click the reference row (opens the report); scroll to first chart",instrumented_measurements.json
+minimum_user_actions,T4,2,actions,"click claim link in executive summary; click Technical details",instrumented_measurements.json
+time_to_feedback,T1 upload and validation,0.81,seconds,"from clicking Create and upload until 'File checked successfully' is visible (production, 19:57 +07)",instrumented_measurements.json
+time_to_feedback,T2 profiling job,10,seconds,"VALIDATED to PROFILED observed by API polling at 5 s intervals while creating the reference analysis (19:37:14 to 19:37:24 +07); the progress screen appeared after 1.02 s",instrumented_measurements.json notes
+time_to_feedback,T3 report ready from list,3.62,seconds,"from clicking Analyses until the Executive summary heading is visible",instrumented_measurements.json
+time_to_feedback,T4 panel open,1.03,seconds,"from clicking the claim link until the How we know panel is visible",instrumented_measurements.json
+warning_position,T2 profile page,1187,px from top,"top edge of the missing-value warning box at a 1920x1080 viewport; not visible without scrolling; the red 14.6% cell in the table is visible",instrumented_measurements.json
+target_size,T4 claim link,21x16,px,"bounding box of the first executive-summary claim link; WCAG 2.2 success criterion 2.5.8 minimum is 24x24",instrumented_measurements.json
+unresolved_placeholders,T3 report,2,occurrences,"'{Sales Amount (THB)}' and '{Region}' rendered literally in Finding #2 'What this chart shows'",instrumented_measurements.json
+axe_violations,login,2 rules / 8 elements,count,"landmark-one-main (moderate, 1); region (moderate, 7); 30 rules passed",axe-core 4.13 via Playwright
+axe_violations,dashboard,0 rules / 0 elements,count,"37 rules passed",axe-core 4.13 via Playwright
+axe_violations,new_analysis,1 rule / 4 elements,count,"color-contrast serious: inactive stepper labels 2.51:1 (#90a1b9 on #f8fafc); 41 rules passed",axe-core 4.13 via Playwright
+axe_violations,profile,1 rule / 10 elements,count,"color-contrast serious: inactive stepper labels 2.51:1 and '(0)' missing counts 2.63:1; 44 rules passed",axe-core 4.13 via Playwright
+axe_violations,report,1 rule / 1 element,count,"color-contrast serious: 'Every statement above was checked...' note 2.63:1; 46 rules passed",axe-core 4.13 via Playwright
+axe_violations,traceability_panel,2 rules / 2 elements,count,"aria-allowed-role minor (aside role=dialog); the same contrast note; 48 rules passed",axe-core 4.13 via Playwright
+readability,executive summary (5 sentences),74.6,Flesch Reading Ease,"textstat on the five production sentences joined; mean 13.0 words per sentence",instrumented_measurements.json
+readability,executive summary (5 sentences),4.7,Flesch-Kincaid grade,"textstat; per-sentence range 3.9 to 5.9",instrumented_measurements.json
