@@ -530,4 +530,9 @@ export const zh: Dictionary = {
   'Every statement is being checked against the evidence.': '正在逐条核对每个陈述与证据。',
   ' by the AI model': '（由 AI 模型）',
   'AI model, prompt version {prompt}': 'AI 模型，提示版本 {prompt}',
+  'The report is ready to read. Review the charts to change what it shows. The uploaded file was deleted after the run to protect your data, so upload it again if you want to recalculate.':
+    '报告已可阅读。查看图表以更改其显示内容。为保护您的数据，上传的文件在运行后已被删除；如需重新计算，请再次上传。',
+  'The uploaded file was deleted after the run; upload it again to recalculate.':
+    '上传的文件在运行后已被删除；请再次上传以重新计算。',
+  'How we know, statement {n}': '我们如何得知，第 {n} 句',
 };

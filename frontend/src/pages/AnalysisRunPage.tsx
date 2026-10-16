@@ -172,23 +172,34 @@ export function AnalysisRunPage() {
           <div className="text-sm text-emerald-900">
             <p className="font-medium">{t('This analysis is complete')}</p>
             <p>
-              {t(
-                'The report is ready to read. Review the charts to change what it shows, or run again to recalculate from the current definitions.',
-              )}
+              {a.dataset.transient_file_present
+                ? t(
+                    'The report is ready to read. Review the charts to change what it shows, or run again to recalculate from the current definitions.',
+                  )
+                : t(
+                    'The report is ready to read. Review the charts to change what it shows. The uploaded file was deleted after the run to protect your data, so upload it again if you want to recalculate.',
+                  )}
             </p>
           </div>
           <div className="flex gap-2">
             <Button variant="secondary" onClick={() => setReviewing(true)}>
               {t('Review charts')}
             </Button>
-            <Button
-              variant="secondary"
-              onClick={start}
-              loading={run.isPending}
-              disabled={!a.dataset.transient_file_present}
-            >
-              {t('Run again')}
-            </Button>
+            {a.dataset.transient_file_present ? (
+              <Button variant="secondary" onClick={start} loading={run.isPending}>
+                {t('Run again')}
+              </Button>
+            ) : (
+              <Button
+                variant="secondary"
+                onClick={() => navigate(`/analyses/new?id=${a.id}`)}
+                title={t(
+                  'The uploaded file was deleted after the run; upload it again to recalculate.',
+                )}
+              >
+                {t('Upload the file again')}
+              </Button>
+            )}
             <Button onClick={openReport} icon={<ArrowRight size={16} aria-hidden="true" />}>
               {t('Open the report')}
             </Button>

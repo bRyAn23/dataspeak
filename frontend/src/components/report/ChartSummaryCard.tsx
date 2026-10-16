@@ -48,7 +48,7 @@ export function ChartSummaryCard({ analysisId, chart, insight, theme }: Props) {
                     <ClaimLink analysisId={analysisId} claimId={item.claim_id} />
                   </span>
                 ) : (
-                  <span className="ml-2 text-xs text-slate-400">{t('calculated')}</span>
+                  <span className="ml-2 text-xs text-slate-600">{t('calculated')}</span>
                 )}
               </li>
             ))}

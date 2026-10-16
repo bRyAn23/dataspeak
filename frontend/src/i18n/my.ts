@@ -558,4 +558,9 @@ export const my: Dictionary = {
     'ဖော်ပြချက်တိုင်းကို အထောက်အထားနှင့် စစ်ဆေးနေပါသည်။',
   ' by the AI model': ' AI မော်ဒယ်မှ',
   'AI model, prompt version {prompt}': 'AI မော်ဒယ်၊ ပရွမ့်ဗားရှင်း {prompt}',
+  'The report is ready to read. Review the charts to change what it shows. The uploaded file was deleted after the run to protect your data, so upload it again if you want to recalculate.':
+    'အစီရင်ခံစာ ဖတ်ရန် အသင့်ဖြစ်ပါပြီ။ ပြသမည့်အရာကို ပြောင်းရန် ဇယားများကို ပြန်စစ်ပါ။ သင့်ဒေတာကို ကာကွယ်ရန် တင်ထားသောဖိုင်ကို လုပ်ဆောင်ပြီးနောက် ဖျက်လိုက်ပါသည်၊ ပြန်တွက်လိုပါက ထပ်မံတင်ပါ။',
+  'The uploaded file was deleted after the run; upload it again to recalculate.':
+    'တင်ထားသောဖိုင်ကို လုပ်ဆောင်ပြီးနောက် ဖျက်လိုက်ပါသည်၊ ပြန်တွက်ရန် ထပ်မံတင်ပါ။',
+  'How we know, statement {n}': 'ကျွန်ုပ်တို့ မည်သို့သိသနည်း၊ ဝါကျ {n}',
 };

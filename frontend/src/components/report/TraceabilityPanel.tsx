@@ -51,7 +51,7 @@ export function TraceabilityPanel({ claim, loading, error, onClose, onRetry }: P
   return (
     <div className="fixed inset-0 z-40 flex justify-end">
       <div className="absolute inset-0 bg-black/30" onClick={onClose} aria-hidden="true" />
-      <aside
+      <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="trace-title"
@@ -128,9 +128,9 @@ export function TraceabilityPanel({ claim, loading, error, onClose, onRetry }: P
                   {t('Technical details')}
                 </summary>
                 <dl className="mt-2 grid grid-cols-3 gap-x-3 gap-y-1">
-                  <dt className="text-slate-400">{t('Statement template')}</dt>
+                  <dt className="text-slate-600">{t('Statement template')}</dt>
                   <dd className="col-span-2 break-words font-mono">{claim.statement_template}</dd>
-                  <dt className="text-slate-400">{t('Check')}</dt>
+                  <dt className="text-slate-600">{t('Check')}</dt>
                   <dd className="col-span-2">
                     {claim.validation.method ?? '—'}
                     {claim.validation.reasons.length
@@ -139,7 +139,7 @@ export function TraceabilityPanel({ claim, loading, error, onClose, onRetry }: P
                   </dd>
                   {claim.generation && (
                     <>
-                      <dt className="text-slate-400">{t('Written by')}</dt>
+                      <dt className="text-slate-600">{t('Written by')}</dt>
                       <dd className="col-span-2">
                         {t('AI model, prompt version {prompt}', {
                           prompt: claim.generation.prompt_version ?? '—',
@@ -164,7 +164,7 @@ export function TraceabilityPanel({ claim, loading, error, onClose, onRetry }: P
             </>
           )}
         </div>
-      </aside>
+      </div>
     </div>
   );
 }

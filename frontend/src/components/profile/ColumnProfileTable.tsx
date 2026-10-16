@@ -57,7 +57,7 @@ export function ColumnProfileTable({ columns }: { columns: ColumnProfile[] }) {
                     ) : null}
                   </>
                 ) : (
-                  <span className="text-slate-400">—</span>
+                  <span className="text-slate-600">—</span>
                 )}
               </td>
               <td className="px-4 py-3 text-slate-600">
@@ -67,7 +67,7 @@ export function ColumnProfileTable({ columns }: { columns: ColumnProfile[] }) {
                 className={`px-4 py-3 tabular-nums ${c.null_rate >= 0.1 ? 'text-amber-700' : 'text-slate-600'}`}
               >
                 {formatPct(c.null_rate)}{' '}
-                <span className="text-slate-400">({formatInt(c.null_count)})</span>
+                <span className="text-slate-600">({formatInt(c.null_count)})</span>
               </td>
               <td className="px-4 py-3 text-slate-600">{summarize(c)}</td>
             </tr>

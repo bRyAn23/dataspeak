@@ -543,4 +543,9 @@ export const th: Dictionary = {
   'Every statement is being checked against the evidence.': 'กำลังตรวจสอบทุกข้อความกับหลักฐาน',
   ' by the AI model': ' โดยโมเดล AI',
   'AI model, prompt version {prompt}': 'โมเดล AI เวอร์ชันพรอมต์ {prompt}',
+  'The report is ready to read. Review the charts to change what it shows. The uploaded file was deleted after the run to protect your data, so upload it again if you want to recalculate.':
+    'รายงานพร้อมอ่านแล้ว ตรวจสอบแผนภูมิเพื่อเปลี่ยนสิ่งที่แสดง ไฟล์ที่อัปโหลดถูกลบหลังการรันเพื่อปกป้องข้อมูลของคุณ หากต้องการคำนวณใหม่ให้อัปโหลดอีกครั้ง',
+  'The uploaded file was deleted after the run; upload it again to recalculate.':
+    'ไฟล์ที่อัปโหลดถูกลบหลังการรัน อัปโหลดอีกครั้งเพื่อคำนวณใหม่',
+  'How we know, statement {n}': 'เรารู้ได้อย่างไร ข้อความที่ {n}',
 };

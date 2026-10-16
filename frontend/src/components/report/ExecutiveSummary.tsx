@@ -46,7 +46,13 @@ export function ExecutiveSummary({ report }: { report: Report }) {
             <span key={c.id}>
               {c.statement}
               <sup className="ml-0.5 mr-1.5">
-                <ClaimLink analysisId={report.analysis_id} claimId={c.id} label={String(i + 1)} />
+                {/* DEF-07: evidence links meet the 24px minimum target size (WCAG 2.5.8) */}
+                <ClaimLink
+                  analysisId={report.analysis_id}
+                  claimId={c.id}
+                  label={String(i + 1)}
+                  compact
+                />
               </sup>
             </span>
           ))}
@@ -59,7 +65,7 @@ export function ExecutiveSummary({ report }: { report: Report }) {
         )
       )}
       {report.ai.status === 'ready' && summaryClaims.length > 0 && (
-        <p className="mt-4 text-xs text-slate-400">
+        <p className="mt-4 text-xs text-slate-600">
           {t(
             'Every statement above was checked against the calculated results before being shown.',
           )}

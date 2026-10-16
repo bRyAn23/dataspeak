@@ -45,7 +45,7 @@ export function AnalysisStepper({ current, analysisId, status }: Props) {
                         ? 'bg-white border-brand-700 text-brand-700'
                         : allowed
                           ? 'bg-white border-brand-300 text-brand-700'
-                          : 'bg-white border-slate-200 text-slate-400',
+                          : 'bg-white border-slate-300 text-slate-600',
                     allowed ? 'cursor-pointer hover:bg-brand-50' : 'cursor-default',
                   )}
                 >
@@ -54,7 +54,7 @@ export function AnalysisStepper({ current, analysisId, status }: Props) {
                 <span
                   className={cn(
                     'mt-1.5 text-xs font-medium',
-                    active ? 'text-brand-700' : done ? 'text-slate-700' : 'text-slate-400',
+                    active ? 'text-brand-700' : done ? 'text-slate-700' : 'text-slate-600',
                   )}
                 >
                   {label}

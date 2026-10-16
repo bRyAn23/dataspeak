@@ -146,6 +146,13 @@ export function DataProfilePage() {
       {data && (
         <div className="space-y-6">
           <DatasetOverviewCards profile={data} issueCount={issues.length} />
+          {/* DEF-08: data-quality notes are shown before the column table so a missing-value warning is visible without scrolling */}
+          <section aria-labelledby="quality-h">
+            <h2 id="quality-h" className="mb-3 text-base font-semibold text-slate-900">
+              {t('Data quality')}
+            </h2>
+            <QualityIssueList issues={issues} />
+          </section>
           <section aria-labelledby="columns-h">
             <h2 id="columns-h" className="mb-3 text-base font-semibold text-slate-900">
               {t('Columns')}
@@ -163,12 +170,6 @@ export function DataProfilePage() {
               </p>
             ) : null}
             <ColumnProfileTable columns={data.columns} />
-          </section>
-          <section aria-labelledby="quality-h">
-            <h2 id="quality-h" className="mb-3 text-base font-semibold text-slate-900">
-              {t('Data quality')}
-            </h2>
-            <QualityIssueList issues={issues} />
           </section>
           <ProfileContinueAction
             onContinue={() => navigate(`/analyses/${id}/define`)}
