@@ -1,0 +1,55 @@
+== npm ci && npm run build  (2026-10-14 00:15:00 +07, node v24.21.0, npm 11.19.0) ==
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 417 packages, and audited 418 packages in 5s
+
+90 packages are looking for funding
+  run `npm fund` for details
+
+4 vulnerabilities (2 moderate, 2 critical)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm warn install-scripts 3 packages have install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)
+npm warn install-scripts   fsevents@2.3.3 (install: (install scripts present))
+npm warn install-scripts   msw@2.15.0 (postinstall: node -e "import('./config/scripts/postinstall.js').catch(() => void 0)")
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+
+> dataspeak-frontend@1.0.0 build
+> tsc --noEmit -p tsconfig.json && vite build
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vite.config.ts:29:27). Use `import.meta.dirname` instead
+  - JSON import "./src/config/site.json" without import attributes (vite.config.ts:6:31). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 2597 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/robots.txt                   0.02 kB │ gzip:   0.04 kB
+dist/index.html                   0.91 kB │ gzip:   0.43 kB
+dist/assets/logo-Mu38toVe.png   632.58 kB
+dist/assets/index-DK2E9A9Z.css   37.15 kB │ gzip:   7.89 kB
+dist/assets/index-9MhTT88_.js   973.89 kB │ gzip: 279.29 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 414ms
+== exit 0 ==
+total 40
+drwxr-xr-x@  8 zeyarwint  staff   256 Oct 14 00:15 .
+drwxr-xr-x@ 28 zeyarwint  staff   896 Oct  4 20:54 ..
+drwxr-xr-x   5 zeyarwint  staff   160 Oct 14 00:15 assets
+-rw-r--r--   1 zeyarwint  staff   497 Oct 14 00:15 favicon.svg
+-rw-r--r--   1 zeyarwint  staff  5031 Oct 14 00:15 icons.svg
+-rw-r--r--   1 zeyarwint  staff   914 Oct 14 00:15 index.html
+-rw-r--r--   1 zeyarwint  staff    26 Oct 14 00:15 robots.txt

@@ -1,0 +1,3 @@
+== backend PHPUnit after fixes (2026-10-16 10:09:57 +07, Laravel Framework 13.34.0)
+{"tool":"pint","result":"passed"}
+{"tool":"phpunit","result":"passed","tests":154,"passed":154,"assertions":921,"duration_ms":6308}

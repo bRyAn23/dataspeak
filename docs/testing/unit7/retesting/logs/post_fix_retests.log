@@ -1,0 +1,11 @@
+creating analysis X and generating a report (local Qwen)
+report COMPLETED in 112s; translations now queued. Starting profile of Y immediately
+RT-04 {'defect': 'DEF-04', 'profile_job_wall_seconds_during_translations': 12.2, 'profile_status': 'PROFILED', 'translate_jobs_seen_on': [], 'profile_job_seen_on': ['dataspeak-backend-worker'], 'baseline_before_fix_seconds': 73.3, 'pass': False}
+RT-01/02/03 True True True
+[FAIL] RT-04 (DEF-04)
+[PASS] RT-01 (DEF-01)
+[PASS] RT-02 (DEF-02)
+[PASS] RT-03 (DEF-03)
+[PASS] RT-05 (DEF-05)
+[PASS] RT-08 (DEF-08)
+[FAIL] RT-07 (DEF-07)

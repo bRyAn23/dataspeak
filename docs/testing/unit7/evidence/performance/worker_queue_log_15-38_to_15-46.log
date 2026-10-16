@@ -1,0 +1,19 @@
+  2026-10-15 08:38:52 App\Jobs\GenerateReportJob ................. 1m 31s DONE
+  2026-10-15 08:38:52 App\Jobs\TranslateReportJob .................... RUNNING
+  2026-10-15 08:40:03 App\Jobs\TranslateReportJob ................ 1m 11s DONE
+  2026-10-15 08:40:03 App\Jobs\TranslateReportJob .................... RUNNING
+  2026-10-15 08:41:06 App\Jobs\TranslateReportJob ................. 1m 2s DONE
+  2026-10-15 08:41:06 App\Jobs\ProfileAnalysisJob .................... RUNNING
+  2026-10-15 08:41:17 App\Jobs\ProfileAnalysisJob ................... 11s DONE
+  2026-10-15 08:41:17 App\Jobs\TranslateReportJob .................... RUNNING
+  2026-10-15 08:43:26 App\Jobs\TranslateReportJob ................. 2m 8s DONE
+  2026-10-15 08:43:26 App\Jobs\RunAnalysisJob ........................ RUNNING
+  2026-10-15 08:43:26 App\Jobs\RunAnalysisJob .................. 156.79ms DONE
+  2026-10-15 08:43:27 App\Jobs\ProfileAnalysisJob .................... RUNNING
+  2026-10-15 08:43:39 App\Jobs\ProfileAnalysisJob ................... 11s DONE
+  2026-10-15 08:43:40 App\Jobs\RunAnalysisJob ........................ RUNNING
+  2026-10-15 08:43:40 App\Jobs\RunAnalysisJob .................. 157.62ms DONE
+  2026-10-15 08:43:42 App\Jobs\ProfileAnalysisJob .................... RUNNING
+  2026-10-15 08:43:54 App\Jobs\ProfileAnalysisJob ................... 11s DONE
+  2026-10-15 08:43:56 App\Jobs\RunAnalysisJob ........................ RUNNING
+  2026-10-15 08:43:56 App\Jobs\RunAnalysisJob .................. 210.80ms DONE

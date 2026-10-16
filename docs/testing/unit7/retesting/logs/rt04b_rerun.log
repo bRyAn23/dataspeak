@@ -1,0 +1,21 @@
+report COMPLETED in 178s
+{
+ "defect": "DEF-04",
+ "report_generation_s": 177.9,
+ "profile_job_wall_seconds_during_translations": 37.0,
+ "profile_status": "PROFILED",
+ "translate_jobs_seen_on": [
+  "dataspeak-backend-worker-translations"
+ ],
+ "profile_job_seen_on": [
+  "dataspeak-backend-worker"
+ ],
+ "translations_queue_length_after": "2",
+ "baseline_before_fix_seconds": 73.3,
+ "analyses": {
+  "X": "f4de3703-1512-47b4-a34a-e1952e85023c",
+  "Y": "0e1c86bd-ad35-4445-9c7d-868190dfb6ef"
+ },
+ "pass": true
+}
+[PASS] RT-04b

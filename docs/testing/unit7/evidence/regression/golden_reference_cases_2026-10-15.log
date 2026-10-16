@@ -1,0 +1,34 @@
+{"total": 33, "passed": 33, "pass_rate": 100.0, "numeric_total": 26, "numeric_passed": 26, "numeric_rate": 100.0}
+SA-01 PASS test_tiny_golden_hand_verified row_count                                        exp=6 act=6.0 tol=exact (==)
+SA-02 PASS test_tiny_golden_hand_verified mean(amount)                                     exp=30 act=30.0 tol=exact (==)
+SA-03 PASS test_tiny_golden_hand_verified median(amount)                                   exp=30 act=30.0 tol=exact (==)
+SA-04 PASS test_tiny_golden_hand_verified min(amount)                                      exp=10 act=10.0 tol=exact (==)
+SA-05 PASS test_tiny_golden_hand_verified max(amount)                                      exp=50 act=50.0 tol=exact (==)
+SA-06 PASS test_tiny_golden_hand_verified sum(amount)                                      exp=180 act=180.0 tol=exact (==)
+SA-07 PASS test_tiny_golden_hand_verified group mean(amount | region=N)                    exp=20 act=20.0 tol=exact (==)
+SA-08 PASS test_tiny_golden_hand_verified group mean(amount | region=S)                    exp=40 act=40.0 tol=exact (==)
+SA-09 PASS test_tiny_golden_hand_verified group sum(amount | region=S)                     exp=120 act=120.0 tol=exact (==)
+SA-10 PASS test_tiny_golden_hand_verified top_bottom_mean_difference = (40-20)/20          exp=1.0 act=1.0 tol=exact (==)
+SA-11 PASS test_tiny_golden_hand_verified group test selection with 3 rows per group       exp=none_applicable / insufficient act=none_applicable / insufficient tol=exact match
+SA-12 PASS test_tiny_golden_hand_verified trend granularity for 6 monthly dates            exp=month act=month tol=exact match
+SA-13 PASS test_retail_golden_cross_check mean(revenue THB), n=240                         exp=383.4678333333333 act=383.4678333333334 tol=rel 1e-9
+SA-14 PASS test_retail_golden_cross_check median(revenue THB), n=240                       exp=372.16999999999996 act=372.16999999999996 tol=rel 1e-9
+SA-15 PASS test_retail_golden_cross_check std(revenue THB), n=240                          exp=106.90131567569158 act=106.90131567569159 tol=rel 1e-9
+SA-16 PASS test_retail_golden_cross_check sum display value carries unit                   exp=ends with 'THB' act=92,032 THB tol=string suffix
+SA-17 PASS test_retail_golden_cross_check group mean(revenue | region=North)               exp=485.4252427184466 act=485.4252427184466 tol=rel 1e-9
+SA-18 PASS test_retail_golden_cross_check group count(region=North)                        exp=103 act=103 tol=exact (==)
+SA-19 PASS test_retail_golden_cross_check top_group_share = sum(North)/sum(all)            exp=0.5432745988690055 act=0.5432745988690055 tol=rel 1e-6 (pytest.approx default)
+SA-20 PASS test_retail_golden_cross_check top group identity                               exp=North act=North tol=exact match
+SA-21 PASS test_retail_golden_cross_check group difference test method (4 regions, n>=30)  exp=one_way_anova or kruskal_wallis act=kruskal_wallis tol=set membership
+SA-22 PASS test_retail_golden_cross_check group difference test p-value                    exp=< 0.05 act=4.285005651730344e-39 tol=threshold
+SA-23 PASS test_retail_golden_cross_check trend granularity (240 daily rows over 2025)     exp=month act=month tol=exact match
+SA-24 PASS test_retail_golden_cross_check number of periods in series                      exp=12 act=12 tol=exact (==)
+SA-25 PASS test_retail_golden_cross_check trend slope sign (growth baked into data)        exp=> 0 act=178.91517482517474 tol=sign
+SA-26 PASS test_retail_golden_cross_check trend slope n_periods                            exp=12 act=12 tol=exact (==)
+SA-27 PASS test_retail_golden_cross_check null_rate(discount_pct)                          exp=0.14583333333333334 act=0.14583333333333334 tol=rel 1e-6 (pytest.approx default)
+SA-28 PASS test_retail_golden_cross_check null_rate quality flag at 15% missing            exp=warning act=warning tol=exact match
+SA-29 PASS test_descriptive_statistics_ma sum(revenue), n=7 non-null                       exp=879.0 act=879.0 tol=rel 1e-6 (pytest.approx default)
+SA-30 PASS test_descriptive_statistics_ma mean(revenue), n=7 non-null                      exp=125.57142857142857 act=125.57142857142857 tol=rel 1e-6 (pytest.approx default)
+SA-31 PASS test_descriptive_statistics_ma median(revenue), n=7 non-null                    exp=60.0 act=60.0 tol=rel 1e-6 (pytest.approx default)
+SA-32 PASS test_descriptive_statistics_ma min(revenue)                                     exp=25.0 act=25.0 tol=exact (==)
+SA-33 PASS test_descriptive_statistics_ma max(revenue)                                     exp=495.0 act=495.0 tol=exact (==)

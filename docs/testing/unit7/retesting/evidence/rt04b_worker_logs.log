@@ -1,0 +1,5 @@
+dataspeak-backend-worker-translations  |   2026-10-16 03:20:21 App\Jobs\TranslateReportJob .................... RUNNING
+dataspeak-backend-worker               |   2026-10-16 03:17:24 App\Jobs\GenerateReportJob ..................... RUNNING
+dataspeak-backend-worker               |   2026-10-16 03:20:21 App\Jobs\GenerateReportJob ................. 2m 56s DONE
+dataspeak-backend-worker               |   2026-10-16 03:20:23 App\Jobs\ProfileAnalysisJob .................... RUNNING
+dataspeak-backend-worker               |   2026-10-16 03:20:58 App\Jobs\ProfileAnalysisJob ................... 35s DONE

@@ -1,0 +1,126 @@
+# Data Speak analytics service: full pytest run with coverage
+# date: 2026-10-13 22:33:39 +07  commit: c4a1951  branch: main
+# python: Python 3.9.6  pytest: pytest 8.4.2  pytest-cov: 7.1.0
+# command: .venv/bin/python -m pytest --cov=app --cov-report=term-missing --cov-report=html:../docs/evidence/unit6/coverage_html --cov-report=xml:../docs/evidence/unit6/coverage.xml -v -ra -p no:cacheprovider --durations=5
+
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-8.4.2, pluggy-1.6.0 -- /Users/zeyarwint/Documents/MSIT/dataspeak/analytics/.venv/bin/python
+rootdir: /Users/zeyarwint/Documents/MSIT/dataspeak/analytics
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.12.1, cov-7.1.0
+collecting ... collected 49 items
+
+tests/contract/test_openapi_contract.py::test_openapi_file_matches_application PASSED [  2%]
+tests/contract/test_openapi_contract.py::test_evidence_schema_has_required_fields PASSED [  4%]
+tests/unit/test_csv_reader.py::test_bom_and_unicode_headers_are_preserved PASSED [  6%]
+tests/unit/test_csv_reader.py::test_delimiters_are_sniffed[,] PASSED     [  8%]
+tests/unit/test_csv_reader.py::test_delimiters_are_sniffed[;] PASSED     [ 10%]
+tests/unit/test_csv_reader.py::test_delimiters_are_sniffed[\t] PASSED    [ 12%]
+tests/unit/test_csv_reader.py::test_delimiters_are_sniffed[|] PASSED     [ 14%]
+tests/unit/test_csv_reader.py::test_empty_file_is_invalid_dataset PASSED [ 16%]
+tests/unit/test_csv_reader.py::test_header_only_and_duplicate_columns_fail_validation PASSED [ 18%]
+tests/unit/test_csv_reader.py::test_malformed_rows_and_duplicates_are_warnings_not_errors PASSED [ 20%]
+tests/unit/test_csv_reader.py::test_null_tokens_become_nulls PASSED      [ 22%]
+tests/unit/test_csv_reader.py::test_sniffer_falls_back_to_comma PASSED   [ 24%]
+tests/unit/test_endpoints.py::test_v1_routes_require_token PASSED        [ 26%]
+tests/unit/test_endpoints.py::test_validate_profile_analyze_roundtrip PASSED [ 28%]
+tests/unit/test_endpoints.py::test_temp_files_are_removed_on_failure PASSED [ 30%]
+tests/unit/test_endpoints.py::test_errors_never_echo_cell_values_and_edge_cases PASSED [ 32%]
+tests/unit/test_endpoints.py::test_payload_limit_is_enforced PASSED      [ 34%]
+tests/unit/test_endpoints.py::test_log_leak_guard_through_the_api PASSED [ 36%]
+tests/unit/test_endpoints.py::test_insights_endpoint_rejects_unknown_fields PASSED [ 38%]
+tests/unit/test_engine_golden.py::test_tiny_golden_hand_verified_values PASSED [ 40%]
+tests/unit/test_engine_golden.py::test_retail_golden_cross_checked_with_statistics_module PASSED [ 42%]
+tests/unit/test_engine_golden.py::test_determinism_same_input_same_evidence PASSED [ 44%]
+tests/unit/test_engine_golden.py::test_insights_reference_evidence_and_avoid_causal_language PASSED [ 46%]
+tests/unit/test_engine_golden.py::test_visualizations_use_units_from_definitions_and_flag_missing_units PASSED [ 48%]
+tests/unit/test_health.py::test_py_api_001_health_contract PASSED        [ 51%]
+tests/unit/test_health.py::test_root_route_is_not_served PASSED          [ 53%]
+tests/unit/test_inference_and_profile.py::test_numeric_with_thousands_and_currency_symbols PASSED [ 55%]
+tests/unit/test_inference_and_profile.py::test_integer_boolean_date_datetime_category_identifier_text PASSED [ 57%]
+tests/unit/test_inference_and_profile.py::test_mixed_numeric_column_counts_parse_failures PASSED [ 59%]
+tests/unit/test_inference_and_profile.py::test_profile_returns_derived_metadata_only_and_no_category_labels PASSED [ 61%]
+tests/unit/test_inference_and_profile.py::test_profile_quality_findings PASSED [ 63%]
+tests/unit/test_logging.py::test_forbidden_keys_are_redacted PASSED      [ 65%]
+tests/unit/test_logging.py::test_unknown_extra_keys_are_not_emitted PASSED [ 67%]
+tests/unit/test_logging.py::test_output_is_json_lines_with_service_field PASSED [ 69%]
+tests/unit/test_output_validation.py::test_valid_dataset_is_accepted PASSED [ 71%]
+tests/unit/test_output_validation.py::test_empty_dataset_is_rejected PASSED [ 73%]
+tests/unit/test_output_validation.py::test_dataset_without_usable_rows_is_rejected PASSED [ 75%]
+tests/unit/test_output_validation.py::test_invalid_headers_are_rejected PASSED [ 77%]
+tests/unit/test_output_validation.py::test_missing_values_are_detected PASSED [ 79%]
+tests/unit/test_output_validation.py::test_duplicate_rows_are_detected PASSED [ 81%]
+tests/unit/test_output_validation.py::test_numeric_columns_are_recognised PASSED [ 83%]
+tests/unit/test_output_validation.py::test_descriptive_statistics_match_reference_values PASSED [ 85%]
+tests/unit/test_rules_and_selection.py::test_rule_constants_are_sane PASSED [ 87%]
+tests/unit/test_rules_and_selection.py::test_test_selection_follows_sample_sizes PASSED [ 89%]
+tests/unit/test_rules_and_selection.py::test_granularity_selection_follows_business_preference PASSED [ 91%]
+tests/unit/test_rules_and_selection.py::test_definitions_override_inference_and_exclude_text_identifier PASSED [ 93%]
+tests/unit/test_security.py::test_missing_token_is_rejected_with_structured_error PASSED [ 95%]
+tests/unit/test_security.py::test_wrong_token_is_rejected PASSED         [ 97%]
+tests/unit/test_security.py::test_correct_token_is_accepted PASSED       [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.9.6-final-0 ________________
+
+Name                                        Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------
+app/__init__.py                                 0      0   100%
+app/api/__init__.py                             0      0   100%
+app/api/health.py                               7      0   100%
+app/api/v1/__init__.py                          0      0   100%
+app/api/v1/analyze.py                          31      2    94%   35, 39
+app/api/v1/deps.py                             43      3    93%   28-32
+app/api/v1/insights.py                         14      0   100%
+app/api/v1/profile.py                          23      1    96%   29
+app/api/v1/validate.py                         18      0   100%
+app/api/v1/visualizations.py                   14      0   100%
+app/core/__init__.py                            0      0   100%
+app/core/config.py                             17      0   100%
+app/core/errors.py                             29      1    97%   65
+app/core/logging.py                            35      1    97%   57
+app/core/security.py                           13      1    92%   25
+app/main.py                                    22      0   100%
+app/schemas/__init__.py                         0      0   100%
+app/schemas/common.py                          58      1    98%   90
+app/schemas/health.py                           6      0   100%
+app/schemas/requests.py                        29      0   100%
+app/schemas/responses.py                       64      0   100%
+app/services/__init__.py                        0      0   100%
+app/services/analysis/__init__.py               0      0   100%
+app/services/analysis/association.py           58      6    90%   22, 24, 53, 100, 111-124
+app/services/analysis/descriptive.py           53      3    94%   42-55, 138
+app/services/analysis/engine.py                43      1    98%   58
+app/services/analysis/evidence.py              48      7    85%   21, 28, 67, 70, 72, 86, 92
+app/services/analysis/groups.py                77      4    95%   19, 29, 79, 88
+app/services/analysis/quality.py               38      2    95%   19, 84
+app/services/analysis/roles.py                 58      1    98%   53
+app/services/analysis/rules.py                 49      0   100%
+app/services/analysis/trend.py                 86     13    85%   33, 43, 47, 50, 53, 61, 65, 69, 72-88, 93, 134
+app/services/insights/__init__.py               0      0   100%
+app/services/insights/detector.py              89     13    85%   54, 57-59, 72, 77-78, 146, 185-186, 215, 229, 258
+app/services/insights/wording.py               21      4    81%   31, 52, 60, 64
+app/services/profiling/__init__.py              0      0   100%
+app/services/profiling/inference.py            76      3    96%   76-77, 90
+app/services/profiling/profiler.py             53      6    89%   17, 20-21, 27, 43, 101
+app/services/validation/__init__.py             0      0   100%
+app/services/validation/csv_reader.py          72      7    90%   40, 47, 50-52, 96-97, 123
+app/services/validation/validator.py           35      5    86%   19, 33, 44, 53, 61
+app/services/visualization/__init__.py          0      0   100%
+app/services/visualization/recommender.py      82     13    84%   28, 85-88, 105, 116-118, 141, 149-150, 154
+app/utils/__init__.py                           0      0   100%
+app/utils/tempfiles.py                         20      1    95%   28
+-------------------------------------------------------------------------
+TOTAL                                        1381     99    93%
+Coverage HTML written to dir ../docs/evidence/unit6/coverage_html
+Coverage XML written to file ../docs/evidence/unit6/coverage.xml
+============================= slowest 5 durations ==============================
+0.08s call     tests/contract/test_openapi_contract.py::test_evidence_schema_has_required_fields
+0.06s call     tests/unit/test_endpoints.py::test_validate_profile_analyze_roundtrip
+0.06s call     tests/unit/test_engine_golden.py::test_determinism_same_input_same_evidence
+0.06s call     tests/contract/test_openapi_contract.py::test_openapi_file_matches_application
+0.03s call     tests/unit/test_engine_golden.py::test_retail_golden_cross_checked_with_statistics_module
+============================== 49 passed in 2.08s ==============================
+
+# exit code: 0

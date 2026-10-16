@@ -1,0 +1,45 @@
+== Reproduction of the CI analytics job locally (full repository layout): python:3.12-slim, pip install -r requirements-dev.txt, pytest -q  (2026-10-14 00:20:23 +07)
+Python 3.12.15
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+fastapi           0.143.0
+numpy             2.5.4
+polars            2.0.0
+pydantic          2.14.1
+pytest            9.1.1
+scipy             1.18.1
+statsmodels       0.15.0
+F................................................                        [100%]
+=================================== FAILURES ===================================
+____________________ test_openapi_file_matches_application _____________________
+
+    def test_openapi_file_matches_application():
+        current = export(
+            Path(os.environ.get("CONTRACT_OUT", str(OUT)))
+            if os.environ.get("UPDATE_CONTRACT")
+            else OUT.with_suffix(".tmp.json")
+        )
+        try:
+            assert REQUIRED_PATHS <= set(current["paths"])
+            assert OUT.exists(), "run: python -m scripts.export_openapi"
+            frozen = json.loads(OUT.read_text(encoding="utf-8"))
+>           assert frozen == current, "OpenAPI changed; regenerate docs/contracts/fastapi-openapi.json and review the diff"
+E           AssertionError: OpenAPI changed; regenerate docs/contracts/fastapi-openapi.json and review the diff
+E           assert {'components'..., ...}}, ...}} == {'openapi': '..., ...}, ...}}}
+E             
+E             Omitting 3 identical items, use -vv to show
+E             Differing items:
+E             {'components': {'schemas': {'AnalysisOptions': {'additionalProperties': False, 'properties': {'max_insights': {'defaul...': 'string'}, 'unit': {'anyOf': [...], 'title': 'Unit'}}, 'required': ['field', 'label'], 'title': 'Axis', ...}, ...}}} != {'components': {'schemas': {'AnalysisOptions': {'properties': {'seed': {'type': 'integer', 'title': 'Seed', 'default':...[...], 'title': 'Unit'}}, 'additionalProperties': False, 'type': 'object', 'required': ['field', 'label'], ...}, ...}}}
+E             Use -v to get more diff
+
+tests/contract/test_openapi_contract.py:29: AssertionError
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /usr/local/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/contract/test_openapi_contract.py::test_openapi_file_matches_application
+1 failed, 48 passed, 1 warning in 1.18s
+== container exit: 0

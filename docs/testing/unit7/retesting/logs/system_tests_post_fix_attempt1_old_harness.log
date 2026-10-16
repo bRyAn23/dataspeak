@@ -1,0 +1,31 @@
+Unit 7 system tests started 2026-10-16T10:31:52+07:00  commit 524842f
+[PASS] INT-02: upload 201; validate 200; rows 240 cols 7; analytics log lines matching /v1/validate: 0
+[PASS] INT-03: API status VALIDATED, listed=True, postgres row: VALIDATED|240|7|retail_sales.csv
+[PASS] INT-04: validate 200 valid=True rows=240; profile 200 cols=7; analyze 200 evidence=75 families=['descriptive', 'trend', 'group_comparison', 'association', 'quality', 's
+[FAIL] INT-05: exception: [Errno 2] No such file or directory: '/Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/retesting/evidence/system-run/system/inputs/invali
+  stopping local analytics container for failure injection
+  starting analytics container
+[PASS] INT-06: during outage HTTP 503 code=ANALYTICS_UNAVAILABLE msg='The analytics service is unavailable.'; status after=UPLOADED; healthy after restart=True; retry HTTP 200
+[PASS] SYS-10: error state shown=True; retry succeeded=True
+    INT-07 profile 10:32:04 ('VALIDATED', 'VALIDATION', 0)
+    INT-07 profile 10:32:08 ('VALIDATED', 'VALIDATION', 55)
+    INT-07 profile 10:32:16 ('PROFILED', 'PROFILING', 100)
+    INT-07 run 10:32:16 ('ANALYZING', 'STATISTICAL_ANALYSIS', 0)
+    INT-07 run 10:32:20 ('ANALYZED', 'VISUALIZATION', 100)
+[FAIL] INT-07: final ANALYZED; insights 7 (0 evidence keys), charts 8; job SUCCEEDED; db evidence|insights|charts = 75|7|8
+[PASS] SYS-01: wrong-password error shown; dashboard lists 'Unit7 INT A1'=True
+[PASS] INT-01: observed 3 API responses incl. GET /analyses [200]; UI rendered list=True
+[PASS] SYS-02: message present=True
+[FAIL] SYS-05: cards present=False
+[PASS] SYS-03: warning present=True; red 14.6% (35) in table
+[FAIL] SYS-04: exception: [Errno 2] No such file or directory: '/Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/retesting/evidence/system-run/system/inputs/invali
+[PASS] SYS-06: status=ANALYZED in 2.3s; chart review shown
+[PASS] SYS-09: report status=READY claims_total=21 supported=17 generation 102s
+[PASS] SYS-07: svg charts rendered=7; api selected charts=8 types=[None, None, None, None, None, None, None, None]; matching titles found=21
+[PASS] SYS-08: badge present=True
+[PASS] SYS-11: redirect ok; no token 401; other user 404/404
+[PASS] INT-08: claims_total=21 supported=17; sampled statuses=['SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED']; db=NEED
+    SYS-12 rerun 10:34:34 ('COMPLETED', 'COMPLETE', 100)
+[FAIL] SYS-12: run 409/409 replayed=None; final COMPLETED; evidence total|distinct before 75|75 after 75|75
+SUMMARY {"integration": {"PASS": 6, "FAIL": 2}, "system": {"PASS": 9, "FAIL": 3}}
+accounts: unit7-a-1792121512@example.com unit7-b-1792121512@example.com | analyses A1 39e444fd-8421-4865-976f-e3c23cb90092 U1 92f7da98-8221-4449-8d1d-6934b063d076

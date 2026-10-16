@@ -1,0 +1,53 @@
+Endpoint : GET http://localhost:8000/api/v1/analyses/c74c7c9d.../status
+Started  : 2026-10-13T23:51:52+07:00
+Client   : Python 3.9.6, httpx 0.28.1, Darwin arm64
+Timer    : time.perf_counter_ns (monotonic); 5 warm-up + 30 measured sequential requests, one connection
+
+warm-up 1/5: HTTP 200
+warm-up 2/5: HTTP 200
+warm-up 3/5: HTTP 200
+warm-up 4/5: HTTP 200
+warm-up 5/5: HTTP 200
+
+  #  HTTP         ms  ok
+  1   200     10.438  yes
+  2   200      9.642  yes
+  3   200      8.840  yes
+  4   200      9.053  yes
+  5   200      9.943  yes
+  6   200      9.948  yes
+  7   200     10.306  yes
+  8   200     10.631  yes
+  9   200     10.432  yes
+ 10   200     10.101  yes
+ 11   200     10.629  yes
+ 12   200     10.210  yes
+ 13   200      9.504  yes
+ 14   200     10.219  yes
+ 15   200     10.100  yes
+ 16   200      9.265  yes
+ 17   200      9.691  yes
+ 18   200      9.313  yes
+ 19   200     10.246  yes
+ 20   200     10.513  yes
+ 21   200      9.949  yes
+ 22   200      9.389  yes
+ 23   200      9.520  yes
+ 24   200     10.438  yes
+ 25   200     10.110  yes
+ 26   200      9.838  yes
+ 27   200      9.819  yes
+ 28   200      9.261  yes
+ 29   200      9.750  yes
+ 30   200      9.127  yes
+
+Summary (30 measured requests)
+  success rate      : 100.0%  (30/30 HTTP 200)
+  mean              : 9.874 ms
+  median            : 9.945 ms
+  min / max         : 8.84 / 10.631 ms
+  p95 nearest-rank  : 10.629 ms  (rank ceil(0.95*30)=29 of 30 sorted)
+  p95 linear interp : 10.577 ms  (numpy default, for comparison)
+  sample stdev      : 0.498 ms
+
+Raw results written to ../docs/evidence/unit6/latency_results_run2.csv

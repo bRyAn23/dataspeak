@@ -1,0 +1,27 @@
+== DEF-04 follow-up: rebuild dev worker image with dev dependencies and recreate the translations worker (2026-10-16 10:15:30 +07)
+#19 DONE 0.0s
+ Image dataspeak-backend-worker-translations Built 
+ Container dataspeak-backend-worker-translations Started 
+-- worker log
+dataspeak-backend-worker-translations  | {"message":"Class \"Laravel\\Pail\\PailServiceProvider\" not found","context":{"exception":{"class":"Error","message":"Class \"La
+dataspeak-backend-worker-translations  | 
+dataspeak-backend-worker-translations  | In Application.php line 969:
+dataspeak-backend-worker-translations  |                                                       
+dataspeak-backend-worker-translations  |   Class "Laravel\Pail\PailServiceProvider" not found  
+dataspeak-backend-worker-translations  |                                                       
+dataspeak-backend-worker-translations  | 
+-- translations queue length now (was 3)
+3
+== recreate the translations worker with a fresh anonymous vendor volume (-V) (2026-10-16 10:16:12 +07)
+ Container dataspeak-backend-worker-translations Started 
+backend-worker-translations Up 15 seconds
+-- worker log
+dataspeak-backend-worker-translations  |   2026-10-16 03:16:13 App\Jobs\TranslateReportJob .................... RUNNING
+dataspeak-backend-worker-translations  | {"message":"labels.translated","context":{"analysis_id":"92e8969f-a258-47a6-aa99-a0ffe1730de4","locale":"th","candidates":20,"tra
+dataspeak-backend-worker-translations  | {"message":"claims.translated","context":{"analysis_id":"92e8969f-a258-47a6-aa99-a0ffe1730de4","locale":"th","translated":2,"pend
+dataspeak-backend-worker-translations  | {"message":"report.pretranslated","context":{"analysis_id":"92e8969f-a258-47a6-aa99-a0ffe1730de4","locale":"th","attempt":1,"tran
+dataspeak-backend-worker-translations  |   2026-10-16 03:16:27 App\Jobs\TranslateReportJob ................... 14s DONE
+dataspeak-backend-worker-translations  |   2026-10-16 03:16:27 App\Jobs\TranslateReportJob .................... RUNNING
+-- translations queue length now (was 3)
+1
+Pail present: no

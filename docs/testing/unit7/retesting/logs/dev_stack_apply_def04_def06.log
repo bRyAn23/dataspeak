@@ -1,0 +1,13 @@
+== apply DEF-04 worker split and DEF-06 pinned image to the local dev stack (2026-10-16 10:03:53 +07)
+ Container dataspeak-backend-worker Starting 
+ Container dataspeak-backend-worker-translations Started 
+ Container dataspeak-backend-worker Started 
+-- worker commands now running:
+backend-worker	Up Less than a second	"/usr/local/bin/entr…"
+backend-worker-translations	Up Less than a second	"/usr/local/bin/entr…"
+-- rebuilding analytics image with pinned requirements
+#13 DONE 0.0s
+ Image dataspeak-analytics Built 
+ Container dataspeak-analytics Started 
+analytics container now: fastapi 0.128.8 pydantic 2.13.5 starlette 0.49.3
+{"status":"ok","service":"dataspeak-analytics","version":"1.0"}

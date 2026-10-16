@@ -1,0 +1,46 @@
+== docker compose config: production stack  (2026-10-14 00:46:44 +07) ==
+Docker Compose version v5.5.1
+
+--- validate docker-compose.prod.yml + docker-compose.nginx.yml (env from the committed .env.prod.example; no secrets loaded)
+RESULT: configuration is valid (exit 0)
+
+--- services defined
+analytics
+redis
+app
+scheduler
+worker
+
+--- images referenced
+dataspeak-api:latest
+dataspeak-api:latest
+dataspeak-api:latest
+redis:7-alpine
+dataspeak-analytics:latest
+
+--- volumes defined
+app_storage
+redis_data
+caddy_data
+caddy_config
+
+--- app service after the nginx override (ports, healthcheck, restart; secrets omitted)
+  app:
+    container_name: dataspeak-prod-api
+        condition: service_started
+        condition: service_healthy
+      SERVER_NAME: :80
+      TRUSTED_PROXIES: '*'
+      test:
+      interval: 30s
+      retries: 5
+        host_ip: 127.0.0.1
+        target: 80
+        published: "8080"
+    restart: unless-stopped
+        target: /app/storage
+        target: /data
+        target: /config
+
+--- development stack (as run in CI): docker compose config --quiet
+RESULT: development compose configuration is valid (exit 0)

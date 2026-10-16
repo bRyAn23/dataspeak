@@ -1,0 +1,24 @@
+cropped (1387, 840) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/environment/figure-01-test-environment.png
+cropped (1117, 768) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/regression/figure-05-statistical-validation.png
+cropped (1099, 1164) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/regression/pytest-full-coverage.png
+cropped (1099, 588) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/regression/phpunit-backend.png
+cropped (1099, 660) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/regression/vitest-frontend.png
+cropped (1387, 876) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/performance/figure-06-performance-test-results.png
+cropped (1477, 840) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/integration/figure-02-integration-test-results.png
+cropped (1477, 516) scale 1.0
+captured -> /Users/zeyarwint/Documents/MSIT/dataspeak/docs/testing/unit7/evidence/acceptance/figure-07-acceptance-verification.png
+  50.3 figure-07-acceptance-verification.png ok
+  49.0 figure-01-test-environment.png ok
+  55.5 figure-02-integration-test-results.png ok
+  53.6 figure-06-performance-test-results.png ok
+  48.3 figure-05-statistical-validation.png ok
+  39.8 phpunit-backend.png ok
+  50.9 pytest-full-coverage.png ok
+  51.1 vitest-frontend.png ok

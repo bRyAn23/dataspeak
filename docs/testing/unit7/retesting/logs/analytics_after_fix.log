@@ -1,0 +1,12 @@
+== analytics checks after fixes (2026-10-16 10:08:35 +07, Python 3.9.6)
+-- ruff check
+All checks passed!
+-- ruff format --check
+63 files already formatted
+-- pytest with coverage
+TOTAL                                        1381     99    93%
+49 passed in 2.04s
+-- golden reference cases
+{"total": 33, "passed": 33, "pass_rate": 100.0, "numeric_total": 26, "numeric_passed": 26, "numeric_rate": 100.0}
+-- spearman display value now
+display_value: +0.71 | value: 0.7054 | method: spearman_rank_correlation

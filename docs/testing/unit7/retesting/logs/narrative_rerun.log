@@ -1,0 +1,6 @@
+ollama loaded models before start: ['qwen3:8b'] | translations queue: 0
+report requested 202
+[PASS] SYS-09b: report status=READY ai=ready claims_total=29 supported=19 generation 194s
+[PASS] SYS-08b: claim links=20; badge present=True
+[PASS] INT-08b: claims_total=29 supported=19; sampled=['SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED', 'SUPPORTED']; methods=['rule_b
+narrative re-run done

@@ -1,0 +1,28 @@
+performance run started 2026-10-15T15:39:58+07:00 commit e5ecc93
+  P1 FastAPI direct            small   fastapi_validate           n=5 median=0.010 p95=0.014 s
+  P1 FastAPI direct            small   fastapi_profile            n=5 median=0.024 p95=0.025 s
+  P1 FastAPI direct            small   fastapi_analyze            n=5 median=0.062 p95=0.064 s
+  P1 FastAPI direct            small   evidence_records           n=1 median=75.000 p95=75.000 count
+  P1 FastAPI direct            medium  fastapi_validate           n=5 median=0.014 p95=0.016 s
+  P1 FastAPI direct            medium  fastapi_profile            n=5 median=0.032 p95=0.035 s
+  P1 FastAPI direct            medium  fastapi_analyze            n=5 median=0.138 p95=0.153 s
+  P1 FastAPI direct            medium  evidence_records           n=1 median=75.000 p95=75.000 count
+  P1 FastAPI direct            large   fastapi_validate           n=5 median=0.027 p95=0.029 s
+  P1 FastAPI direct            large   fastapi_profile            n=5 median=0.079 p95=0.088 s
+  P1 FastAPI direct            large   fastapi_analyze            n=5 median=0.286 p95=0.296 s
+  P1 FastAPI direct            large   evidence_records           n=1 median=75.000 p95=75.000 count
+  P3 end-to-end via Laravel    small   upload_plus_validate       n=1 median=0.076 p95=0.076 s
+  P3 end-to-end via Laravel    small   profiling_job_to_PROFILED  n=1 median=73.264 p95=73.264 s
+  P3 end-to-end via Laravel    small   run_job_to_ANALYZED        n=1 median=128.434 p95=128.434 s
+  P3 end-to-end via Laravel    small   total_upload_to_ANALYZED   n=1 median=201.824 p95=201.824 s
+  P3 end-to-end via Laravel    medium  upload_plus_validate       n=1 median=0.049 p95=0.049 s
+  P3 end-to-end via Laravel    medium  profiling_job_to_PROFILED  n=1 median=12.213 p95=12.213 s
+  P3 end-to-end via Laravel    medium  run_job_to_ANALYZED        n=1 median=2.071 p95=2.071 s
+  P3 end-to-end via Laravel    medium  total_upload_to_ANALYZED   n=1 median=14.384 p95=14.384 s
+  P3 end-to-end via Laravel    large   upload_plus_validate       n=1 median=0.059 p95=0.059 s
+  P3 end-to-end via Laravel    large   profiling_job_to_PROFILED  n=1 median=14.249 p95=14.249 s
+  P3 end-to-end via Laravel    large   run_job_to_ANALYZED        n=1 median=2.062 p95=2.062 s
+  P3 end-to-end via Laravel    large   total_upload_to_ANALYZED   n=1 median=16.407 p95=16.407 s
+  P2 Laravel API latency       large   GET_status_latency         n=30 median=9.315 p95=9.783 ms
+errors: 0
+done

@@ -1,0 +1,43 @@
+Unit 7 system tests started 2026-10-16T10:34:51+07:00  commit 524842f
+[PASS] INT-02: upload 201; validate 200; rows 240 cols 7; analytics log lines matching /v1/validate: 0
+[PASS] INT-03: API status VALIDATED, listed=True, postgres row: VALIDATED|240|7|retail_sales.csv
+[PASS] INT-04: validate 200 valid=True rows=240; profile 200 cols=7; analyze 200 evidence=75 families=['descriptive', 'trend', 'group_comparison', 'association', 'quality', 's
+[PASS] INT-05: header_only=200/True; empty=422/True; no_token=401; dup=True; laravel dup=422 CSV_VALIDATION_FAILED; txt=422
+  stopping local analytics container for failure injection
+  starting analytics container
+[PASS] INT-06: during outage HTTP 503 code=ANALYTICS_UNAVAILABLE msg='The analytics service is unavailable.'; status after=UPLOADED; healthy after restart=True; retry HTTP 200
+[PASS] SYS-10: error state shown=True; retry succeeded=True
+    INT-07 profile 10:35:08 ('VALIDATED', 'VALIDATION', 0)
+    INT-07 profile 10:35:12 ('VALIDATED', 'VALIDATION', 55)
+    INT-07 profile 10:35:48 ('PROFILED', 'PROFILING', 100)
+    INT-07 run 10:35:48 ('ANALYZING', 'STATISTICAL_ANALYSIS', 0)
+    INT-07 run 10:35:52 ('ANALYZED', 'VISUALIZATION', 100)
+[PASS] INT-07: final ANALYZED; insights 7 (9 evidence keys), charts 8; job SUCCEEDED; db evidence|insights|charts = 75|7|8
+[PASS] SYS-01: wrong-password error shown; dashboard lists 'Unit7 INT A1'=True
+[PASS] INT-01: observed 3 API responses incl. GET /analyses [200]; UI rendered list=True
+[PASS] SYS-02: message present=True
+[PASS] SYS-05: cards present=True
+[PASS] SYS-03: warning present=True; red 14.6% (35) in table
+[PASS] SYS-04: dup headers: shown=True terms=['empty', 'Duplicate']; txt rejected=True
+[PASS] SYS-06: status=ANALYZED in 2.7s; chart review shown
+[FAIL] SYS-09: report status=READY claims_total=0 supported=0 generation 304s
+[PASS] SYS-07: svg charts rendered=7; api selected charts=8 types=['BAR', 'BAR', 'TABLE', 'LINE', 'BAR', 'BAR', 'LINE', 'LINE']; matching titles found=21
+[FAIL] SYS-08: exception: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("a[href*='/claims/']").first
+
+[PASS] SYS-11: redirect ok; no token 401; other user 404/404
+[FAIL] INT-08: claims_total=0 supported=0; sampled statuses=[]; db=
+    SYS-12 profile 10:42:20 ('VALIDATED', 'VALIDATION', 0)
+    SYS-12 profile 10:42:24 ('VALIDATED', 'VALIDATION', 55)
+    SYS-12 profile 10:42:48 ('PROFILED', 'PROFILING', 100)
+    SYS-12 run1 10:42:48 ('ANALYZING', 'STATISTICAL_ANALYSIS', 0)
+    SYS-12 run1 10:42:52 ('ANALYZED', 'VISUALIZATION', 100)
+    SYS-12 profile2 10:42:52 ('VALIDATED', 'VALIDATION', 0)
+    SYS-12 profile2 10:42:56 ('VALIDATED', 'VALIDATION', 55)
+    SYS-12 profile2 10:43:29 ('PROFILED', 'PROFILING', 100)
+    SYS-12 run2 10:43:29 ('ANALYZING', 'STATISTICAL_ANALYSIS', 0)
+    SYS-12 run2 10:43:33 ('ANALYZED', 'VISUALIZATION', 100)
+[PASS] SYS-12: run 202/202 replayed=true; run1 ANALYZED 75|75; reupload 201; run2 ANALYZED 75|75; identical key sets=True
+SUMMARY {"integration": {"PASS": 7, "FAIL": 1}, "system": {"PASS": 10, "FAIL": 2}}
+accounts: unit7-a-1792121691@example.com unit7-b-1792121692@example.com | analyses A1 ce77aea5-09ef-4f96-a675-45b46f8beacd U1 6b730456-7fb1-4623-848a-2c20f8416165

@@ -1,0 +1,42 @@
+== Health checks  (2026-10-14 00:15:59 +07) ==
+--- 1. FastAPI analytics health: GET http://127.0.0.1:8001/health  (local container, loopback only, not public)
+HTTP/1.1 200 OK
+date: Tue, 13 Oct 2026 17:15:59 GMT
+server: uvicorn
+content-length: 63
+content-type: application/json
+
+{"status":"ok","service":"dataspeak-analytics","version":"1.0"}
+
+--- 2. Laravel API health: GET http://localhost:8000/api/v1/health  (local dev stack; checks database + redis)
+HTTP/1.1 200 OK
+Host: localhost:8000
+Connection: close
+X-Powered-By: PHP/8.4.26
+Cache-Control: no-cache, private
+Date: Tue, 13 Oct 2026 17:15:59 GMT
+Content-Type: application/json
+Vary: X-Dataspeak-Language
+Content-Language: en
+Access-Control-Allow-Origin: http://localhost:5173
+Access-Control-Expose-Headers: Content-Disposition, Content-Language, Idempotent-Replayed
+
+{"data":{"status":"ok","service":"dataspeak-backend","version":"1.0","checks":{"database":"ok","redis":"ok"}}}
+
+--- 3. Production frontend: GET https://dataspeaknow.com/  (read-only)
+HTTP 200  ssl_verify=0  time=0.232751s  https://dataspeaknow.com/
+
+--- 4. Production API health: GET https://api.dataspeaknow.com/api/v1/health  (read-only; route api.v1.health)
+HTTP/2 200 
+server: nginx/1.28.3 (Ubuntu)
+date: Tue, 13 Oct 2026 17:16:00 GMT
+content-type: application/json
+content-length: 110
+cache-control: no-cache, private
+content-language: en
+referrer-policy: no-referrer
+vary: X-Dataspeak-Language, Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+
+{"data":{"status":"ok","service":"dataspeak-backend","version":"1.0","checks":{"database":"ok","redis":"ok"}}}

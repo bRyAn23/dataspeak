@@ -1,0 +1,28 @@
+== Data Speak Unit 7 test environment record  (2026-10-15 18:14:28 +07) ==
+git: e5ecc93ae806427734e982162b2b4093517c71a2  branch: main  uncommitted files: 6
+os: macOS 26.6.2 arm64  cpu: Apple M5 Pro  ram: 64 GiB
+docker: Docker version 29.8.1  compose: 5.5.1
+node: v24.21.0  npm: 11.19.0  vitest: vitest/3.2.7 darwin-arm64 node-v24.21.0  playwright: 1.60.0 (python)
+php (host): PHP 8.4.21  php (container): 8.4.26  laravel: Laravel Framework 13.34.0
+python (venv): Python 3.9.6  pytest: pytest 8.4.2  python (container): Python 3.12.15
+postgres: PostgreSQL 17.11  test database: dataspeak (local Docker volume, development data only)
+redis: redis_version:7.4.11
+ollama: qwen3:8b  (development LLM driver)
+
+-- running services (docker compose ps)
+SERVICE          IMAGE                                                                     STATUS                PORTS
+analytics        sha256:da5a8870fce7cdc22ef3ac457bd54bd85650939575bc2631ddbd56fa002b2bf1   Up 3 hours            127.0.0.1:8001->8000/tcp
+backend          dataspeak-backend                                                         Up 9 days             127.0.0.1:8000->8000/tcp, [::]:8000->8000/tcp
+backend-worker   dataspeak-backend-worker                                                  Up 9 days             8000/tcp
+frontend         dataspeak-frontend                                                        Up 9 days             127.0.0.1:5173->5173/tcp, [::]:5173->5173/tcp
+mailpit          axllent/mailpit:latest                                                    Up 9 days (healthy)   127.0.0.1:8025->8025/tcp
+postgres         postgres:17                                                               Up 9 days (healthy)   127.0.0.1:5432->5432/tcp
+redis            redis:7-alpine                                                            Up 9 days (healthy)   127.0.0.1:6379->6379/tcp
+
+-- health checks
+Laravel   GET http://localhost:8000/api/v1/health   -> {"data":{"status":"ok","service":"dataspeak-backend","version":"1.0","checks":{"database":"ok","redis":"ok"}}}
+FastAPI   GET http://127.0.0.1:8001/health          -> {"status":"ok","service":"dataspeak-analytics","version":"1.0"}
+Frontend  GET http://localhost:5173/                 -> HTTP 200
+Mailpit   GET http://127.0.0.1:8025/                 -> HTTP 200
+
+-- applied migrations: 23   scope: local development stack only; production was not used for any Unit 7 test
