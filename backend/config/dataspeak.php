@@ -73,6 +73,18 @@ return [
         'job_timeout_seconds' => (int) env('AI_JOB_TIMEOUT_SECONDS', 900),
         'validator' => env('AI_CLAIM_VALIDATOR', 'rule_based'),
 
+        // DEF-09: application-side coordination of access to a single local model (see ModelAccessCoordinator).
+        // 'auto' enables it for the ollama driver only; API providers handle concurrency themselves.
+        'coordinator' => [
+            'enabled' => env('AI_MODEL_LOCK', 'auto'),
+            'lock_ttl_seconds' => (int) env('AI_MODEL_LOCK_TTL', 330),            // > OLLAMA_TIMEOUT so a crashed holder expires
+            'interactive_wait_seconds' => (int) env('AI_MODEL_LOCK_WAIT', 240),   // narrative / suggestions / on-demand translation
+            'background_wait_seconds' => (int) env('AI_MODEL_LOCK_BG_WAIT', 300), // pre-translation batches
+            'background_yield_seconds' => (int) env('AI_MODEL_LOCK_BG_YIELD', 120), // how long background steps aside for waiting interactive work
+            'poll_ms' => 250,
+            'busy_retry_delay_seconds' => (int) env('AI_MODEL_BUSY_RETRY_DELAY', 60), // GenerateReportJob is released once with this delay on AI_BUSY
+        ],
+
         // The only evidence fields a placeholder may reference. Resolved by PlaceholderResolver.
         'placeholder_fields' => ['display_value', 'label', 'unit', 'dimension', 'group', 'period', 'period_from', 'period_to'],
 

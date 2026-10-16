@@ -6,6 +6,7 @@ use App\Enums\AnalysisStatus;
 use App\Models\Analysis;
 use App\Services\Ai\ClaimTranslator;
 use App\Services\Ai\DisplayLabelTranslator;
+use App\Services\Ai\ModelAccessCoordinator;
 use App\Services\Reports\DisplayLabels;
 use App\Support\Locale;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
@@ -57,6 +58,13 @@ class TranslateReportJob implements ShouldBeUniqueUntilProcessing, ShouldQueue
     }
 
     public function handle(DisplayLabelTranslator $labels, ClaimTranslator $claims): void
+    {
+        // DEF-09: every model request made by this job is background work; it yields to user-facing requests
+        // (bounded) and a request that cannot get the model in time counts as "unavailable" and is retried later.
+        app(ModelAccessCoordinator::class)->asBackground(fn () => $this->translate($labels, $claims));
+    }
+
+    private function translate(DisplayLabelTranslator $labels, ClaimTranslator $claims): void
     {
         $analysis = Analysis::query()->find($this->analysisId);
         $locale = Locale::normalize($this->locale);

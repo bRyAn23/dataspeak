@@ -26,4 +26,10 @@ class LlmUnavailableException extends RuntimeException
     {
         return new self('AI_HTTP_ERROR', "The AI gateway returned HTTP {$status}.");
     }
+
+    /** DEF-09: the bounded wait for the shared local model ran out; nothing was sent. */
+    public static function busy(string $class, int $waitedSeconds): self
+    {
+        return new self('AI_BUSY', "The AI model was busy with other work; the {$class} request waited {$waitedSeconds}s and was not started.");
+    }
 }

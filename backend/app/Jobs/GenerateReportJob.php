@@ -39,7 +39,8 @@ class GenerateReportJob implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
 
-    public int $tries = 1;
+    /** One extra attempt is used only when the shared model was busy (DEF-09); every other failure is final. */
+    public int $tries = 2;
 
     public int $uniqueFor = 3600;
 
@@ -94,6 +95,17 @@ class GenerateReportJob implements ShouldBeUnique, ShouldQueue
             $progress->update($analysis, JobStatus::RUNNING, AnalysisStage::AI_SYNTHESIS->value, 10);
             $resolver = PlaceholderResolver::for($analysis, $locale);
             $generation = $gateway->interpret($analysis, $resolver, true, $locale);
+            if (self::shouldRetryForBusy($generation->status, $generation->error_code, $this->attempts(), $this->tries)) {
+                // DEF-09: the model was occupied for the whole bounded wait. Put the job back once, with a delay,
+                // rather than falling back immediately; the stage and progress stay in the running state.
+                $delay = (int) config('dataspeak.ai.coordinator.busy_retry_delay_seconds', 60);
+                $lifecycle->failStage($stage, 'AI_BUSY');
+                $stage = null;
+                Log::warning('report.model_busy_retry', ['analysis_id' => $analysis->public_id, 'attempt' => $this->attempts(), 'delay_s' => $delay]);
+                $this->release($delay);
+
+                return;
+            }
             if ($generation->status === AiGenerationStatus::SUCCEEDED) {
                 $lifecycle->completeStage($stage, ['generation_id' => $generation->id, 'claims_returned' => count($generation->response_payload['claims'] ?? [])]);
             } else {
@@ -146,6 +158,12 @@ class GenerateReportJob implements ShouldBeUnique, ShouldQueue
     private const REPAIRABLE = ['DIGITS_OUTSIDE_PLACEHOLDER', 'PLACEHOLDER_FIELD_NOT_ALLOWED', 'PLACEHOLDER_UNRESOLVABLE', 'PLACEHOLDER_UNKNOWN_EVIDENCE', 'WRONG_LANGUAGE', 'STRAY_BRACES'];
 
     /** @return array{validated: int, supported: int, rejected: int, needs_review: int, repaired: int} */
+    /** DEF-09: retry (once) only for a busy model, never for schema failures or outages. */
+    public static function shouldRetryForBusy(AiGenerationStatus $status, ?string $errorCode, int $attempt, int $tries): bool
+    {
+        return $status === AiGenerationStatus::FAILED && $errorCode === 'AI_BUSY' && $attempt < $tries;
+    }
+
     private function persistClaims(Analysis $analysis, AiGeneration $generation, PlaceholderResolver $resolver, ClaimValidator $validator): array
     {
         $counts = ['validated' => 0, 'supported' => 0, 'rejected' => 0, 'needs_review' => 0, 'repaired' => 0];
