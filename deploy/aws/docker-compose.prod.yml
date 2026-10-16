@@ -52,7 +52,16 @@ services:
     stop_grace_period: 120s
     healthcheck:
       disable: true   # the base image's HEALTHCHECK probes the web server, which does not run here
-    command: ["php", "artisan", "queue:work", "redis", "--queue=default,translations", "--tries=1", "--timeout=600", "--sleep=1", "--max-jobs=200"]
+    # DEF-04: user-facing jobs only; translations have their own worker so they never delay profiling or analysis.
+    command: ["php", "artisan", "queue:work", "redis", "--queue=default", "--tries=1", "--timeout=600", "--sleep=1", "--max-jobs=200"]
+
+  worker-translations:
+    <<: *app
+    container_name: dataspeak-prod-worker-translations
+    stop_grace_period: 120s
+    healthcheck:
+      disable: true
+    command: ["php", "artisan", "queue:work", "redis", "--queue=translations", "--tries=1", "--timeout=600", "--sleep=2", "--max-jobs=100"]
 
   scheduler:
     <<: *app

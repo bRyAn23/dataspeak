@@ -28,7 +28,7 @@ echo "== start redis and analytics"
 echo "== run database migrations"
 "${COMPOSE[@]}" run --rm --no-deps --entrypoint sh app -c 'php artisan migrate --force --no-interaction'
 echo "== restart api, worker and scheduler"
-"${COMPOSE[@]}" up -d --no-build app worker scheduler
+"${COMPOSE[@]}" up -d --no-build app worker worker-translations scheduler
 "${COMPOSE[@]}" ps
 
 if [ "$PROXY" = "nginx" ] && [ -f nginx/api.conf ]; then

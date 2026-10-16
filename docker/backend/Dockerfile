@@ -9,8 +9,9 @@ RUN apk add --no-cache postgresql-dev icu-dev oniguruma-dev libzip-dev git unzip
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY backend/composer.json backend/composer.lock ./
-RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction \
-    || composer install --no-scripts --no-autoloader --prefer-dist --no-interaction
+# Development image: install dev dependencies too (APP_ENV=local discovers dev-only providers such as Pail, and the
+# package manifest in the bind-mounted bootstrap/cache is shared by every container built from this image). DEF-04 follow-up.
+RUN composer install --no-scripts --no-autoloader --prefer-dist --no-interaction
 COPY backend/ ./
 RUN composer dump-autoload --optimize --no-scripts \
     && mkdir -p storage/app/tmp storage/fonts storage/framework/{cache,sessions,views} storage/logs bootstrap/cache \
