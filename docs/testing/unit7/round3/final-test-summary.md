@@ -60,7 +60,7 @@ Before comparing: Round 1 ran one queue worker on `e5ecc93`; Round 2 ran two wor
 
 - Production (AWS, Claude API): not tested in this round by rule; the production deployment of `57b7bce`/`c68be35` is **pending** because SSH to the server is filtered from the current network (documented in the completion report). The DEF-09 coordinator is inactive on the Anthropic driver; the DEF-10 fix is in the rebuilt production image awaiting shipment.
 - Real-user acceptance and assistive-technology testing: not available; accessibility is automated only.
-- Terminal figure of the suites: the suites were re-run in a real Terminal window at 23:23 (`recovery/evidence/regression/suites_terminal.log`), but the screen was locked, so the capture is pending an unlock (`recovery/evidence/regression/recapture_watcher.log`).
+- Terminal figure of the suites: the 23:23 re-run could not be photographed because the screen was locked; the capture was taken on 2026-10-17 15:25 from a further identical run at commit `0f9b5d8` (`recovery/evidence/regression/figure-r3-regression-suites.png`, `suites_terminal.log`, `recapture_watcher.log`).
 
 ## 6. Corrections to earlier records (originals untouched)
 

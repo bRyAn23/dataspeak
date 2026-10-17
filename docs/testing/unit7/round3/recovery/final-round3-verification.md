@@ -84,7 +84,7 @@ GitHub Actions run #2 (`38926418330`) on `57b7bce`: **success**, four jobs (back
 ## 11. Remaining limitations
 
 - Production deployment of `57b7bce` + `c68be35` is pending: SSH (port 22) to the server is filtered from the current network; images for the server's architecture are built locally and the deploy commands are documented. Production uses the Anthropic driver (Haiku), on which the DEF-09 coordinator is intentionally inactive.
-- The Terminal screenshot of the suite re-run could not be taken because the screen was locked; a watcher captures it after unlock (`evidence/regression/recapture_watcher.log`). The log of that run is complete.
+- The Terminal screenshot of the suite re-run could not be taken on 2026-10-16 because the screen was locked; it was captured on 2026-10-17 15:25 from an identical run at commit `0f9b5d8` (`evidence/regression/figure-r3-regression-suites.png`; the first watcher attempt at 15:24 failed to crop because the image library path was not set, see `recapture_watcher.log`).
 - One-off worker containers used for R3-AI-05/06 and W5b were started with `--rm`, and only their stdout was saved; their JSON application log lines (stderr) are lost. The outcomes are established from `ai_generations` rows and job timings instead.
 - Acceptance is investigator-led; no real users or assistive technology; local-model Burmese quality is a known model limitation; durations are laptop figures.
 
